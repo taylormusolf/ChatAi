@@ -5,6 +5,8 @@ const Tweet = require('../models/Tweet');
 const bcrypt = require('bcryptjs');
 const { faker } = require('@faker-js/faker');
 
+
+
 const NUM_SEED_USERS = 10;
 const NUM_SEED_TWEETS = 30;
 

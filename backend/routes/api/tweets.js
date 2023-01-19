@@ -5,11 +5,12 @@ const User = mongoose.model('User');
 const Tweet = mongoose.model('Tweet');
 const { requireUser } = require('../../config/passport');
 const validateTweetInput = require('../../validations/tweets');
+const { multipleFilesUpload, multipleMulterUpload } = require("../../awsS3");
 
 router.get('/', async (req, res) => {
   try {
     const tweets = await Tweet.find()
-                              .populate("author", "_id, username")
+                              .populate("author", "_id username profileImageUrl")
                               .sort({ createdAt: -1 });
     return res.json(tweets);
   }
@@ -31,7 +32,7 @@ router.get('/user/:userId', async (req, res, next) => {
   try {
     const tweets = await Tweet.find({ author: user._id })
                               .sort({ createdAt: -1 })
-                              .populate("author", "_id, username");
+                              .populate("author", "_id username profileImageUrl")
     return res.json(tweets);
   }
   catch(err) {
@@ -42,7 +43,7 @@ router.get('/user/:userId', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const tweet = await Tweet.findById(req.params.id)
-                             .populate("author", "id, username");
+                             .populate("author", "_id username profileImageUrl")
     return res.json(tweet);
   }
   catch(err) {
@@ -59,14 +60,16 @@ router.get('/:id', async (req, res, next) => {
 // current user.) Also attach validateTweetInput as a middleware before the 
 // route handler.
 router.post('/', requireUser, validateTweetInput, async (req, res, next) => {
+  const imageUrls = await multipleFilesUpload({ files: req.files, public: true });
   try {
     const newTweet = new Tweet({
       text: req.body.text,
+      imageUrls,  
       author: req.user._id
     });
 
     let tweet = await newTweet.save();
-    tweet = await tweet.populate('author', '_id, username');
+    tweet = await tweet.populate("author", "_id username profileImageUrl")
     return res.json(tweet);
   }
   catch(err) {

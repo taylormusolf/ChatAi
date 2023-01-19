@@ -9,6 +9,10 @@ const tweetSchema = Schema({
   text: {
     type: String,
     required: true
+  },
+  imageUrls: {
+    type: [String],
+    required: false
   }
 }, {
   timestamps: true
