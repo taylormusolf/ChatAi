@@ -8,13 +8,13 @@ const csurf = require('csurf');
 const { isProduction } = require('./config/keys');
 
 require('./models/User');
-require('./models/Tweet');
+require('./models/Post');
 require('./config/passport');
 
 const passport = require('passport');
 
 const usersRouter = require('./routes/api/users');
-const tweetsRouter = require('./routes/api/tweets');
+const postsRouter = require('./routes/api/posts');
 const csrfRouter = require('./routes/api/csrf');
 
 const app = express();
@@ -47,7 +47,7 @@ app.use(
 
 // Attach Express routers
 app.use('/api/users', usersRouter);
-app.use('/api/tweets', tweetsRouter);
+app.use('/api/posts', postsRouter);
 app.use('/api/csrf', csrfRouter);
 
 // Serve static React build files statically in production

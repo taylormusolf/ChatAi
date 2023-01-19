@@ -1,7 +1,7 @@
 {
-  "name": "mern-twitter3.0",
+  "name": "the-social-petwork",
   "version": "1.0.0",
-  "description": "App for posts",
+  "description": "App for pets",
   "scripts": {
     "backend-install": "npm install --prefix backend",
     "backend": "npm run dev --prefix backend",

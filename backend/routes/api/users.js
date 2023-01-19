@@ -45,7 +45,7 @@ router.post('/register', singleMulterUpload("image"), validateRegisterInput, asy
 
   const profileImageUrl = req.file ?
       await singleFileUpload({ file: req.file, public: true }) :
-      DEFAULT_PROFILE_IMAGE_URL;
+      'https://pet-network-seeds.s3.us-west-1.amazonaws.com/leo_on_couch.JPG';
     const newUser = new User({
       username: req.body.username,
       profileImageUrl,

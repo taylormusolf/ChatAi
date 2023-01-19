@@ -1,12 +1,12 @@
-import './TweetBox.css'
+import './PostBox.css'
 
-function TweetBox ({ tweet: { text, author, imageUrls }}) {
+function PostBox ({ post: { text, author, imageUrls }}) {
   const { username, profileImageUrl } = author;
   const images = imageUrls?.map((url, index) => {
-    return <img className="tweet-image" key ={url} src={url} alt={`tweetImage${index}`} />
+    return <img className="post-image" key ={url} src={url} alt={`postImage${index}`} />
   });
   return (
-    <div className="tweet">
+    <div className="post">
       <h3>
         {profileImageUrl ?
           <img className="profile-image" src={profileImageUrl} alt="profile"/> :
@@ -20,4 +20,4 @@ function TweetBox ({ tweet: { text, author, imageUrls }}) {
   );
 }
 
-export default TweetBox;
+export default PostBox;
