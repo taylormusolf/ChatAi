@@ -16,7 +16,7 @@ const userSchema = Schema({
   },
   profileImageUrl: {
     type: String,
-    required: true
+    required: false
   }
 }, {
   timestamps: true
