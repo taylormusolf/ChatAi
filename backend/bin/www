@@ -22,23 +22,16 @@ const { mongoURI: db } = require('../config/keys.js');
 var port = normalizePort(process.env.PORT || '5001');
 app.set('port', port);
 
-const insertSeeds = () => {
-  console.log("Resetting db and seeding users and posts...");
 
-  User.collection.drop()
-                 .then(() => Post.collection.drop())
-                 .then(() => User.insertMany(users))
-                 .then(() => Post.insertMany(posts))
-                 .then(() => {
-                   console.log("Done!");
-                   mongoose.disconnect();
-                 })
-                 .catch(err => {
-                   console.error(err.stack);
-                   process.exit(1);
-                 });
-}
+/**
+ * Create HTTP server.
+ */
 
+const server = http.createServer(app);
+
+/**
+ * Connect to Mongo database, then allow the server to listen for requests
+ */
 
 mongoose
   .connect(db, { useNewUrlParser: true })
@@ -46,23 +39,11 @@ mongoose
     // Use `debug` instead of `dbLogger` if you did not split the debug 
     // console into `dbLogger` and `serverLogger` above. 
     dbLogger("Connected to MongoDB successfully");
-    insertSeeds();
     server.listen(port);
   })
   // Use `debug` instead of `serverLogger` if you did not split the debug 
   // console into `dbLogger` and `serverLogger` above.
-  .catch(err => {
-    
-    serverLogger(err)
-    console.error(err.stack);
-    process.exit(1);
-  });
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
+  .catch(err => serverLogger(err));
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -80,7 +61,7 @@ server.on('listening', onListening);
  */
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+  const port = parseInt(val, 10);
 
   if (isNaN(port)) {
     // named pipe

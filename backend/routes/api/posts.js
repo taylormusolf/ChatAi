@@ -60,11 +60,12 @@ router.get('/:id', async (req, res, next) => {
 // current user.) Also attach validatePostInput as a middleware before the 
 // route handler.
 router.post('/', requireUser, validatePostInput, async (req, res, next) => {
-  const imageUrls = await multipleFilesUpload({ files: req.files, public: true });
+  // const imageUrls = await multipleFilesUpload({ files: req.files, public: true });
+
   try {
     const newPost = new Post({
       text: req.body.text,
-      imageUrls,  
+      // imageUrls,  
       author: req.user._id
     });
 
@@ -73,6 +74,7 @@ router.post('/', requireUser, validatePostInput, async (req, res, next) => {
     return res.json(post);
   }
   catch(err) {
+    console.log(req)
     next(err);
   }
 });

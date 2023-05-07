@@ -22,6 +22,7 @@ function Profile () {
         {userPosts.map(post => (
           <PostBox
             key={post._id}
+            post={post}
             text={post.text}
           />
         ))}

@@ -70,7 +70,7 @@ function PostCompose () {
             <PostBox post={{text, author, imageUrls}} /> : // <-- MODIFY THIS LINE
             undefined}
       </div> */}
-      <PostBox text={newPost?.text} />
+      {/* <PostBox post={{text: newPost?.text}} /> */}
     </>
   )
 }

@@ -1,16 +1,35 @@
 .navbar{
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .links{
-  display: flex;
-  justify-content: space-around;
-  width: 100px;
+  /* display: flex; */
+  /* justify-content: space-around; */
+ 
 }
 
 .links-auth, .links-nav{
-  display: flex;
-  justify-content: space-between;
+  display: flex; 
+  width: 250px;
+  justify-content: space-around;
   align-items: center;
+  padding-left: 20px;
+}
+
+.profile-pic{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.logo{
+  height: 50px;
+  width: 50px;
+}
+
+.navbar h1 {
+  font-size: 2rem;
+  font-weight: bold;
 }

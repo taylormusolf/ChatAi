@@ -8,7 +8,7 @@ const { loginUser, restoreUser } = require('../../config/passport');
 const { isProduction } = require('../../config/keys');
 const validateRegisterInput = require('../../validations/register');
 const validateLoginInput = require('../../validations/login');
-const { singleFileUpload, singleMulterUpload } = require("../../awsS3");
+const { singleFileUpload, singleMulterUpload, retrievePrivateFile } = require("../../awsS3");
 
 
 /* GET users listing. */
@@ -44,7 +44,7 @@ router.post('/register', singleMulterUpload("image"), validateRegisterInput, asy
   // Otherwise create a new user
 
   const profileImageUrl = req.file ?
-      await singleFileUpload({ file: req.file, public: true }) :
+      await singleFileUpload({ file: req.file, public: false}) :
       'https://pet-network-seeds.s3.us-west-1.amazonaws.com/leo_on_couch.JPG';
   const newUser = new User({
     username: req.body.username,
@@ -95,7 +95,7 @@ router.get('/current', restoreUser, (req, res) => {
   res.json({
     _id: req.user._id,
     username: req.user.username,
-    profileImageUrl: req.user.profileImageUrl,
+    profileImageUrl: req.user.profileImageUrl.includes('aws') ? req.user.profileImageUrl : retrievePrivateFile(req.user.profileImageUrl),
     email: req.user.email
   });
 });

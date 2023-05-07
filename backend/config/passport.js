@@ -6,6 +6,7 @@ const User = mongoose.model('User');
 const jwt = require('jsonwebtoken');
 const { secretOrKey } = require('./keys');
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
+const {retrievePrivateFile} = require('../awsS3')
 
 
 passport.use(new LocalStrategy({
@@ -28,7 +29,7 @@ exports.loginUser = async function(user) {
   const userInfo = {
     _id: user._id,
     username: user.username,
-    profileImageUrl: user.profileImageUrl,
+    profileImageUrl: user.profileImageUrl.includes('aws') ? user.profileImageUrl : retrievePrivateFile(user.profileImageUrl),
     email: user.email
   };
   const token = await jwt.sign(

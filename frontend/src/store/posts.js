@@ -61,6 +61,7 @@ export const fetchUserPosts = id => async dispatch => {
 export const composePost = (text, images) => async dispatch => {
   const formData = new FormData();
   formData.append("text", text);
+
   Array.from(images).forEach(image => formData.append("images", image));
   try {
     const res = await jwtFetch('/api/posts/', {

@@ -61,6 +61,8 @@ if (isProduction) {
     );
   });
 
+
+
   // Serve the static assets in the frontend's build folder
   app.use(express.static(path.resolve("../frontend/build")));
 
@@ -72,6 +74,8 @@ if (isProduction) {
     );
   });
 }
+
+
 
 
 // Express custom middleware for catching all unmatched requests and formatting
