@@ -15,7 +15,6 @@ function NavBar () {
   }
 
   const getLinks = () => {
-    console.log(user)
     if (loggedIn) {
       return (
         <div className="links-nav">

@@ -15,15 +15,17 @@ function Posts () {
   if (posts.length === 0) return <div>There are no Posts</div>;
   
   return (
-    <>
+    <div className='posts-container'>
       <h2>All Posts</h2>
-      {posts.map(post => (
-        // <PostBox key={post._id} text={post.text} username={post.author.username} />
-        <PostBox key={post._id} post={post} />
+      <div className='posts'>
+        {posts.map(post => (
+          // <PostBox key={post._id} text={post.text} username={post.author.username} />
+          <PostBox key={post._id} post={post} />
 
-        // console.log(post)
-      ))}
-    </>
+          // console.log(post)
+        ))}
+      </div>
+    </div>
   );
 }
 

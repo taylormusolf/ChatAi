@@ -18,14 +18,18 @@ function Profile () {
   } else {
     return (
       <>
+      <div className='posts-container'>
         <h2>All of {currentUser.username}'s Posts</h2>
-        {userPosts.map(post => (
-          <PostBox
-            key={post._id}
-            post={post}
-            text={post.text}
-          />
-        ))}
+        <div className='posts'>
+          {userPosts.map(post => (
+            <PostBox
+              key={post._id}
+              post={post}
+              text={post.text}
+            />
+          ))}
+          </div>
+        </div>
       </>
     );
   }

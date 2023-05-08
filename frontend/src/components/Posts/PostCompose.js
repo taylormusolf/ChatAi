@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearPostErrors, composePost } from '../../store/posts';
 import PostBox from './PostBox';
@@ -8,8 +8,10 @@ function PostCompose () {
   const [images, setImages] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
   const dispatch = useDispatch();
+  const author = useSelector(state => state.session.user);
   const newPost = useSelector(state => state.entities.posts.new);
   const errors = useSelector(state => state.errors.posts);
+  const fileRef = useRef(null);
 
   useEffect(() => {
     return () => dispatch(clearPostErrors());
@@ -18,6 +20,7 @@ function PostCompose () {
   const handleSubmit = e => {
     e.preventDefault();
     dispatch(composePost(text, images));
+    fileRef.current.value = null;
     setImages([]);
     setImageUrls([]);       
     setText('');
@@ -57,6 +60,7 @@ function PostCompose () {
           Images to Upload
           <input
             type="file"
+            ref={fileRef}
             accept=".jpg, .jpeg, .png"
             multiple
             onChange={updateFiles} />
@@ -64,12 +68,12 @@ function PostCompose () {
         <div className="errors">{errors && errors.text}</div>
         <input type="submit" value="Submit" />
       </form>
-      {/* <div className="post-preview">
+      <div className="post-preview">
         <h3>Post Preview</h3>
         {(text || imageUrls.length !== 0) ?                  // <-- MODIFY THIS LINE
             <PostBox post={{text, author, imageUrls}} /> : // <-- MODIFY THIS LINE
             undefined}
-      </div> */}
+      </div>
       {/* <PostBox post={{text: newPost?.text}} /> */}
     </>
   )
