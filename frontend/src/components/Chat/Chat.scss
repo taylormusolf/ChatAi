@@ -1,0 +1,31 @@
+.chat-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 300px;
+  margin-top: 50px;
+  margin-bottom: 150px;
+}
+.chat-leo-container{
+  display: flex;
+}
+
+.chat-box{
+  width: 300px;
+  overflow-y: scroll;
+  ul{
+    line-height: 150%;
+    height: 100px;
+  }
+  ul div{
+    padding-bottom: 20px;
+  }
+  
+}
+
+.chat-container img{
+  height: 200px;
+  padding: 10px;
+  border-radius: 15%;
+}

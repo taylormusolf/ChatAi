@@ -86,7 +86,6 @@ router.post('/', multipleMulterUpload("images"), validatePostInput, requireUser,
     return res.json(post);
   }
   catch(err) {
-    console.log('log yo', req.body)
     next(err);
   }
 });

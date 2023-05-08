@@ -16,6 +16,7 @@ const passport = require('passport');
 const usersRouter = require('./routes/api/users');
 const postsRouter = require('./routes/api/posts');
 const csrfRouter = require('./routes/api/csrf');
+const chatbotRouter = require('./routes/api/chatbot')
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.use(
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/csrf', csrfRouter);
+app.use('/api/chatbot', chatbotRouter)
 
 // Serve static React build files statically in production
 if (isProduction) {

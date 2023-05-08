@@ -21,8 +21,6 @@ function Posts () {
         {posts.map(post => (
           // <PostBox key={post._id} text={post.text} username={post.author.username} />
           <PostBox key={post._id} post={post} />
-
-          // console.log(post)
         ))}
       </div>
     </div>

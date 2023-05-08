@@ -1,9 +1,12 @@
+import Chat from "../Chat/Chat";
+import './MainPage.css'
+
 function MainPage() {
   return (
     <>
-      <p>A Pet Page</p>
+      <Chat />
       <footer>
-        Copyright &copy; 2022 The Social Petwork
+        Copyright &copy; 2023 The Social Petwork
       </footer>
     </>
   );
