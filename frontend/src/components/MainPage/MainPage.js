@@ -1,10 +1,11 @@
-import Chat from "../Chat/Chat";
+
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './MainPage.css'
 
 function MainPage() {
   return (
     <>
-      <Chat />
+      <h1 className='chat-link'><Link to='/chat'>Chat with single dogs here!</Link></h1>
       <footer>
         Copyright &copy; 2023 The Social Petwork
       </footer>

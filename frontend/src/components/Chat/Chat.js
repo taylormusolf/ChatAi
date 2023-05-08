@@ -1,12 +1,10 @@
 import {useEffect, useState, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import jwtFetch from '../../store/jwt';
 import { fetchChatResponse, receiveChatRequest } from '../../store/chat';
 import './Chat.scss'
 
 function Chat(){
   const [request, setRequest] = useState('');
-  const [response, setResponse] = useState('');
   const chat = useSelector(state => Object.keys(state.ui.chat).length === 0 ? [] : state.ui.chat)
   const dispatch = useDispatch();
   const chatEndRef = useRef(null);
@@ -15,21 +13,6 @@ function Chat(){
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
-  // const fetchChatResponse = async ()=> {
-  //   try {
-  //     const res = await jwtFetch ('/api/chatbot', {
-  //       method: 'POST',
-  //       body: JSON.stringify({chatRequest: request})
-  //     });
-  //     const chatResponse = await res.json();
-  //     setResponse(chatResponse);
-  //   } catch (err) {
-  //     const resBody = await err.json();
-  //     if (resBody.statusCode === 400) {
-  //       setResponse(resBody.errors);
-  //     }
-  //   }
-  // };
 
   useEffect(()=>{
     scrollToBottomChat();
@@ -51,7 +34,6 @@ function Chat(){
       console.log(err)
     }
 
-    
   }
 
 

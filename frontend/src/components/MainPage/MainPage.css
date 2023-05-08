@@ -1,3 +1,14 @@
+
+
+
+
+.chat-link{
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
 footer{
+  margin-top: 500px;
   margin-left: 100px;
 }

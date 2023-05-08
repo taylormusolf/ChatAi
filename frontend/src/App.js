@@ -14,6 +14,8 @@ import Profile from './components/Profile/Profile';
 import PostCompose from './components/Posts/PostCompose';
 
 import { getCurrentUser } from './store/session';
+import { Route } from 'react-router-dom/cjs/react-router-dom.min';
+import Chat from './components/Chat/Chat';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -29,6 +31,8 @@ function App() {
         <AuthRoute exact path="/" component={MainPage} />
         <AuthRoute exact path="/login" component={LoginForm} />
         <AuthRoute exact path="/signup" component={SignupForm} />
+
+        <Route exact path="/chat" component={Chat} />
 
         <ProtectedRoute exact path="/posts" component={Posts} />
         <ProtectedRoute exact path="/profile" component={Profile} />

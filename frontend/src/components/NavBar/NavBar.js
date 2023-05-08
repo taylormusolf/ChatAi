@@ -40,8 +40,8 @@ function NavBar () {
 
   return (
     <div className='navbar'>
-      <img className='logo' src={dogImg} alt='logo' />
-      <h1>The Social Petwork</h1>
+      <Link to='/'><img className='logo' src={dogImg} alt='logo' /></Link>
+      <Link to='/'><h1>The Social Petwork</h1></Link>
       { getLinks() }
     </div>
   );
