@@ -1,1 +1,1 @@
-# the-social-petwork-mern
+# the-aibot-creator-mern
