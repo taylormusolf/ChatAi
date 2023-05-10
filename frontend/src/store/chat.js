@@ -1,15 +1,23 @@
 import jwtFetch from './jwt';
+import { REMOVE_CHATBOT, RECEIVE_NEW_CHATBOT } from './chatbots';
 
-const RECEIVE_CHATS = "chats/RECEIVE_CHATS";
+const RECEIVE_CHAT = "chats/RECEIVE_CHAT";
+const REMOVE_CHAT = "chats/REMOVE_CHAT";
+
 const RECEIVE_CHAT_REQUEST = "chats/RECEIVE_CHAT_REQUEST";
 const RECEIVE_CHAT_RESPONSE = "chats/RECEIVE_CHAT_RESPONSE";
 
 const RECEIVE_CHAT_ERRORS = "chats/RECEIVE_CHAT_ERRORS";
 const CLEAR_CHAT_ERRORS = "chats/CLEAR_CHAT_ERRORS";
 
-const receiveChats = chats => ({
-  type: RECEIVE_CHATS,
-  chats
+const receiveChat = chat => ({
+  type: RECEIVE_CHAT,
+  chat
+});
+
+const removeChat = chatId => ({
+  type: REMOVE_CHAT,
+  chatId
 });
 
 export const receiveChatRequest = (chatRequest) => ({
@@ -25,6 +33,36 @@ const receiveErrors = errors => ({
   type: RECEIVE_CHAT_ERRORS,
   errors
 });
+
+export const createChat = (chat) => async dispatch => {
+  try {
+    const res = await jwtFetch('/api/chats/', {
+      method: 'POST',
+      body: JSON.stringify(chat)
+    });
+    const data = await res.json();
+    dispatch(receiveChat(data));
+  } catch(err) {
+    const resBody = await err.json();
+    if (resBody.statusCode === 400) {
+      return dispatch(receiveErrors(resBody.errors));
+    }
+  }
+}
+
+export const deleteChat = (chatId) => async dispatch =>{
+  try {
+      await jwtFetch(`/api/chats/${chatId}`, {
+      method: 'DELETE'
+    });
+    dispatch(removeChat(chatId));
+  } catch(err) {
+    const resBody = await err.json();
+    if (resBody.statusCode === 400) {
+      return dispatch(receiveErrors(resBody.errors));
+    }
+  }
+}
 
 export const fetchChatResponse = (chatRequest)=> async dispatch=> {
   
@@ -57,10 +95,16 @@ export const chatErrorsReducer = (state = nullErrors, action) => {
   }
 };
 
-const chatReducer = (state = [], action) => {
+const chatsReducer = (state = [], action) => {
   switch(action.type) {
     // case RECEIVE_CHATS:
     //   return { ...state, all: action.chats, new: undefined};
+    case RECEIVE_NEW_CHATBOT:
+      return action.payload.chat
+    case REMOVE_CHATBOT:
+      return [];
+    case REMOVE_CHAT:
+      return [];
     case RECEIVE_CHAT_REQUEST:
       return [...state, {role: 'user', content: action.chatRequest}]
     case RECEIVE_CHAT_RESPONSE:
@@ -70,4 +114,4 @@ const chatReducer = (state = [], action) => {
   }
 };
 
-export default chatReducer;
+export default chatsReducer;

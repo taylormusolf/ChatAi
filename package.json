@@ -1,7 +1,7 @@
 {
-  "name": "the-social-petwork",
+  "name": "the-ai-chatwork",
   "version": "1.0.0",
-  "description": "App for pets",
+  "description": "App for chatbots",
   "scripts": {
     "backend-install": "npm install --prefix backend",
     "backend": "npm run dev --prefix backend",

@@ -1,0 +1,27 @@
+.chatbot-show-container{
+  display: flex;
+}
+
+.chatbot-show-box{
+  width: 300px;
+  overflow-y: scroll;
+  ul{
+    line-height: 150%;
+    height: 100px;
+  }
+  ul div{
+    padding-bottom: 20px;
+  }
+  
+}
+
+
+
+.chatbot-show-details{
+  display: flex;
+  padding: 5px;
+}
+
+.chatbot-show-details img{
+  height: 400px;
+}

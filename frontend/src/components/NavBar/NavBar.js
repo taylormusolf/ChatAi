@@ -18,13 +18,13 @@ function NavBar () {
     if (loggedIn) {
       return (
         <div className="links-nav">
-          <Link to={'/posts'}>All Posts</Link>
+          {/* <Link to={'/posts'}>All Posts</Link> */}
           <Link to={'/profile'}>
           {user.profileImageUrl ? 
             <img className='profile-pic' src={user.profileImageUrl} alt='profile-img' /> : 
             null}
           </Link>  
-          <Link to={'/posts/new'}>Write a Post</Link>
+          {/* <Link to={'/posts/new'}>Write a Post</Link> */}
           <button onClick={logoutUser}>Logout</button>
         </div>
       );
@@ -41,7 +41,7 @@ function NavBar () {
   return (
     <div className='navbar'>
       <Link to='/'><img className='logo' src={dogImg} alt='logo' /></Link>
-      <Link to='/'><h1>The Social Petwork</h1></Link>
+      <Link to='/'><h1>MeetAi</h1></Link>
       { getLinks() }
     </div>
   );

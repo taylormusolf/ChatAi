@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const ChatBot = mongoose.model('ChatBot');
+const User = mongoose.model('User');
 const Chat = mongoose.model('Chat');
 const { requireUser } = require('../../config/passport');
 const { singleFileUpload, singleMulterUpload, retrievePrivateFile } = require("../../awsS3");
@@ -34,6 +35,28 @@ router.get('/:id', requireUser, async (req, res, next) => {
   try {
     const chat = await Chat.findOne({ chatBot: chatbot, author: req.user})
     return res.json({chat, chatbot})
+  } catch(err){
+    return res.json([]);
+  }
+  
+});
+
+router.get('/user/:userId', requireUser, async (req, res, next) => {
+  let user;
+  try {
+    user = await User.findById(req.params.userId);
+  } catch(err) {
+    const error = new Error('User not found');
+    error.statusCode = 404;
+    error.errors = { message: "No user found with that id" };
+    return next(error);
+  }
+  try {
+    
+    const chatBots = await Chat.find({ author: user._id })
+                          .sort({ createdAt: -1 })
+                          .populate("author", "_id username profileImageUrl")
+    return res.json(chatBots)
   } catch(err){
     return res.json([]);
   }
