@@ -33,7 +33,9 @@ router.get('/:id', requireUser, async (req, res, next) => {
     return next(error);
   }
   try {
-    const chat = await Chat.findOne({ chatBot: chatbot, author: req.user})
+    console.log(chatbot, req.user)
+    let chat = await Chat.findOne({ chatBot: chatbot, author: req.user})
+    if(!chat) chat = {};
     return res.json({chat, chatbot})
   } catch(err){
     return res.json([]);
@@ -53,7 +55,7 @@ router.get('/user/:userId', requireUser, async (req, res, next) => {
   }
   try {
     
-    const chatBots = await Chat.find({ author: user._id })
+    const chatBots = await ChatBot.find({ author: user })
                           .sort({ createdAt: -1 })
                           .populate("author", "_id username profileImageUrl")
     return res.json(chatBots)
@@ -120,6 +122,17 @@ router.delete('/:id',  requireUser, async (req, res, next) => {
     err.errors = errors;
     errors.userId = "You are not the owner of this Chatbot";
     return next(err);
+  }
+
+  try{
+    await Chat.deleteMany({chatBot: chatbot });
+
+  }catch (err){
+    err.statusCode = 400;
+    const errors = {};
+    err.errors = errors;
+    errors.userId = "Unable to delete related chats";
+    next(err);
   }
 
   try{

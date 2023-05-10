@@ -22,9 +22,26 @@ router.get('/:id', async (req, res, next) => {
   
 });
 
-router.get('/', async (req, res, next) => {
+
+//get all chats
+// router.get('/', async (req, res, next) => {
+//   try {
+//     const chat = await Chat.find()
+//     return res.json(chat)
+//   } catch(err) {
+//     const error = new Error('Chat not found');
+//     error.statusCode = 404;
+//     error.errors = { message: "No chat found with that id" };
+//     return next(error);
+//   }
+  
+// });
+
+//get all chatbots that current use has chatted with
+router.get('/', requireUser, async (req, res, next) => {
   try {
-    const chat = await Chat.find()
+    const chat = await Chat.find({author: req.user})
+                  .populate('chatBot, _id name')
     return res.json(chat)
   } catch(err) {
     const error = new Error('Chat not found');
@@ -37,30 +54,34 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', requireUser, async (req, res) => {
   const chatBot = await ChatBot.findOne({_id: req.body.chatBotId})
-  let newChat;
+  // let newChat;
   try {
     // if(chatBot){
-      newChat = new Chat ({
+      const newChat = new Chat ({
         author: req.user,
     chatBot: chatBot,
     messages: []
-  })
+  });
+
+  const chat = await newChat.save();
+  return res.json(chat);
+
 }catch(err){
   const error = new Error('Chatbot not found');
   error.statusCode = 404;
   error.errors = { message: "No chatbot found with that id" };
   return next(error);
 }
-  try{
-    let messages = [{role:'system', content:`You are ${chatBot.name} from ${chatBot.location} and should respond as them. ${chatBot.bio}`}, req.body.chatRequest]
-    const data = await getAiResponse(messages);
-    newChat.messages = [req.body.chatRequest, data]
-    const chat = await newChat.save();
+  // try{
+  //   let messages = [{role:'system', content:`You are ${chatBot.name} from ${chatBot.location} and should respond as them. ${chatBot.bio}`}, req.body.chatRequest]
+  //   const data = await getAiResponse(messages);
+  //   newChat.messages = [req.body.chatRequest, data]
+  //   const chat = await newChat.save();
 
-    return res.json(chat);
-  }catch(err) {
-    return res.json('Could not return that request');
-  }
+  //   return res.json(chat);
+  // }catch(err) {
+  //   return res.json('Could not return that request');
+  // }
 });
 
 router.patch('/:id', requireUser, async (req, res) => {
