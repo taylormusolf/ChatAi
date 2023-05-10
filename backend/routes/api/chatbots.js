@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 });
 
 //gets chatBot and the signedIn user's messages with that bot
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', requireUser, async (req, res, next) => {
   let chatbot = null;
   try {
     chatbot = await ChatBot.findById(req.params.id)
@@ -32,7 +32,7 @@ router.get('/:id', async (req, res, next) => {
     return next(error);
   }
   try {
-    const chat = await Chat.find({ chatbot: chatbot._id, author: req.user})
+    const chat = await Chat.findOne({ chatBot: chatbot, author: req.user})
     return res.json({chat, chatbot})
   } catch(err){
     return res.json([]);
@@ -63,7 +63,7 @@ router.post('/', singleMulterUpload("image"),  requireUser, async (req, res, nex
 });
 
 router.patch('/:id', singleMulterUpload("image"), requireUser, async (req, res, next) => {
-  let chatbot = await ChatBot.find({ _id: req.params.id, author: {_id: req.user._id}})
+  let chatbot = await ChatBot.findOne({ _id: req.params.id, author: {_id: req.user._id}})
   if(!chatbot) {
     const err = new Error("Validation Error");
     err.statusCode = 400;
@@ -89,7 +89,7 @@ router.patch('/:id', singleMulterUpload("image"), requireUser, async (req, res, 
 });
 
 router.delete('/:id',  requireUser, async (req, res, next) => {
-  const chatbot = await ChatBot.find({ _id: req.params.id, author: {_id: req.user._id}})
+  const chatbot = await ChatBot.findOne({ _id: req.params.id, author: {_id: req.user._id}})
   if(!chatbot) {
     const err = new Error("Validation Error");
     err.statusCode = 400;

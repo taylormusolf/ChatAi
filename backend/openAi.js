@@ -10,7 +10,7 @@ const getAiResponse = async (messages) =>{
     model: "gpt-3.5-turbo",
     messages: messages
   });
-  return res.data.choices[0].message.content
+  return res.data.choices[0].message
 }
 
 
