@@ -18,8 +18,8 @@ const passport = require('passport');
 const usersRouter = require('./routes/api/users');
 const postsRouter = require('./routes/api/posts');
 const csrfRouter = require('./routes/api/csrf');
-const chatbotRouter = require('./routes/api/chatbot');
-const chatRouter = require('./routes/api/chat');
+const chatbotsRouter = require('./routes/api/chatbots');
+const chatsRouter = require('./routes/api/chats');
 
 
 const app = express();
@@ -54,8 +54,8 @@ app.use(
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/csrf', csrfRouter);
-app.use('/api/chatbot', chatbotRouter);
-app.use('/api/chat', chatRouter);
+app.use('/api/chatbots', chatbotsRouter);
+app.use('/api/chats', chatsRouter);
 
 
 // Serve static React build files statically in production

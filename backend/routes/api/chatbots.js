@@ -72,7 +72,7 @@ router.patch('/:id', singleMulterUpload("image"), requireUser, async (req, res, 
     errors.userId = "You are not the owner of this Chatbot";
     return next(err);
   }
-  const profileImageUrl = req.file ?
+  req.file ?
       chatbot.profileImageUrl = await singleFileUpload({ file: req.file, public: false}) :
       chatbot.profileImageUrl;
   try{
