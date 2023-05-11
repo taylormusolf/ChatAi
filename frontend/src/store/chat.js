@@ -1,5 +1,5 @@
 import jwtFetch from './jwt';
-import { REMOVE_CHATBOT, RECEIVE_NEW_CHATBOT } from './chatbots';
+import { REMOVE_CHATBOT, RECEIVE_NEW_CHATBOT, RECEIVE_CHATBOT } from './chatbots';
 
 const RECEIVE_CHAT = "chats/RECEIVE_CHAT";
 const REMOVE_CHAT = "chats/REMOVE_CHAT";
@@ -24,9 +24,9 @@ export const receiveChatRequest = (chatRequest) => ({
   type: RECEIVE_CHAT_REQUEST,
   chatRequest
 });
-const receiveChatResponse = (chatResponse) => ({
+const receiveChatResponse = (chat) => ({
   type: RECEIVE_CHAT_RESPONSE,
-  chatResponse
+  chat
 });
 
 const receiveErrors = errors => ({
@@ -34,6 +34,7 @@ const receiveErrors = errors => ({
   errors
 });
 
+//initialize chat with a chatBot for the first time
 export const createChat = (chat) => async dispatch => {
   try {
     const res = await jwtFetch('/api/chats/', {
@@ -50,6 +51,7 @@ export const createChat = (chat) => async dispatch => {
   }
 }
 
+//clear chat history with a chatBot
 export const deleteChat = (chatId) => async dispatch =>{
   try {
       await jwtFetch(`/api/chats/${chatId}`, {
@@ -64,11 +66,12 @@ export const deleteChat = (chatId) => async dispatch =>{
   }
 }
 
-export const fetchChatResponse = (chatRequest)=> async dispatch=> {
+//ask new question to chatBot in an existing chat
+export const fetchChatResponse = (chatId, chatRequest)=> async dispatch=> {
   
   try {
-    const res = await jwtFetch ('/api/chatbot', {
-      method: 'POST',
+    const res = await jwtFetch (`/api/chats/${chatId}`, {
+      method: 'PATCH',
       body: JSON.stringify({chatRequest})
     });
     const chatResponse = await res.json();
@@ -95,20 +98,28 @@ export const chatErrorsReducer = (state = nullErrors, action) => {
   }
 };
 
-const chatsReducer = (state = [], action) => {
+const chatsReducer = (state = { all: {}, current: {}, new:{}}, action) => {
+  const newCurrent = {...state.current};
   switch(action.type) {
     // case RECEIVE_CHATS:
     //   return { ...state, all: action.chats, new: undefined};
-    case RECEIVE_NEW_CHATBOT:
-      return action.payload.chat
+    case RECEIVE_CHATBOT:
+      return {...state, current: action.payload.chat};
+    // case RECEIVE_NEW_CHATBOT:
+    //   return {...state, current: action.payload.chat};
     case REMOVE_CHATBOT:
-      return [];
+      return {...state, current:{}};
     case REMOVE_CHAT:
-      return [];
+      return {...state, current:{}};
     case RECEIVE_CHAT_REQUEST:
-      return [...state, {role: 'user', content: action.chatRequest}]
+      // return [...state, {role: 'user', content: action.chatRequest}]
+      newCurrent.messages.push({role: 'user', content: action.chatRequest})
+      return {...state, current: newCurrent }
     case RECEIVE_CHAT_RESPONSE:
-      return [...state, {role:'assistant', content: action.chatResponse}]
+      // newCurrent.messages.push({role:'assistant', content: action.chatResponse})
+      return {...state, current: action.chat }
+    case RECEIVE_CHAT:
+      return {...state, current: action.chat }
     default:
       return state;
   }

@@ -57,6 +57,7 @@ router.post('/', requireUser, async (req, res) => {
   // let newChat;
   try {
     // if(chatBot){
+      debugger
       const newChat = new Chat ({
         author: req.user,
     chatBot: chatBot,

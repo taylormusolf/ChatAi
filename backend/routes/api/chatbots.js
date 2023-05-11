@@ -80,7 +80,7 @@ router.post('/', singleMulterUpload("image"),  requireUser, async (req, res, nex
     });
     let chatBot = await newChatBot.save();
     chatBot = await chatBot.populate("author", "_id username profileImageUrl")
-    return res.json(newChatBot);
+    return res.json(chatBot);
 
   }catch(err) {
     next(err);

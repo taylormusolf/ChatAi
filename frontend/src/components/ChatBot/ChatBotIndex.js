@@ -15,14 +15,15 @@ function ChatBotIndex(){
 
   return(
     <div className="chatbots-index-container">
-      {chatBots?.map((bot)=>{
+      {chatBots?.map((bot, i)=>{
         return(
-          <ul className="chatbots-index-details" key={bot._id}>
+          <ul className="chatbots-index-details" key={i}>
             <Link to={`/chatbots/${bot._id}`}><li>{bot.name}</li></Link>
             <Link to={`/chatbots/${bot._id}`}><img src={bot.profileImageUrl} alt={bot.name}/></Link>
           </ul>
         )
       })}
+      <Link to='/chatbots/new'>Create a new chatbot</Link>
     </div>
   )
 

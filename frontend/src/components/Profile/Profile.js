@@ -1,38 +1,36 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserPosts, clearPostErrors } from '../../store/posts';
-import PostBox from '../Posts/PostBox';
+import { fetchUserChatBots, deleteChatBot } from '../../store/chatbots';
+import {Link} from 'react-router-dom'
+import './Profile.css'
 
 function Profile () {
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.session.user);
-  const userPosts = useSelector(state => Object.values(state.entities.posts.user))
+  const userChatBots = useSelector(state => state.entities.chatBots.user)
   
   useEffect(() => {
-    dispatch(fetchUserPosts(currentUser._id));
-    return () => dispatch(clearPostErrors());
+
+    dispatch(fetchUserChatBots(currentUser._id))
   }, [currentUser, dispatch]);
 
-  if (userPosts.length === 0) {
-    return <div>{currentUser.username} has no Posts</div>;
-  } else {
+ 
     return (
       <>
-      <div className='posts-container'>
-        <h2>All of {currentUser.username}'s Posts</h2>
-        <div className='posts'>
-          {userPosts.map(post => (
-            <PostBox
-              key={post._id}
-              post={post}
-              text={post.text}
-            />
-          ))}
+      <div className='profile-bots-container'>
+        <h2>All of {currentUser.username}'s Chatbots</h2>
+        <div className='profile-bots'>
+          {userChatBots?.map((bot)=>{
+            return (<ul className='profile-bot' key={bot._id}>
+              <Link to={`/chatBots/${bot._id}`}><li>{bot.name}</li></Link>
+              <Link to={`/chatBots/${bot._id}`}><img src={bot.profileImageUrl} alt={bot.name}/></Link>
+              <button onClick={()=>dispatch(deleteChatBot(bot._id))}>Delete Bot</button>
+            </ul>)
+          })}
           </div>
         </div>
       </>
     );
   }
-}
 
 export default Profile;

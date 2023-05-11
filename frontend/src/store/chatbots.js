@@ -2,7 +2,7 @@ import jwtFetch from './jwt';
 
 const RECEIVE_CHATBOTS = "chatbots/RECEIVE_CHATBOTS";
 export const REMOVE_CHATBOT = "chatbots/REMOVE_CHATBOT";
-const RECEIVE_CHATBOT = "chatbots/REMOVE_CHATBOT";
+export const RECEIVE_CHATBOT = "chatbots/RECEIVE_CHATBOT";
 
 
 const RECEIVE_USER_CHATBOTS = "chatbots/RECEIVE_USER_CHATBOTS";
@@ -10,28 +10,30 @@ export const RECEIVE_NEW_CHATBOT = "chatbots/RECEIVE_NEW_CHATBOT";
 const RECEIVE_CHATBOT_ERRORS = "chatbots/RECEIVE_CHATBOT_ERRORS";
 const CLEAR_CHATBOT_ERRORS = "chatbots/CLEAR_CHATBOT_ERRORS";
 
-const receiveChatBots = chatBots => ({
+const receiveChatBots = chatbots => ({
   type: RECEIVE_CHATBOTS,
-  chatBots
+  chatbots
 });
-const receiveChatBot = chatBot => ({
+const receiveChatBot = payload => {
+  return {
   type: RECEIVE_CHATBOT,
-  chatBot
-});
-
-const removeChatBot = chatBotId => ({
-  type: REMOVE_CHATBOT,
-  chatBotId
-});
-
-const receiveUserChatBots = chatBots => ({
-  type: RECEIVE_USER_CHATBOTS,
-  chatBots
-});
-
-const receiveNewChatBot = payload => ({
-  type: RECEIVE_NEW_CHATBOT,
   payload
+  }
+};
+
+const removeChatBot = chatbotId => ({
+  type: REMOVE_CHATBOT,
+  chatbotId
+});
+
+const receiveUserChatBots = chatbots => ({
+  type: RECEIVE_USER_CHATBOTS,
+  chatbots
+});
+
+const receiveNewChatBot = chatbot=> ({
+  type: RECEIVE_NEW_CHATBOT,
+  chatbot
 });
 
 const receiveErrors = errors => ({
@@ -43,6 +45,9 @@ export const clearChatBotErrors = errors => ({
     type: CLEAR_CHATBOT_ERRORS,
     errors
 });
+
+
+
 
 export const fetchChatBots = () => async dispatch => {
   try {
@@ -57,11 +62,12 @@ export const fetchChatBots = () => async dispatch => {
   }
 };
 
+
 export const fetchChatBot = (id) => async dispatch => {
   try {
     const res = await jwtFetch (`/api/chatbots/${id}`);
     const chatBot = await res.json();
-    dispatch(receiveNewChatBot(chatBot));
+    dispatch(receiveChatBot(chatBot));
   } catch (err) {
     const resBody = await err.json();
     if (resBody.statusCode === 400) {
@@ -83,7 +89,7 @@ export const fetchUserChatBots = id => async dispatch => {
   }
 };
 
-export const composeChatBot = (chatBot, image) => async dispatch => {
+export const createChatBot = (chatBot, image) => async dispatch => {
   const { name, bio, location} = chatBot;
   const formData = new FormData();
   formData.append("name", name);
@@ -118,7 +124,7 @@ export const updateChatBot = (chatBotInfo, image) => async dispatch => {
       body: formData
     });
     const chatBot = await res.json();
-    dispatch(receiveNewChatBot(chatBot));
+    dispatch(receiveChatBot(chatBot));
   } catch(err) {
     const resBody = await err.json();
     if (resBody.statusCode === 400) {
@@ -156,17 +162,34 @@ export const chatBotErrorsReducer = (state = nullErrors, action) => {
   }
 };
 
-const chatBotsReducer = (state = { all: {}, user: {}, new: undefined }, action) => {
+const chatBotsReducer = (state = { all: [], user: [], new: undefined }, action) => {
   switch(action.type) {
     case RECEIVE_CHATBOTS:
-      return { ...state, all: action.chatBots, new: undefined};
+      return { ...state, all: action.chatbots, new: undefined};
     case RECEIVE_USER_CHATBOTS:
-      return { ...state, user: action.chatBots, new: undefined};
+      return { ...state, user: action.chatbots, new: undefined};
+    case RECEIVE_CHATBOT:
+      return { ...state, new: action.payload.chatbot};
     case RECEIVE_NEW_CHATBOT:
-      return { ...state, new: action.payload.chatBot};
+      return { ...state, new: action.chatbot, all: [...state.all, action.chatbot] };
     case REMOVE_CHATBOT:
-      const newState = {...state, user: {}, new: undefined }
-      delete newState.all[action.chatBotId]
+      // if (state.user.length) 
+      let i;
+      for (let index = 0; index < state.user.length; index++) {
+        const element = state.user[index];
+        // console.log(element._id.toString() === action.chatbotId.toString(), element._id, action.chatbotId);
+        if(element._id.toString() === action.chatbotId.toString()){
+          i = index;
+          break;
+        }
+      }
+      if(i !== 0 && !i) i = -1;
+  
+      // const newUser = state.user.slice(0, i) + state.user.slice(i+ 1);
+      const newUser = [...state.user]
+      delete newUser[i]
+      const newState = {...state, user: newUser, new: undefined }
+      delete newState.all[action.chatbotId]
       return newState;
     default:
       return state;
