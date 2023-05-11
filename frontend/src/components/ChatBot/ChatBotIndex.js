@@ -1,25 +1,32 @@
 import { useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { fetchChatBots } from "../../store/chatbots";
-import {Link} from "react-router-dom";
+import {Link , useHistory} from "react-router-dom";
 import './ChatBotIndex.css'
+import { createChat } from "../../store/chat";
 
 function ChatBotIndex(){
   const dispatch = useDispatch();
+  const history = useHistory();
   const chatBots = useSelector(state => Object.values(state.entities.chatBots.all).length !== 0 ?  state.entities.chatBots.all : []  )
+  const chatted = useSelector(state => state.entities.chatBots?.chatted )
   useEffect(()=>{
     dispatch(fetchChatBots())
   }, [dispatch])
 
-
+  const clickHandler = (chatBotId) => (e)=>{
+    dispatch(createChat({chatBotId}));
+    history.push(`/chatbots/${chatBotId}`)
+  } 
 
   return(
     <div className="chatbots-index-container">
       {chatBots?.map((bot, i)=>{
         return(
           <ul className="chatbots-index-details" key={i}>
-            <Link to={`/chatbots/${bot._id}`}><li>{bot.name}</li></Link>
-            <Link to={`/chatbots/${bot._id}`}><img src={bot.profileImageUrl} alt={bot.name}/></Link>
+            <li>{bot.name}</li>
+            <img src={bot.profileImageUrl} alt={bot.name}/>
+            {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`}>Resume Chat</Link> : <button onClick={clickHandler(bot._id)}> Start Chat</button>}
           </ul>
         )
       })}

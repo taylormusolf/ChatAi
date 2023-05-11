@@ -25,12 +25,18 @@ function ChatBotShow(){
     dispatch(fetchChatBot(chatBotId))
   }, [dispatch, chatBotId])
 
-  useEffect(()=>{
-    if(Object.values(chat).length === 0){
-      dispatch(createChat({chatBotId}))
-    }
+  const clearHistory = chatId => e => {
+    e.preventDefault();
+    dispatch(deleteChat(chatId))
+    dispatch(createChat({chatBotId}))
+  }
+
+  // useEffect(()=>{
+  //   if(Object.values(chat).length === 0){
+  //     dispatch(createChat({chatBotId}))
+  //   }
     
-  }, [dispatch, chatBotId, chat])
+  // }, [dispatch, chatBotId, chat])
 
   useEffect(()=>{
     scrollToBottomChat();
@@ -81,7 +87,7 @@ function ChatBotShow(){
             <input onChange={handleChange} value={request}/>
             <input type='submit' value="Send"/>
           </form>
-          <button onClick={()=> dispatch(deleteChat(chat._id))}>Clear Chat History</button>
+          <button onClick={clearHistory(chat?._id)}>Clear Chat History</button>
                 
             <Link to='/chatbots/'>Back to ChatBot Index</Link>
     </div>

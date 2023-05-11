@@ -1,5 +1,5 @@
 import jwtFetch from './jwt';
-import { REMOVE_CHATBOT, RECEIVE_NEW_CHATBOT, RECEIVE_CHATBOT } from './chatbots';
+import { REMOVE_CHATBOT, RECEIVE_NEW_CHATBOT, RECEIVE_CHATBOT, RECEIVE_CHATBOTS } from './chatbots';
 
 const RECEIVE_CHAT = "chats/RECEIVE_CHAT";
 const REMOVE_CHAT = "chats/REMOVE_CHAT";
@@ -98,11 +98,13 @@ export const chatErrorsReducer = (state = nullErrors, action) => {
   }
 };
 
-const chatsReducer = (state = { all: {}, current: {}, new:{}}, action) => {
+const chatsReducer = (state = { all: {}, current: {}, user:{}}, action) => {
   const newCurrent = {...state.current};
   switch(action.type) {
     // case RECEIVE_CHATS:
     //   return { ...state, all: action.chats, new: undefined};
+    case RECEIVE_CHATBOTS:
+      return {...state, current: {}};
     case RECEIVE_CHATBOT:
       return {...state, current: action.payload.chat};
     // case RECEIVE_NEW_CHATBOT:
@@ -110,7 +112,7 @@ const chatsReducer = (state = { all: {}, current: {}, new:{}}, action) => {
     case REMOVE_CHATBOT:
       return {...state, current:{}};
     case REMOVE_CHAT:
-      return {...state, current:{}};
+      return {...state, current:{messages:[]}};
     case RECEIVE_CHAT_REQUEST:
       // return [...state, {role: 'user', content: action.chatRequest}]
       newCurrent.messages.push({role: 'user', content: action.chatRequest})

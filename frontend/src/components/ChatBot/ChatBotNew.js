@@ -2,14 +2,17 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {createChatBot} from '../../store/chatbots'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import './ChatBotNew.css'
 
 function ChatBotNew(){
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
   const [location, setLocation] = useState('');
   const [image, setImage] = useState(null);
+  const [photoUrl, setPhotoUrl] = useState(null);
   const errors = useSelector(state => state.errors.session);
   const dispatch = useDispatch();
+
 
   const update = field => {
     let setState;
@@ -31,7 +34,19 @@ function ChatBotNew(){
     return e => setState(e.currentTarget.value);
   }
 
-  const updateFile = e => setImage(e.target.files[0]);
+  // const updateFile = e => setImage(e.target.files[0]);
+
+  const handleFile = ({ currentTarget }) => {
+    const file = currentTarget.files[0];
+    setImage(file);
+    if (file) {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => setPhotoUrl(fileReader.result);
+    }else {
+      setPhotoUrl(null);
+    }
+  }
 
 
   const usernameSubmit = e => {
@@ -47,6 +62,7 @@ function ChatBotNew(){
     setName('');
     setLocation('');
     setBio('');
+    setImage(null);
   }
   
 
@@ -83,7 +99,7 @@ function ChatBotNew(){
           </label>
           <label>
             Chatbot Image
-            <input type="file" accept=".jpg, .jpeg, .png" onChange={updateFile} />
+            <input type="file" accept=".jpg, .jpeg, .png" onChange={handleFile} />
           </label>
           <input
             type="submit"
@@ -91,6 +107,7 @@ function ChatBotNew(){
             disabled={!name || !location || !bio}
           />
           </form>
+          {photoUrl? <img className='preview' src={photoUrl} alt='preview' /> : null}
           <Link to='/chatbots'>Back to chatbot index</Link>
         </div>
     );

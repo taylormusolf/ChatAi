@@ -1,6 +1,6 @@
 import jwtFetch from './jwt';
 
-const RECEIVE_CHATBOTS = "chatbots/RECEIVE_CHATBOTS";
+export const RECEIVE_CHATBOTS = "chatbots/RECEIVE_CHATBOTS";
 export const REMOVE_CHATBOT = "chatbots/REMOVE_CHATBOT";
 export const RECEIVE_CHATBOT = "chatbots/RECEIVE_CHATBOT";
 
@@ -10,9 +10,9 @@ export const RECEIVE_NEW_CHATBOT = "chatbots/RECEIVE_NEW_CHATBOT";
 const RECEIVE_CHATBOT_ERRORS = "chatbots/RECEIVE_CHATBOT_ERRORS";
 const CLEAR_CHATBOT_ERRORS = "chatbots/CLEAR_CHATBOT_ERRORS";
 
-const receiveChatBots = chatbots => ({
+const receiveChatBots = payload => ({
   type: RECEIVE_CHATBOTS,
-  chatbots
+  payload
 });
 const receiveChatBot = payload => {
   return {
@@ -90,7 +90,7 @@ export const fetchUserChatBots = id => async dispatch => {
 };
 
 export const createChatBot = (chatBot, image) => async dispatch => {
-  const { name, bio, location} = chatBot;
+  const { image, name, bio, location} = chatBot;
   const formData = new FormData();
   formData.append("name", name);
   formData.append("bio", bio);
@@ -162,12 +162,12 @@ export const chatBotErrorsReducer = (state = nullErrors, action) => {
   }
 };
 
-const chatBotsReducer = (state = { all: [], user: [], new: undefined }, action) => {
+const chatBotsReducer = (state = { all: [], user: [], chatted: [] }, action) => {
   switch(action.type) {
     case RECEIVE_CHATBOTS:
-      return { ...state, all: action.chatbots, new: undefined};
+      return { ...state, all: action.payload.chatbots, chatted: action.payload.chattedChatbotIds};
     case RECEIVE_USER_CHATBOTS:
-      return { ...state, user: action.chatbots, new: undefined};
+      return { ...state, user: action.chatbots};
     case RECEIVE_CHATBOT:
       return { ...state, new: action.payload.chatbot};
     case RECEIVE_NEW_CHATBOT:
@@ -177,6 +177,7 @@ const chatBotsReducer = (state = { all: [], user: [], new: undefined }, action) 
       let i;
       for (let index = 0; index < state.user.length; index++) {
         const element = state.user[index];
+        // if (element === undefined) continue;
         // console.log(element._id.toString() === action.chatbotId.toString(), element._id, action.chatbotId);
         if(element._id.toString() === action.chatbotId.toString()){
           i = index;
@@ -187,8 +188,13 @@ const chatBotsReducer = (state = { all: [], user: [], new: undefined }, action) 
   
       // const newUser = state.user.slice(0, i) + state.user.slice(i+ 1);
       const newUser = [...state.user]
-      delete newUser[i]
-      const newState = {...state, user: newUser, new: undefined }
+      delete newUser[i];
+      //avoiding shallow copies
+      const newerUser = [];
+      newUser.forEach((obj)=>{
+        if(obj) newerUser.push({...obj})
+      })
+      const newState = {...state, user: newerUser, new: undefined }
       delete newState.all[action.chatbotId]
       return newState;
     default:

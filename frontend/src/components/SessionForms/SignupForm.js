@@ -9,6 +9,8 @@ function SignupForm () {
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [image, setImage] = useState(null);
+  const [photoUrl, setPhotoUrl] = useState(null);
+
   const errors = useSelector(state => state.errors.session);
   const dispatch = useDispatch();
 
@@ -41,7 +43,20 @@ function SignupForm () {
     return e => setState(e.currentTarget.value);
   }
 
-  const updateFile = e => setImage(e.target.files[0]);
+  // const updateFile = e => setImage(e.target.files[0]);
+
+  const handleFile = ({ currentTarget }) => {
+    const file = currentTarget.files[0];
+    setImage(file);
+    if (file) {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => setPhotoUrl(fileReader.result);
+    }else {
+      setPhotoUrl(null);
+    }
+  }
+
 
   const usernameSubmit = e => {
     e.preventDefault();
@@ -99,7 +114,7 @@ function SignupForm () {
         </label>
         <label>
           Profile Image
-          <input type="file" accept=".jpg, .jpeg, .png" onChange={updateFile} />
+          <input type="file" accept=".jpg, .jpeg, .png" onChange={handleFile} />
         </label>
         <input
           type="submit"
@@ -107,6 +122,8 @@ function SignupForm () {
           disabled={!email || !username || !password || password !== password2}
         />
       </form>
+        {photoUrl? <img className='preview' src={photoUrl} alt='preview' /> : null}
+
     </div>
   );
 }

@@ -9,11 +9,19 @@ const { singleFileUpload, singleMulterUpload, retrievePrivateFile } = require(".
 
 
 //gets all chatBots for index page
-router.get('/', async (req, res) => {
+router.get('/', requireUser, async (req, res) => {
   try {
-    const bots = await ChatBot.find()
-                  .populate("author", "_id username")
-    return res.json(bots);
+    const chatbots = await ChatBot.find()
+                  .populate("author", "_id username");
+    chatbots.forEach(bot=>{
+      if(!bot.profileImageUrl.includes('aws') ){
+        bot.profileImageUrl = retrievePrivateFile(bot.profileImageUrl)
+      }
+    })
+    const chats = await Chat.find({author: req.user})
+    const chattedChatbotIds = chats.map(chat => chat.chatBot);
+
+    return res.json({chatbots, chattedChatbotIds});
   }
   catch(err) {
     return res.json([]);
@@ -26,6 +34,9 @@ router.get('/:id', requireUser, async (req, res, next) => {
   try {
     chatbot = await ChatBot.findById(req.params.id)
                     .populate("author", "_id username")
+    if(!chatbot.profileImageUrl.includes('aws') ){
+      chatbot.profileImageUrl = retrievePrivateFile(chatbot.profileImageUrl)
+    }
   } catch(err) {
     const error = new Error('Chatbot not found');
     error.statusCode = 404;
@@ -33,7 +44,6 @@ router.get('/:id', requireUser, async (req, res, next) => {
     return next(error);
   }
   try {
-    console.log(chatbot, req.user)
     let chat = await Chat.findOne({ chatBot: chatbot, author: req.user})
     if(!chat) chat = {};
     return res.json({chat, chatbot})
@@ -58,6 +68,11 @@ router.get('/user/:userId', requireUser, async (req, res, next) => {
     const chatBots = await ChatBot.find({ author: user })
                           .sort({ createdAt: -1 })
                           .populate("author", "_id username profileImageUrl")
+    chatBots.forEach(bot=>{
+      if(!bot.profileImageUrl.includes('aws') ){
+        bot.profileImageUrl = retrievePrivateFile(bot.profileImageUrl)
+      }
+    })
     return res.json(chatBots)
   } catch(err){
     return res.json([]);
@@ -69,7 +84,7 @@ router.get('/user/:userId', requireUser, async (req, res, next) => {
 router.post('/', singleMulterUpload("image"),  requireUser, async (req, res, next) => {
   const profileImageUrl = req.file ?
       await singleFileUpload({ file: req.file, public: false}) :
-      'https://pet-network-seeds.s3.us-west-1.amazonaws.com/leo_on_couch.JPG';
+      'https://pet-network-seeds.s3.us-west-1.amazonaws.com/default_profile.jpg';
   try{
     const newChatBot = new ChatBot({
       name: req.body.name,
@@ -79,7 +94,10 @@ router.post('/', singleMulterUpload("image"),  requireUser, async (req, res, nex
       author: req.user
     });
     let chatBot = await newChatBot.save();
-    chatBot = await chatBot.populate("author", "_id username profileImageUrl")
+    chatBot = await chatBot.populate("author", "_id username profileImageUrl");
+    if(!chatBot.profileImageUrl.includes('aws') ){
+      chatBot.profileImageUrl = retrievePrivateFile(chatBot.profileImageUrl)
+    }
     return res.json(chatBot);
 
   }catch(err) {
@@ -105,7 +123,10 @@ router.patch('/:id', singleMulterUpload("image"), requireUser, async (req, res, 
     chatbot.bio = req.body.bio || chatbot.bio;
     chatbot.location = req.body.location || chatbot.location;
     await chatbot.save();
-    chatbot = await chatbot.populate("author", "_id username profileImageUrl")
+    chatbot = await chatbot.populate("author", "_id username profileImageUrl");
+    if(!chatbot.profileImageUrl.includes('aws') ){
+      chatbot.profileImageUrl = retrievePrivateFile(chatbot.profileImageUrl)
+    }
     return res.json(chatbot);
 
   }catch(err) {
