@@ -22,8 +22,9 @@ function Profile () {
         <div className='profile-bots'>
           {userChatBots?.map((bot)=>{
             return (<ul className='profile-bot' key={bot._id}>
-              <Link to={`/chatBots/${bot._id}`}><li>{bot.name}</li></Link>
-              <Link to={`/chatBots/${bot._id}`}><img src={bot.profileImageUrl} alt={bot.name}/></Link>
+              <li>{bot.name}</li>
+              <img src={bot.profileImageUrl} alt={bot.name}/>
+              <Link to={`/chatbots/${bot._id}/edit`}>Edit</Link>
               <button onClick={()=>dispatch(deleteChatBot(bot._id))}>Delete Bot</button>
             </ul>)
           })}

@@ -5,9 +5,9 @@ import './MainPage.css'
 function MainPage() {
   return (
     <>
-      <h1 className='chat-link'><Link to='/chat'>Chat with single dogs here!</Link></h1>
+      <h1>Chat with anyone!</h1>
       <footer>
-        Copyright &copy; 2023 The Social Petwork
+        Copyright &copy; 2023 ChatAi
       </footer>
     </>
   );

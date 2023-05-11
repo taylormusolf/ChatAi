@@ -111,8 +111,8 @@ export const createChatBot = (chatBot, image) => async dispatch => {
   }
 };
 
-export const updateChatBot = (chatBotInfo, image) => async dispatch => {
-  const { name, bio, location} = chatBotInfo;
+export const updateChatBot = (chatBotInfo) => async dispatch => {
+  const { name, bio, location, image} = chatBotInfo;
   const formData = new FormData();
   formData.append("name", name);
   formData.append("bio", bio);
@@ -123,8 +123,8 @@ export const updateChatBot = (chatBotInfo, image) => async dispatch => {
       method: 'PATCH',
       body: formData
     });
-    const chatBot = await res.json();
-    dispatch(receiveChatBot(chatBot));
+    const chatbot = await res.json();
+    dispatch(receiveChatBot({chatbot}));
   } catch(err) {
     const resBody = await err.json();
     if (resBody.statusCode === 400) {

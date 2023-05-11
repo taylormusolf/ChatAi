@@ -90,7 +90,8 @@ router.patch('/:id', requireUser, async (req, res) => {
                   .populate("chatBot", "_id name")
   const chatBot = await ChatBot.findOne({_id: chat.chatBot._id})
   try{
-    let messages = [{role:'system', content:`You are ${chatBot.name} from ${chatBot.location} and should respond as them. ${chatBot.bio}`}, ...chat.messages, req.body.chatRequest]
+    let systemPrompt = `You are ${chatBot.name} from ${chatBot.location} and should respond as them as realistically as you can. Do not mention that you are an AI language model. ${chatBot.bio}`
+    let messages = [{role:'system', content: systemPrompt}, ...chat.messages, req.body.chatRequest]
     const data = await getAiResponse(messages);
     chat.messages = [...chat.messages, req.body.chatRequest, data]
     const updatedChat = await chat.save();

@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import './NavBar.css';
 import { logout } from '../../store/session';
-import dogImg from '../../assets/dog-24.svg';
+// import dogImg from '../../assets/dog-24.svg';
+import gpt from '../../assets/gpt.jpg';
 
 function NavBar () {
   const loggedIn = useSelector(state => !!state.session.user);
@@ -40,8 +41,8 @@ function NavBar () {
 
   return (
     <div className='navbar'>
-      <Link to='/'><img className='logo' src={dogImg} alt='logo' /></Link>
-      <Link to='/'><h1>MeetAi</h1></Link>
+      <Link to='/'><img className='logo' src={gpt} alt='logo' /></Link>
+      <Link to='/'><h1>ChatAi</h1></Link>
       { getLinks() }
     </div>
   );

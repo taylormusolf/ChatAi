@@ -17,6 +17,7 @@ import { getCurrentUser } from './store/session';
 import { Route } from 'react-router-dom/cjs/react-router-dom.min';
 import Chat from './components/Chat/Chat';
 import ChatBotNew from './components/ChatBot/ChatBotNew';
+import ChatBotEdit from './components/ChatBot/ChatBotEdit';
 import ChatBotIndex from './components/ChatBot/ChatBotIndex';
 import ChatBotShow from './components/ChatBot/ChatBotShow';
 
@@ -36,7 +37,9 @@ function App() {
         <AuthRoute exact path="/signup" component={SignupForm} />
 
         <ProtectedRoute exact path="/chatbots/new" component={ChatBotNew} />
+
         <ProtectedRoute exact path="/chatbots/" component={ChatBotIndex} />
+        <ProtectedRoute exact path="/chatbots/:chatbotId/edit" component={ChatBotEdit} />
         <ProtectedRoute exact path="/chatbots/:chatBotId" component={ChatBotShow} />
 
         {/* <ProtectedRoute exact path="/posts" component={Posts} /> */}

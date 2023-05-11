@@ -1,1 +1,1 @@
-# the-aibot-creator-mern
+# chat-ai-mern

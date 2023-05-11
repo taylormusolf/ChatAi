@@ -63,6 +63,8 @@ function ChatBotNew(){
     setLocation('');
     setBio('');
     setImage(null);
+    setPhotoUrl(null);
+
   }
   
 
@@ -81,7 +83,7 @@ function ChatBotNew(){
           </label>
           <div className="errors">{errors?.location}</div>
           <label>
-            <span>Location</span>
+            <span>From</span>
             <input type="location"
               value={location}
               onChange={update('location')}
@@ -90,7 +92,7 @@ function ChatBotNew(){
           </label>
           <div className="errors">{errors?.bio}</div>
           <label>
-            <span>Bio</span>
+            <span>Additional Prompt</span>
             <textarea type="bio"
               value={bio}
               onChange={update('bio')}
