@@ -2,10 +2,11 @@ import { useEffect, useState, useRef } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { fetchChatBot } from "../../store/chatbots";
 import { fetchChatResponse, receiveChatRequest, createChat, deleteChat } from '../../store/chat';
+import { fetchPrompts, clearPrompts } from "../../store/prompts";
 import {Link} from "react-router-dom";
 import './ChatBotShow.scss'
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import typing from "../../assets/typing-text.gif"
+import typingGif from "../../assets/typing-text.gif"
 
 
 function ChatBotShow(){
@@ -15,8 +16,11 @@ function ChatBotShow(){
   const bot = useSelector(state => state.entities.chatBots?.new ? state.entities.chatBots.new: {}  )
 
   const [request, setRequest] = useState('');
-  const [loading, setLoading] = useState(false);
-  const chat = useSelector(state => Object.keys(state.entities.chats).length === 0 ? {} : state.entities.chats.current)
+  const [loadingChat, setLoadingChat] = useState(false);
+  const [loadingPrompts, setLoadingPrompts] = useState(true);
+
+  const chat = useSelector(state => Object.keys(state.entities.chats).length === 0 ? {} : state.entities.chats.current);
+  const prompts = useSelector(state => state.ui.prompts.response?.content.split('\n'));
   const chatEndRef = useRef(null);
   
   const scrollToBottomChat = ()=>{
@@ -24,8 +28,14 @@ function ChatBotShow(){
   }
 
   useEffect(()=>{
+    dispatch(clearPrompts())
     dispatch(fetchChatBot(chatBotId))
   }, [dispatch, chatBotId])
+
+  useEffect(()=>{ 
+    dispatch(fetchPrompts(chatBotId)).then(()=>setLoadingPrompts(false));
+  }, [dispatch, chatBotId]);
+
 
   const clearHistory = chatId => e => {
     e.preventDefault();
@@ -33,12 +43,18 @@ function ChatBotShow(){
     dispatch(createChat({chatBotId}))
   }
 
-  // useEffect(()=>{
-  //   if(Object.values(chat).length === 0){
-  //     dispatch(createChat({chatBotId}))
-  //   }
-    
-  // }, [dispatch, chatBotId, chat])
+  const regeneratePrompts = e => {  
+    e.preventDefault();
+    setLoadingPrompts(true);
+    dispatch(fetchPrompts(chatBotId)).then(()=>setLoadingPrompts(false));
+  }
+
+  const handlePromptClick = (e) => {
+    e.preventDefault();
+    if(!loadingChat){
+      setRequest(e.target.innerText.slice(3))
+    }
+  }
 
   useEffect(()=>{
     scrollToBottomChat();
@@ -53,11 +69,8 @@ function ChatBotShow(){
     try {
       dispatch(receiveChatRequest(request))
       setRequest("");
-      setLoading(true);
-      // const newChatRequest = {...chat};
-      // newChatRequest.messages.push({role: 'user', content: request })
-      // const chatRequest = [...chat, {role: 'user', content: request }]
-      dispatch(fetchChatResponse(chat._id, {role: 'user', content: request })).then(()=>setLoading(false));
+      setLoadingChat(true);
+      dispatch(fetchChatResponse(chat._id, {role: 'user', content: request })).then(()=>setLoadingChat(false));
       
     } catch (err) {
       console.log(err)
@@ -84,8 +97,7 @@ function ChatBotShow(){
                     </div>
                   ) 
                 })}
-                 {/* <img className='typing' src={typing} alt='gif'/>   */}
-                {loading ? <img className='typing' src={typing} alt='gif'/> : null}
+                {loadingChat ? <img className='typing' src={typingGif} alt='gif'/> : null}
                 <div ref={chatEndRef} />
               </ul>
               
@@ -95,11 +107,18 @@ function ChatBotShow(){
             <form onSubmit={handleSubmit}>
               <h1>Talk to {bot?.name}:</h1>
               <input onChange={handleChange} value={request}/>
-              <input type='submit' value="Send"/>
+              <input type='submit' value="Send" disabled={loadingChat}/>
             </form>
-            <ul className="prompt-suggestions">
-
+            <h1>Prompt Suggestions:</h1>
+            <ul className="prompt-suggestions" onClick={handlePromptClick}>
+              {loadingPrompts ? <h1>Loading...</h1> : null}
+              {prompts?.map((prompt, i)=>{
+                return(
+                  <li key={i}>{prompt}</li>
+                )
+              })}
             </ul>
+            <button onClick={regeneratePrompts}>Regenerate Prompts</button>
             <button onClick={clearHistory(chat?._id)}>Clear Chat History</button>
             <Link to='/chatbots/'>Back to ChatBot Index</Link>
           </div>

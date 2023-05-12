@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {createChatBot} from '../../store/chatbots'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { fetchImages, clearImages } from '../../store/images';
 import './ChatBotNew.css'
 
 function ChatBotNew(){
@@ -9,6 +10,8 @@ function ChatBotNew(){
   const [bio, setBio] = useState('');
   const [location, setLocation] = useState('');
   const [image, setImage] = useState(null);
+  const aiProfileImages = useSelector(state => state.ui.images);
+  const [loadingImage, setLoadingImage] = useState(false);
   const [photoUrl, setPhotoUrl] = useState(null);
   const errors = useSelector(state => state.errors.session);
   const dispatch = useDispatch();
@@ -32,6 +35,12 @@ function ChatBotNew(){
     }
   
     return e => setState(e.currentTarget.value);
+  }
+
+  const generateImage = e => {
+    e.preventDefault();
+    setLoadingImage(true);
+    dispatch(fetchImages({chatbot:{name, bio, location}})).then(() => setLoadingImage(false));
   }
 
   // const updateFile = e => setImage(e.target.files[0]);
@@ -110,6 +119,9 @@ function ChatBotNew(){
           />
           </form>
           {photoUrl? <img className='preview' src={photoUrl} alt='preview' /> : null}
+          {loadingImage? <div className='loading'>Loading...</div> : null}
+          {aiProfileImages?.map((image, i) => <img key={i} src={image.url} alt='profile' />)}
+          <button onClick={generateImage} disabled={!name || !location || !bio} >Generate Profile Picture</button>
           <Link to='/chatbots'>Back to chatbot index</Link>
         </div>
     );
