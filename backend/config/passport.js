@@ -35,7 +35,7 @@ exports.loginUser = async function(user) {
   const token = await jwt.sign(
     userInfo, // payload
     secretOrKey, // sign with secret key
-    { expiresIn: 3600 } // tell the key to expire in one hour
+    { expiresIn: 10800 } // key expires in 3 hours
   );
   return {
     user: userInfo,
