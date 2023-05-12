@@ -20,6 +20,8 @@ const postsRouter = require('./routes/api/posts');
 const csrfRouter = require('./routes/api/csrf');
 const chatbotsRouter = require('./routes/api/chatbots');
 const chatsRouter = require('./routes/api/chats');
+const promptsRouter = require('./routes/api/prompts');
+const imagesRouter = require('./routes/api/images');
 
 
 const app = express();
@@ -56,6 +58,8 @@ app.use('/api/posts', postsRouter);
 app.use('/api/csrf', csrfRouter);
 app.use('/api/chatbots', chatbotsRouter);
 app.use('/api/chats', chatsRouter);
+app.use('/api/prompts', promptsRouter);
+app.use('/api/images', imagesRouter);
 
 
 // Serve static React build files statically in production

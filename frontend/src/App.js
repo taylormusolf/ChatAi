@@ -9,13 +9,13 @@ import NavBar from './components/NavBar/NavBar';
 import MainPage from './components/MainPage/MainPage';
 import LoginForm from './components/SessionForms/LoginForm';
 import SignupForm from './components/SessionForms/SignupForm';
-import Posts from './components/Posts/Posts';
+// import Posts from './components/Posts/Posts';
 import Profile from './components/Profile/Profile';
-import PostCompose from './components/Posts/PostCompose';
+// import PostCompose from './components/Posts/PostCompose';
 
 import { getCurrentUser } from './store/session';
 import { Route } from 'react-router-dom/cjs/react-router-dom.min';
-import Chat from './components/Chat/Chat';
+// import Chat from './components/Chat/Chat';
 import ChatBotNew from './components/ChatBot/ChatBotNew';
 import ChatBotEdit from './components/ChatBot/ChatBotEdit';
 import ChatBotIndex from './components/ChatBot/ChatBotIndex';
