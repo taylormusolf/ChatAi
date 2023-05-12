@@ -26,7 +26,7 @@ function NavBar () {
             null}
           </Link>  
           {/* <Link to={'/posts/new'}>Write a Post</Link> */}
-          <button onClick={logoutUser}>Logout</button>
+          <button onClick={logoutUser} id="logout-button">Logout</button>
         </div>
       );
     } else {
@@ -41,9 +41,13 @@ function NavBar () {
 
   return (
     <div className='navbar'>
-      <Link to='/'><img className='logo' src={gpt} alt='logo' /></Link>
-      <Link to='/'><h1>ChatAi</h1></Link>
-      { getLinks() }
+      <div className="nav-left">
+        <Link to='/'><img className='logo' src={gpt} alt='logo' /></Link>
+        <Link to='/'><h1>ChatAi</h1></Link>
+      </div>
+      <div className="nav-right">
+        { getLinks() }
+      </div>
     </div>
   );
 }

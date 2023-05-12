@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+ 
   /* width: 600px; */
 }
 
@@ -11,6 +12,6 @@
 
 
 .chatbots-index-details img{
-  height: 100px;
+  /* height: 100px; */
   /* width: 50px; */
 }

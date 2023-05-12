@@ -113,7 +113,7 @@ function SignupForm () {
           />
         </label>
         <label>
-          Profile Image
+          <span>Profile Image</span>
           <input type="file" accept=".jpg, .jpeg, .png" onChange={handleFile} />
         </label>
         <input

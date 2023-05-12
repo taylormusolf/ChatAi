@@ -1,0 +1,103 @@
+.session-form-container{
+    height: 90vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: 15vh;
+}
+
+.session-form{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    padding: 1rem;
+    height: 100%;
+
+}
+
+
+.session-form *{
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--black);
+}
+.session-form > h2{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    color: var(--black);
+    font-size: 1.5rem;
+    /* word-wrap: ; */
+
+}
+
+label{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    /* font-size: .5rem; */
+    
+}
+
+label > input[type=text]{
+    border: .5px solid rgba(186, 186, 186, 0.814);
+    /* padding: 5px; */
+}
+
+label > input{
+    padding: 5px;
+    padding-left: 2px;
+    border: .5px solid rgba(186, 186, 186, 0.814);
+    border-radius: 2px;
+}
+
+label span{
+    font-size: .75rem;
+    margin-bottom: .25rem;
+}
+
+.session-form > input[type=submit]{
+    background-color: var(--purple);
+    width: 90%;
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+    margin-top: .25rem;
+    border-radius: 2px;
+   
+}
+
+.session-form > input[type=submit]:hover{
+    box-shadow: 0px 0px 2px rgba(12,1,1,0.6);
+}
+.session-form > input[type=submit]:active{
+    box-shadow: inset 0px 0px 8px rgba(12,1,1,0.5);
+
+}
+
+
+#demo-button{
+    background-color: none;
+    text-align: center;
+    width: 90%;
+    color: var(--purple);
+    border: 1px solid var(--purple);
+    padding: 5px;
+    cursor: pointer;
+    margin-top: .25rem;
+    transition: all 1s;
+    border-radius: 2px;
+}
+
+#demo-button:hover{
+    background-color: var(--purple);
+    color: white;
+    box-shadow: 0px 0px 2px rgba(12,1,1,0.5);
+
+}
+
+#demo-button:active{
+    box-shadow: inset 0px 0px 8px rgba(12,1,1,0.6);
+}
+
