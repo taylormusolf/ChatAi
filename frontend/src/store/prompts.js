@@ -12,9 +12,12 @@ const removePrompts = () => ({
     type: REMOVE_PROMPTS
 });
 
-export const fetchPrompts = () => async dispatch => {
+export const fetchPrompts = (chatbotId) => async dispatch => {
     try {
-        const res = await jwtFetch('/api/prompts');
+        const res = await jwtFetch('/api/prompts', {
+            method: 'POST',
+            body: JSON.stringify({chatbotId})
+        });
         const prompts = await res.json();
         dispatch(receivePrompts(prompts));
     } catch (err) {
