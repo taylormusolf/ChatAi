@@ -26,11 +26,11 @@ function ChatBotIndex(){
           <ul className="chatbots-index-details" key={i}>
             <li>{bot.name}</li>
             <img src={bot.profileImageUrl} alt={bot.name}/>
-            {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`}>Resume Chat</Link> : <button onClick={clickHandler(bot._id)}> Start Chat</button>}
+            {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button">Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button"> Start Chat</button>}
           </ul>
         )
       })}
-      <Link to='/chatbots/new'>Create a new chatbot</Link>
+      <Link to='/chatbots/new' id="create-button"><div>+</div></Link>
     </div>
   )
 

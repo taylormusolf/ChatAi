@@ -86,8 +86,8 @@ function LoginForm () {
           value="Log In"
           disabled={!email || !password}
         />
+        <div onClick={handleDemo} id="demo-button">Demo User Login</div>
       </form>
-      <button onClick={handleDemo}>Demo User Login</button>
     </div>
   );
 }

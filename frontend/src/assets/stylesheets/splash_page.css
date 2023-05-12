@@ -1,0 +1,23 @@
+.navbar{
+    width: 100vw;
+    height: 15vh;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    background-color: white;
+    z-index: 5;
+}
+
+#logout-button{
+    border: none;
+    background-color: transparent;
+    color: var(--purple);
+    cursor: pointer;
+    transition: all;
+    transition: all 750ms;
+    transition-timing-function: ease-out;
+}
+
+#logout-button:hover{
+    transform: translateY(-2px);
+}

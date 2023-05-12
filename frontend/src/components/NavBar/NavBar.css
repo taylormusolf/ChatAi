@@ -1,14 +1,9 @@
-.navbar{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+:root{
+  --purple: #541ffb;
+  --black: rgb(49, 49, 49);
+  
 }
 
-.links{
-  /* display: flex; */
-  /* justify-content: space-around; */
- 
-}
 
 .links-auth, .links-nav{
   display: flex; 
@@ -30,6 +25,44 @@
 }
 
 .navbar h1 {
-  font-size: 2rem;
-  font-weight: bold;
+ font-family: Arial, Helvetica, sans-serif;
+ color: var(--purple);
+ font-size: 1.25rem;
+ font-weight: 900;
+}
+
+.nav-left{
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-right{
+  width: 50%;
+  display: flex;
+  justify-content:flex-end ;
+
+}
+
+.links-auth{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: .75rem;
+  color: var(--black);
+ 
+
+}
+
+.links-auth > a{
+  transition: all 750ms;
+  transition-timing-function: ease-out;
+}
+
+.links-auth > a:hover{
+  color: var(--purple);
+  transform: translateY(-2px);
+  
+}
+
+footer{
+  margin: none;
 }
