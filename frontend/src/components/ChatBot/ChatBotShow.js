@@ -17,7 +17,7 @@ function ChatBotShow(){
 
   const [request, setRequest] = useState('');
   const [loadingChat, setLoadingChat] = useState(false);
-  const [loadingPrompts, setLoadingPrompts] = useState(true);
+  const [loadingPrompts, setLoadingPrompts] = useState(false);
 
   const chat = useSelector(state => Object.keys(state.entities.chats).length === 0 ? {} : state.entities.chats.current);
   const prompts = useSelector(state => state.ui.prompts.response?.content.split('\n'));
@@ -32,9 +32,9 @@ function ChatBotShow(){
     dispatch(fetchChatBot(chatBotId))
   }, [dispatch, chatBotId])
 
-  useEffect(()=>{ 
-    dispatch(fetchPrompts(chatBotId)).then(()=>setLoadingPrompts(false));
-  }, [dispatch, chatBotId]);
+  // useEffect(()=>{ 
+  //   dispatch(fetchPrompts(chatBotId)).then(()=>setLoadingPrompts(false));
+  // }, [dispatch, chatBotId]);
 
 
   const clearHistory = chatId => e => {
@@ -43,16 +43,27 @@ function ChatBotShow(){
     dispatch(createChat({chatBotId}))
   }
 
-  const regeneratePrompts = e => {  
+  const generatePrompts = e => {  
     e.preventDefault();
     setLoadingPrompts(true);
+    dispatch(clearPrompts());
     dispatch(fetchPrompts(chatBotId)).then(()=>setLoadingPrompts(false));
   }
 
   const handlePromptClick = (e) => {
     e.preventDefault();
     if(!loadingChat){
-      setRequest(e.target.innerText.slice(3))
+      try {
+        const prompt = e.target.innerText;
+        // const prompt = typeof parseInt(text[0]) === 'number' ? e.target.innerText.slice(3) : e.target.innerText.slice(1);
+        dispatch(receiveChatRequest(prompt));
+        setLoadingChat(true);
+        dispatch(fetchChatResponse(chat._id, {role: 'user', content: prompt })).then(()=>setLoadingChat(false));
+        
+      } catch (err) {
+        console.log(err)
+      }
+
     }
   }
 
@@ -109,16 +120,17 @@ function ChatBotShow(){
               <input onChange={handleChange} value={request}/>
               <input type='submit' value="Send" disabled={loadingChat}/>
             </form>
-            <h1>Prompt Suggestions:</h1>
+            {/* <h1>Prompt Suggestions:</h1> */}
             <ul className="prompt-suggestions" onClick={handlePromptClick}>
               {loadingPrompts ? <h1>Loading...</h1> : null}
               {prompts?.map((prompt, i)=>{
+                const modified = typeof parseInt(prompt[0]) === 'number' ? prompt.slice(3) : prompt.slice(1);
                 return(
-                  <li key={i}>{prompt}</li>
+                  <li key={i}>{modified}</li>
                 )
               })}
             </ul>
-            <button onClick={regeneratePrompts}>Regenerate Prompts</button>
+            <button disabled={loadingPrompts} onClick={generatePrompts}>Generate Prompts</button>
             <button onClick={clearHistory(chat?._id)}>Clear Chat History</button>
             <Link to='/chatbots/'>Back to ChatBot Index</Link>
           </div>

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {createChatBot} from '../../store/chatbots'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import { fetchImages, clearImages } from '../../store/images';
+import { fetchImages, clearImages } from '../../store/images.js';
 import './ChatBotNew.css'
 
 function ChatBotNew(){
@@ -10,6 +10,7 @@ function ChatBotNew(){
   const [bio, setBio] = useState('');
   const [location, setLocation] = useState('');
   const [image, setImage] = useState(null);
+  const [prompt, setPrompt] = useState('');
   const aiProfileImages = useSelector(state => state.ui.images);
   const [loadingImage, setLoadingImage] = useState(false);
   const [photoUrl, setPhotoUrl] = useState(null);
@@ -30,6 +31,9 @@ function ChatBotNew(){
       case 'location':
         setState = setLocation;
         break;
+      case 'prompt':
+        setState = setPrompt;
+        break;
       default:
         throw Error('Unknown field in Form');
     }
@@ -40,7 +44,7 @@ function ChatBotNew(){
   const generateImage = e => {
     e.preventDefault();
     setLoadingImage(true);
-    dispatch(fetchImages({chatbot:{name, bio, location}})).then(() => setLoadingImage(false));
+    dispatch(fetchImages({name, bio, location}, prompt)).then(() => setLoadingImage(false));
   }
 
   // const updateFile = e => setImage(e.target.files[0]);
@@ -121,7 +125,10 @@ function ChatBotNew(){
           {photoUrl? <img className='preview' src={photoUrl} alt='preview' /> : null}
           {loadingImage? <div className='loading'>Loading...</div> : null}
           {aiProfileImages?.map((image, i) => <img key={i} src={image.url} alt='profile' />)}
-          <button onClick={generateImage} disabled={!name || !location || !bio} >Generate Profile Picture</button>
+          <input type='text' value={prompt}
+              onChange={update('prompt')}
+              placeholder="Image Prompt"/>
+          <button onClick={generateImage} disabled={!prompt || loadingImage} >Generate Profile Picture</button>
           <Link to='/chatbots'>Back to chatbot index</Link>
         </div>
     );

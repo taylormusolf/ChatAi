@@ -13,11 +13,11 @@ const removeImages = () => ({
     type: REMOVE_IMAGES
 });
 
-export const fetchImages = (chatbot) => async dispatch => {
+export const fetchImages = (chatbot, prompt) => async dispatch => {
     try {
         const res = await jwtFetch('/api/images', {
             method: 'POST',
-            body: JSON.stringify({chatbot})
+            body: JSON.stringify({chatbot, prompt})
         });
         const images = await res.json();
         dispatch(receiveImages(images));

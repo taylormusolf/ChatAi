@@ -1,9 +1,8 @@
 .chatbot-show-container{
   display: flex;
   justify-content: center;
-  margin-top: 15px;
   position: relative;
-  top: 15vh;
+  top: 17vh;
 }
 
 .chatbot-show-profile{
@@ -22,9 +21,11 @@
   }
 }
 .chatbot-show-box{
-  width: 400px;
+  // width: 400px;
+  width: 30vw;
   overflow-y: scroll;
   font-size: 25px;
+  height: 75vh;
   ul{
     line-height: 150%;
     // height: 100px;
@@ -54,11 +55,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 25vw;
+  height: 75vh;
   button{
     width: 50%;
   }
   .prompt-suggestions{
-    height: 75%;
+    height: 40vh;
+    // li{
+    //   margin: 10px;
+    // }
+    li:hover{
+      cursor: pointer;
+      // margin-right: 10px;
+    }
   }
   *{
     margin-top: 5px;
