@@ -98,28 +98,31 @@ export const chatErrorsReducer = (state = nullErrors, action) => {
   }
 };
 
-const chatsReducer = (state = { all: {}, current: {}, new:{}}, action) => {
+const chatsReducer = (state = { all: {}, current: {}, new:undefined}, action) => {
   const newCurrent = {...state.current};
   switch(action.type) {
     // case RECEIVE_CHATS:
     //   return { ...state, all: action.chats, new: undefined};
     case RECEIVE_CHATBOTS:
-      return {...state, current: {}};
+      return {...state, current: {}, new: undefined};
     case RECEIVE_CHATBOT:
-      return {...state, current: action.payload.chat};
+      return {...state, current: action.payload.chat, new: undefined};
     // case RECEIVE_NEW_CHATBOT:
     //   return {...state, current: action.payload.chat};
     case REMOVE_CHATBOT:
-      return {...state, current:{}};
+      return {...state, current:{}, new: undefined};
     case REMOVE_CHAT:
-      return {...state, current:{messages:[]}};
+      return {...state, current:{messages:[]}, new: undefined};
     case RECEIVE_CHAT_REQUEST:
+      if(state.new) newCurrent.messages.push(state.new);
       // return [...state, {role: 'user', content: action.chatRequest}]
       newCurrent.messages.push({role: 'user', content: action.chatRequest})
-      return {...state, current: newCurrent }
+      return {...state, current: newCurrent, new: undefined }
     case RECEIVE_CHAT_RESPONSE:
+      // debugger
+      const newRes = action.chat.messages.pop();
       // newCurrent.messages.push({role:'assistant', content: action.chatResponse})
-      return {...state, current: action.chat }
+      return {...state, current: action.chat, new: newRes }
     case RECEIVE_CHAT:
       return {...state, current: action.chat }
     default:

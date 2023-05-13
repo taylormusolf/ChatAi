@@ -22,6 +22,7 @@ function ChatBotShow(){
   const [loadingPrompts, setLoadingPrompts] = useState(false);
 
   const chat = useSelector(state => Object.keys(state.entities.chats).length === 0 ? {} : state.entities.chats.current);
+  const newResponse = useSelector(state => state.entities.chats?.new);
   const prompts = useSelector(state => state.ui.prompts.response?.content.split('\n'));
   const chatEndRef = useRef(null);
   
@@ -66,18 +67,27 @@ function ChatBotShow(){
 
     }
   }
+
+  useEffect(()=>{
+    if(newResponse){
+      delayTypeResponse();
+    }
+  }, [newResponse]);
+
+
   const delayTypeResponse = async() => {
-    let lastChat = chat.messages[chat?.messages.length - 1]?.content.split('');
-    for (let i = 0; i < lastChat?.length; i++) {
+    // let lastChat = chat.messages[chat?.messages.length - 1]?.content.split('');
+    let newChat = newResponse?.content.split('');
+    for (let i = 0; i < newChat?.length; i++) {
       await delay(100)
-      setResponse(lastChat.slice(0,i+1).join(''))
+      setResponse(newChat.slice(0,i+1).join(''))
     }
    
   }
 
   useEffect(()=>{
     scrollToBottomChat();
-  }, [chat])
+  }, [chat, response])
 
   const handleChange = (e) => {
     setRequest(e.target.value);
@@ -88,6 +98,7 @@ function ChatBotShow(){
     try {
       dispatch(receiveChatRequest(request))
       setRequest("");
+      setResponse("");
       setLoadingChat(true);
       dispatch(fetchChatResponse(chat._id, {role: 'user', content: request })).then(()=>setLoadingChat(false));
       
@@ -96,7 +107,7 @@ function ChatBotShow(){
     }
 
   }
-  console.log(chat)
+  // console.log(chat)
 
   return(
     <div className="chatbot-show-container">
@@ -117,7 +128,10 @@ function ChatBotShow(){
                     </div>
                   ) 
                 })}
-                <div>{response}</div>
+                <div>
+                  {response && <h1>{bot?.name}</h1>}
+                  <h2>{response}</h2>
+                </div>
                 {loadingChat ? <img className='typing' src={typingGif} alt='gif'/> : null}
                 <div ref={chatEndRef} />
               </ul>

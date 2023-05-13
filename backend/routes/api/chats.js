@@ -95,9 +95,9 @@ router.patch('/:id', requireUser, async (req, res) => {
     const data = await getAiResponse(messages);
     chat.messages = [...chat.messages, req.body.chatRequest, data]
     const updatedChat = await chat.save();
-
     return res.json(updatedChat);
   }catch(err) {
+    console.log(err)
     return res.json('Could not return that request');
   }
 });
