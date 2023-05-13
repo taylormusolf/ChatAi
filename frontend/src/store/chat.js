@@ -98,7 +98,7 @@ export const chatErrorsReducer = (state = nullErrors, action) => {
   }
 };
 
-const chatsReducer = (state = { all: {}, current: {}, user:{}}, action) => {
+const chatsReducer = (state = { all: {}, current: {}, new:{}}, action) => {
   const newCurrent = {...state.current};
   switch(action.type) {
     // case RECEIVE_CHATS:

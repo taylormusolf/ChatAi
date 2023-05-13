@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './SessionForm.css';
+import {delay} from '../Util';
 
 import { login, clearSessionErrors } from '../../store/session';
 
@@ -27,11 +28,11 @@ function LoginForm () {
   }
   const handleDemo = async(e) => {
     e.preventDefault();
-    const delay = (duration) => {
-      return new Promise((resolve) => {
-        setTimeout(resolve, duration);
-      });
-    } 
+    // const delay = (duration) => {
+    //   return new Promise((resolve) => {
+    //     setTimeout(resolve, duration);
+    //   });
+    // } 
     let emailArr = 'demo@user.com'.split('');
     let passwordArr = '123456'.split('');
 

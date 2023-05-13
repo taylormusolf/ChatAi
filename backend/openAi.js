@@ -18,6 +18,7 @@ const getAiPrompts = async (chatbot) =>{
     apiKey: process.env.CHAT_API_KEY
   }));
   const prompt = `The subject's name is ${name} from ${location}. ${bio}`;
+  const message = {role:'user', content: prompt};
   const newMessages = [{role:'system', content:'Provide a non-numbered and list of 3 prompts to ask subject provided. Do not use numbering.'}, message];
   const res = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
