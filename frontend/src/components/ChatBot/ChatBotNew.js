@@ -100,7 +100,7 @@ function ChatBotNew(){
             <input type="location"
               value={location}
               onChange={update('location')}
-              placeholder="location"
+              placeholder="Town, Universe, etc. to give context to your chatbot."
             />
           </label>
           <div className="errors">{errors?.bio}</div>
@@ -109,7 +109,7 @@ function ChatBotNew(){
             <textarea type="bio"
               value={bio}
               onChange={update('bio')}
-              placeholder="Bio"
+              placeholder="Details about your chatbot so it acts the way you want."
             />
           </label>
           <label>
