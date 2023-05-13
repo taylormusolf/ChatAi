@@ -7,8 +7,8 @@ const {getAiPictures} = require('../../openAi');
 
 router.post('/', async (req, res) => {
   try{
-    const {chatbot} = req.body;
-    const response = await getAiPictures(chatbot);
+    const {chatbot, prompt} = req.body;
+    const response = await getAiPictures(chatbot, prompt);
     return res.json({response});
   }catch(err){
     console.log(err);
