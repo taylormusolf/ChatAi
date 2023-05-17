@@ -8,13 +8,15 @@ import './ChatBotShow.scss'
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import typingGif from "../../assets/typing-text.gif";
 import { delay } from "../Util";
+import { openModal } from "../../store/modal";
 
 
 function ChatBotShow(){
   
   const dispatch = useDispatch();
   const {chatBotId} = useParams();
-  const bot = useSelector(state => state.entities.chatBots?.new ? state.entities.chatBots.new: {}  )
+  const bot = useSelector(state => state.entities.chatBots?.new ? state.entities.chatBots.new: null  )
+  const sessionUser = useSelector(state => state.session?.user);
 
   const [request, setRequest] = useState('');
   const [response, setResponse] = useState('');
@@ -79,7 +81,7 @@ function ChatBotShow(){
     // let lastChat = chat.messages[chat?.messages.length - 1]?.content.split('');
     let newChat = newResponse?.content.split('');
     for (let i = 0; i < newChat?.length; i++) {
-      await delay(100)
+      await delay(30)
       setResponse(newChat.slice(0,i+1).join(''))
     }
    
@@ -107,20 +109,21 @@ function ChatBotShow(){
     }
 
   }
-  // console.log(chat)
+
 
   return(
     <div className="chatbot-show-container">
         
           <ul className="chatbot-show-details">
             <div className="chatbot-show-profile">
-              <img className='chatbot-show-img' src={bot?.profileImageUrl} alt={bot?.name}/>
+              <img className='chatbot-show-img' src={bot?.profileImageUrl} alt={bot?.name} />
               <li>{bot?.name}</li>
               
             </div>
             <div className='chatbot-show-box'>
               <ul>
                 {chat?.messages?.map((mess, i)=>{
+                   
                   return(
                     <div key={i}>
                       <h1 >{mess.role === 'assistant' ? bot?.name : 'You'}</h1>
@@ -130,12 +133,11 @@ function ChatBotShow(){
                 })}
                 <div>
                   {response && <h1>{bot?.name}</h1>}
-                  <h2>{response}</h2>
+                  { response && <h2>{response}</h2> }
                 </div>
                 {loadingChat ? <img className='typing' src={typingGif} alt='gif'/> : null}
                 <div ref={chatEndRef} />
               </ul>
-              
             </div>
           </ul>
           <div className="show-chat-right-panel">
@@ -156,6 +158,9 @@ function ChatBotShow(){
             </ul>
             <button disabled={loadingPrompts} onClick={generatePrompts}>Generate Prompts</button>
             <button onClick={clearHistory(chat?._id)}>Clear Chat History</button>
+            { bot?.author?._id.toString() === sessionUser?._id.toString() ? <button onClick={()=> dispatch(openModal('edit'))}>Edit Bot</button> : null}
+            <button onClick={()=> dispatch(openModal('delete'))}>Delete Bot</button>
+            <button>Clone Bot</button>
             <Link to='/chatbots/'>Back to ChatBot Index</Link>
           </div>
              

@@ -4,6 +4,7 @@ import {createChatBot} from '../../store/chatbots'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { fetchImages, clearImages } from '../../store/images.js';
 import './ChatBotNew.css'
+import { closeModal } from '../../store/modal';
 
 function ChatBotNew(){
   const [name, setName] = useState('');
@@ -62,7 +63,7 @@ function ChatBotNew(){
   }
 
 
-  const usernameSubmit = e => {
+  const chatBotSubmit = e => {
     e.preventDefault();
     const bot = {
       name,
@@ -77,13 +78,14 @@ function ChatBotNew(){
     setBio('');
     setImage(null);
     setPhotoUrl(null);
-
+    dispatch(clearImages());
+    dispatch(closeModal());
   }
   
 
   return (
       <div className="chatbot-form-container">
-        <form className="chatbot-form" onSubmit={usernameSubmit}>
+        <form className="chatbot-form" onSubmit={chatBotSubmit}>
           <h2>ChatBot Create Form</h2>
           <div className="errors">{errors?.name}</div>
           <label>
@@ -128,7 +130,8 @@ function ChatBotNew(){
           <input type='text' value={prompt}
               onChange={update('prompt')}
               placeholder="Image Prompt"/>
-          <button onClick={generateImage} disabled={!prompt || loadingImage} >Generate Profile Picture</button>
+          {/* <button onClick={generateImage} disabled={!prompt || loadingImage} >Generate Profile Picture</button> */}
+          <button onClick={generateImage} disabled={true} >Generate Profile Picture</button>
           <Link to='/chatbots'>Back to chatbot index</Link>
         </div>
     );

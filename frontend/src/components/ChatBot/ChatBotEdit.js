@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {createChatBot, fetchChatBot, updateChatBot} from '../../store/chatbots'
+import {createChatBot, fetchChatBot, updateChatBot} from '../../store/chatbots';
+import { closeModal } from '../../store/modal';
 import { Link, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import './ChatBotNew.css'
 
 function ChatBotEdit(){
-  const {chatbotId} = useParams();
+  // const {chatbotId} = useParams();
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
   const [location, setLocation] = useState('');
@@ -16,9 +17,9 @@ function ChatBotEdit(){
   const chatbot = useSelector(state => state.entities.chatBots?.new ? state.entities.chatBots.new : null  )
 
 
-  useEffect(()=>{
-    dispatch(fetchChatBot(chatbotId))
-  }, [chatbotId, dispatch])
+  // useEffect(()=>{
+  //   dispatch(fetchChatBot(chatbotId))
+  // }, [chatbotId, dispatch])
 
   useEffect(()=>{
     if(chatbot){
@@ -65,7 +66,7 @@ function ChatBotEdit(){
   }
 
 
-  const usernameSubmit = e => {
+  const chatBotSubmit = e => {
     e.preventDefault();
     const bot = {
       _id: chatbot._id,
@@ -76,13 +77,14 @@ function ChatBotEdit(){
     };
   
     dispatch(updateChatBot(bot)); 
+    dispatch(closeModal());
   }
   
 
   return (
       <div className="chatbot-form-container">
-        <form className="chatbot-form" onSubmit={usernameSubmit}>
-          <h2>ChatBot Create Form</h2>
+        <form className="chatbot-form" onSubmit={chatBotSubmit}>
+          <h2>Chatbot Edit Form</h2>
           <div className="errors">{errors?.name}</div>
           <label>
             <span>Name</span>

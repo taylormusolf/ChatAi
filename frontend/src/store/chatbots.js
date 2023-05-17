@@ -162,10 +162,10 @@ export const chatBotErrorsReducer = (state = nullErrors, action) => {
   }
 };
 
-const chatBotsReducer = (state = { all: [], user: [], chatted: [] }, action) => {
+const chatBotsReducer = (state = { all: [], user: [], chatted: [], new: undefined }, action) => {
   switch(action.type) {
     case RECEIVE_CHATBOTS:
-      return { ...state, all: action.payload.chatbots, chatted: action.payload.chattedChatbotIds};
+      return { ...state, all: action.payload.chatbots, chatted: action.payload.chattedChatbotIds, new: undefined};
     case RECEIVE_USER_CHATBOTS:
       return { ...state, user: action.chatbots};
     case RECEIVE_CHATBOT:

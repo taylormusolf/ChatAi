@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import chat from './chat';
 import prompts from './prompts';
 import images from './images';
+import modal from './modal';
 
 export default combineReducers({
-  // chat
   prompts,
-  images
+  images,
+  modal
 });

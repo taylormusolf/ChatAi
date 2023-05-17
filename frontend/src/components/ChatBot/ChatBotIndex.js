@@ -4,6 +4,7 @@ import { fetchChatBots } from "../../store/chatbots";
 import {Link , useHistory} from "react-router-dom";
 import './ChatBotIndex.css'
 import { createChat } from "../../store/chat";
+import { openModal } from "../../store/modal";
 
 function ChatBotIndex(){
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ function ChatBotIndex(){
           </ul>
         )
       })}
-      <Link to='/chatbots/new' id="create-button"><div>+</div></Link>
+      <div id="create-button" onClick={()=>dispatch(openModal('new'))}><div>+</div></div>
     </div>
   )
 

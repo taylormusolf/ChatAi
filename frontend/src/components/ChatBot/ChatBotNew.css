@@ -6,8 +6,8 @@
 }
 
 .chatbot-form-container{
-  position: relative;
-  top: 17vh;
+  /* position: relative; */
+  /* top: 17vh; */
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,6 +1,10 @@
 
 .profile-bots-container{
+  position: relative;
+  top: 15vh;
   display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .profile-bots{
@@ -15,6 +19,23 @@
   flex-direction: column;
 }
 
-.profile-bots img{
-  height: 300px;
+
+.profile-bot-img{
+  height: 125px;
+  width: 100px;
+  border-radius: 10%;
+  object-fit: cover;
 }
+
+.profile-bot-buttons{
+  display: flex;
+  
+}
+
+.profile-bot-buttons button{
+  cursor: pointer;
+}
+.profile-bot-edit{
+  width: 54.55px;
+}
+
