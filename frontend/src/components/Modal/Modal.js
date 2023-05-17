@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import ChatBotEdit from "../ChatBot/ChatBotEdit";
 import ChatBotNew from "../ChatBot/ChatBotNew";
 import ChatBotDelete from "../ChatBot/ChatBotDelete";
+import ClearChatHistoryPrompt from "../ChatBot/ClearChatHistoryPrompt";
+import ChatBotClone from "../ChatBot/ChatBotClone";
 import './Modal.css'
 
 
@@ -24,6 +26,12 @@ const Modal = () => {
       break;
     case "delete":
       component = <ChatBotDelete/>;
+      break;
+    case "clear history":
+      component = <ClearChatHistoryPrompt/>;
+      break;
+    case "clone":
+      component = <ChatBotClone/>;
       break;
     default:
       return null;

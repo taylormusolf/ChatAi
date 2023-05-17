@@ -103,6 +103,7 @@ export const createChatBot = (chatBot, image) => async dispatch => {
     });
     const chatBot = await res.json();
     dispatch(receiveNewChatBot(chatBot));
+    return chatBot;
   } catch(err) {
     const resBody = await err.json();
     if (resBody.statusCode === 400) {

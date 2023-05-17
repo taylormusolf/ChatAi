@@ -43,6 +43,7 @@ export const createChat = (chat) => async dispatch => {
     });
     const data = await res.json();
     dispatch(receiveChat(data));
+    return data;
   } catch(err) {
     const resBody = await err.json();
     if (resBody.statusCode === 400) {

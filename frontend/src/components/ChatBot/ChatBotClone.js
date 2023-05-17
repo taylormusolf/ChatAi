@@ -1,25 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {createChatBot, fetchChatBot, updateChatBot} from '../../store/chatbots';
+import {createChatBot} from '../../store/chatbots';
+import {createChat} from '../../store/chat';
 import { closeModal } from '../../store/modal';
-import { Link, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import './ChatBotNew.css'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-function ChatBotEdit(){
-  // const {chatbotId} = useParams();
+function ChatBotClone(){
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
   const [location, setLocation] = useState('');
   const [image, setImage] = useState(null);
   const [photoUrl, setPhotoUrl] = useState(null);
   const errors = useSelector(state => state.errors.session);
+  const history = useHistory();
   const dispatch = useDispatch();
   const chatbot = useSelector(state => state.entities.chatBots?.new ? state.entities.chatBots.new : null  )
-
-
-  // useEffect(()=>{
-  //   dispatch(fetchChatBot(chatbotId))
-  // }, [chatbotId, dispatch])
 
   useEffect(()=>{
     if(chatbot){
@@ -65,18 +61,31 @@ function ChatBotEdit(){
     }
   }
 
+  const chatBotSubmitCleanup = (chatbot) => {
+    dispatch(createChat({chatBotId: chatbot?._id})).then(history.push(`/chatbots/${chatbot._id}`));
+  }
+
 
   const chatBotSubmit = e => {
     e.preventDefault();
+    let newImage;
+    // console.log(image, 'image');
+    // console.log(chatbot.profileImageUrl, 'chatbot.profileImageUrl' )
+    if(image !== null){
+      newImage = image;
+    }else{
+      newImage = chatbot.profileImageUrl
+    }
+    console.log(newImage, 'newImage');
     const bot = {
       _id: chatbot._id,
       name,
       location,
-      image,
+      image: newImage,
       bio
     };
-  
-    dispatch(updateChatBot(bot)); 
+
+    dispatch(createChatBot(bot)).then((chatbot)=> chatBotSubmitCleanup(chatbot));
     dispatch(closeModal());
   }
   
@@ -84,7 +93,7 @@ function ChatBotEdit(){
   return (
       <div className="chatbot-form-container">
         <form className="chatbot-form" onSubmit={chatBotSubmit}>
-          <h2>Chatbot Edit Form</h2>
+          <h2>Chatbot Clone Form</h2>
           <div className="errors">{errors?.name}</div>
           <label>
             <span>Name</span>
@@ -118,7 +127,7 @@ function ChatBotEdit(){
           </label>
           <input
             type="submit"
-            value="Save"
+            value="Create"
             disabled={!name || !location || !bio}
           />
           </form>
@@ -128,4 +137,4 @@ function ChatBotEdit(){
     );
 }
 
-export default ChatBotEdit;
+export default ChatBotClone;

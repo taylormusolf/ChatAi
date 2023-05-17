@@ -157,10 +157,10 @@ function ChatBotShow(){
               })}
             </ul>
             <button disabled={loadingPrompts} onClick={generatePrompts}>Generate Prompts</button>
-            <button onClick={clearHistory(chat?._id)}>Clear Chat History</button>
+            <button onClick={()=> dispatch(openModal('clear history'))}>Clear Chat History</button>
             { bot?.author?._id.toString() === sessionUser?._id.toString() ? <button onClick={()=> dispatch(openModal('edit'))}>Edit Bot</button> : null}
-            <button onClick={()=> dispatch(openModal('delete'))}>Delete Bot</button>
-            <button>Clone Bot</button>
+            { bot?.author?._id.toString() === sessionUser?._id.toString() ? <button onClick={()=> dispatch(openModal('delete'))}>Delete Bot</button> : null}
+            <button onClick={()=> dispatch(openModal('clone'))}>Clone Bot</button>
             <Link to='/chatbots/'>Back to ChatBot Index</Link>
           </div>
              

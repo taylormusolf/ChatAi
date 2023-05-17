@@ -132,7 +132,7 @@ function ChatBotNew(){
               placeholder="Image Prompt"/>
           {/* <button onClick={generateImage} disabled={!prompt || loadingImage} >Generate Profile Picture</button> */}
           <button onClick={generateImage} disabled={true} >Generate Profile Picture</button>
-          <Link to='/chatbots'>Back to chatbot index</Link>
+          {/* <Link to='/chatbots'>Back to chatbot index</Link> */}
         </div>
     );
 }
