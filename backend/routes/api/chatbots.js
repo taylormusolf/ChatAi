@@ -83,7 +83,7 @@ router.get('/user/:userId', requireUser, async (req, res, next) => {
 //create new chatbot
 router.post('/', singleMulterUpload("image"),  requireUser, async (req, res, next) => {
   const profileImageUrl = req.file ?
-      await singleFileUpload({ file: req.file, public: false}) :
+      await singleFileUpload({ file: req.file, public: false}) : req.body.image ? req.body.image : 
       'https://pet-network-seeds.s3.us-west-1.amazonaws.com/default_profile.jpg';
   try{
     const newChatBot = new ChatBot({
