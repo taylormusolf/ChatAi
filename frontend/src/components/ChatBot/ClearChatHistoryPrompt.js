@@ -6,10 +6,15 @@ function ClearChatHistoryPrompt(){
   const dispatch = useDispatch();
   const chatbot = useSelector(state => state.entities.chatBots?.new ? state.entities.chatBots.new : null  )
   const chat = useSelector(state => Object.keys(state.entities.chats).length === 0 ? null : state.entities.chats.current);
+  const modal = useSelector(state => state.ui.modal);
+  if (!modal) {
+    return null;
+  }
 
   const handleClear = e => {
+    const setResponse = modal.fnc;
     e.preventDefault();
-    // console.log('clearing chat history', chat?._id, chatbot?._id)
+    setResponse('');
     dispatch(deleteChat(chat?._id))
     dispatch(createChat({chatBot: chatbot?._id}))
     dispatch(closeModal())

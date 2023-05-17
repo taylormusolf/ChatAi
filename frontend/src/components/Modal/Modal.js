@@ -16,8 +16,9 @@ const Modal = () => {
   if (!modal) {
     return null;
   }
+  const {name} = modal;
   let component;
-  switch (modal) {
+  switch (name) {
     case "edit":
       component = <ChatBotEdit/>;
       break;

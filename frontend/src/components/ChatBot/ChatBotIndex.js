@@ -31,7 +31,7 @@ function ChatBotIndex(){
           </ul>
         )
       })}
-      <div id="create-button" onClick={()=>dispatch(openModal('new'))}><div>+</div></div>
+      <div id="create-button" onClick={()=>dispatch(openModal({name:'new'}))}><div>+</div></div>
     </div>
   )
 
