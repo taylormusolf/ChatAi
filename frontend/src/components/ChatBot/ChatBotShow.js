@@ -42,11 +42,11 @@ function ChatBotShow(){
   // }, [dispatch, chatBotId]);
 
 
-  const clearHistory = chatId => e => {
-    e.preventDefault();
-    dispatch(deleteChat(chatId))
-    dispatch(createChat({chatBotId}))
-  }
+  // const clearHistory = chatId => e => {
+  //   e.preventDefault();
+  //   dispatch(deleteChat(chatId))
+  //   dispatch(createChat({chatBotId}))
+  // }
 
   const generatePrompts = e => {  
     e.preventDefault();

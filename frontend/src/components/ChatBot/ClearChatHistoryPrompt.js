@@ -16,7 +16,7 @@ function ClearChatHistoryPrompt(){
     e.preventDefault();
     setResponse('');
     dispatch(deleteChat(chat?._id))
-    dispatch(createChat({chatBot: chatbot?._id}))
+    // dispatch(createChat({chatBotId: chatbot?._id}))
     dispatch(closeModal())
   }
 

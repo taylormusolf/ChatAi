@@ -55,10 +55,11 @@ export const createChat = (chat) => async dispatch => {
 //clear chat history with a chatBot
 export const deleteChat = (chatId) => async dispatch =>{
   try {
-      await jwtFetch(`/api/chats/${chatId}`, {
+      const res = await jwtFetch(`/api/chats/${chatId}`, {
       method: 'DELETE'
     });
-    dispatch(removeChat(chatId));
+    const data = await res.json();
+    dispatch(receiveChat(data));
   } catch(err) {
     const resBody = await err.json();
     if (resBody.statusCode === 400) {
@@ -125,7 +126,7 @@ const chatsReducer = (state = { all: {}, current: {}, new:undefined}, action) =>
       // newCurrent.messages.push({role:'assistant', content: action.chatResponse})
       return {...state, current: action.chat, new: newRes }
     case RECEIVE_CHAT:
-      return {...state, current: action.chat }
+      return {...state, current: action.chat, new: undefined};
     default:
       return state;
   }

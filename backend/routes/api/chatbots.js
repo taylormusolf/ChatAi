@@ -127,7 +127,10 @@ router.patch('/:id', singleMulterUpload("image"), requireUser, async (req, res, 
     if(!chatbot.profileImageUrl.includes('aws') ){
       chatbot.profileImageUrl = retrievePrivateFile(chatbot.profileImageUrl)
     }
-    return res.json(chatbot);
+  
+    let chat = await Chat.findOne({ chatBot: chatbot, author: req.user})
+    if(!chat) chat = {};
+    return res.json({chat, chatbot})
 
   }catch(err) {
     next(err);

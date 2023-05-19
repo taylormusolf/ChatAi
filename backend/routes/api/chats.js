@@ -114,8 +114,11 @@ router.delete('/:id', requireUser, async (req, res) => {
   }
 
   try{
-    await Chat.deleteOne({_id: req.params.id})
-    return res.json('Successfully Deleted')
+    // await Chat.deleteOne({_id: req.params.id})
+    // return res.json('Successfully Deleted')
+    chat.messages = [];
+    const updatedChat = await chat.save();
+    return res.json(updatedChat);
   }catch(err) {
     next(err);
   }

@@ -124,8 +124,8 @@ export const updateChatBot = (chatBotInfo) => async dispatch => {
       method: 'PATCH',
       body: formData
     });
-    const chatbot = await res.json();
-    dispatch(receiveChatBot({chatbot}));
+    const data = await res.json();
+    dispatch(receiveChatBot(data));
   } catch(err) {
     const resBody = await err.json();
     if (resBody.statusCode === 400) {
