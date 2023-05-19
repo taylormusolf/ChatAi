@@ -19,7 +19,7 @@ const getAiPrompts = async (chatbot) =>{
   }));
   const prompt = `The subject's name is ${name} from ${location}. ${bio}`;
   const message = {role:'user', content: prompt};
-  const newMessages = [{role:'system', content:'Provide a non-numbered and list of 3 prompts to ask subject provided. Do not use numbering.'}, message];
+  const newMessages = [{role:'system', content:'Provide a non-numbered and list of 3 prompts to ask subject provided. Do not use numbering. The prompts should be formatted as if you are addressing the subject directly.'}, message];
   const res = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: newMessages,

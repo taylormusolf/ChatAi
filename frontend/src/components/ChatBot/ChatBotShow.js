@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { fetchChatBot } from "../../store/chatbots";
-import { fetchChatResponse, receiveChatRequest, createChat, deleteChat } from '../../store/chat';
+import { fetchChatResponse, receiveChatRequest} from '../../store/chat';
 import { fetchPrompts, clearPrompts } from "../../store/prompts";
 import {Link} from "react-router-dom";
 import './ChatBotShow.scss'
@@ -37,17 +37,6 @@ function ChatBotShow(){
     dispatch(fetchChatBot(chatBotId))
   }, [dispatch, chatBotId])
 
-  // useEffect(()=>{ 
-  //   dispatch(fetchPrompts(chatBotId)).then(()=>setLoadingPrompts(false));
-  // }, [dispatch, chatBotId]);
-
-
-  // const clearHistory = chatId => e => {
-  //   e.preventDefault();
-  //   dispatch(deleteChat(chatId))
-  //   dispatch(createChat({chatBotId}))
-  // }
-
   const generatePrompts = e => {  
     e.preventDefault();
     setLoadingPrompts(true);
@@ -55,27 +44,13 @@ function ChatBotShow(){
     dispatch(fetchPrompts(chatBotId)).then(()=>setLoadingPrompts(false));
   }
 
-  const handlePromptClick = (e) => {
-    e.preventDefault();
-    if(!loadingChat){
-      try {
-        const prompt = e.target.innerText;
-        dispatch(receiveChatRequest(prompt));
-        setLoadingChat(true);
-        dispatch(fetchChatResponse(chat._id, {role: 'user', content: prompt })).then(()=>setLoadingChat(false)).then(()=>delayTypeResponse());
-      } catch (err) {
-        console.log(err)
-      }
-
-    }
-  }
-
+  
   useEffect(()=>{
     if(newResponse){
       delayTypeResponse();
     }
   }, [newResponse]);
-
+  
 
   const delayTypeResponse = async() => {
     // let lastChat = chat.messages[chat?.messages.length - 1]?.content.split('');
@@ -84,17 +59,32 @@ function ChatBotShow(){
       await delay(30)
       setResponse(newChat.slice(0,i+1).join(''))
     }
-   
+    
   }
-
+  
   useEffect(()=>{
     scrollToBottomChat();
   }, [chat, response])
-
+  
   const handleChange = (e) => {
     setRequest(e.target.value);
   }
+  
+  const handlePromptClick = (e) => {
+    e.preventDefault();
+    if(!loadingChat){
+      try {
+        const prompt = e.target.innerText;
+        dispatch(receiveChatRequest(prompt));
+        setResponse("");
+        setLoadingChat(true);
+        dispatch(fetchChatResponse(chat._id, {role: 'user', content: prompt })).then(()=>setLoadingChat(false));
+      } catch (err) {
+        console.log(err)
+      }
 
+    }
+  }
   const handleSubmit = async(e)=>{
     e.preventDefault();
     try {
@@ -103,7 +93,6 @@ function ChatBotShow(){
       setResponse("");
       setLoadingChat(true);
       dispatch(fetchChatResponse(chat._id, {role: 'user', content: request })).then(()=>setLoadingChat(false));
-      
     } catch (err) {
       console.log(err)
     }
@@ -150,7 +139,7 @@ function ChatBotShow(){
             <ul className="prompt-suggestions" onClick={handlePromptClick}>
               {loadingPrompts ? <h1>Loading...</h1> : null}
               {prompts?.map((prompt, i)=>{
-                const modified = typeof parseInt(prompt[0]) === 'number' ? prompt.slice(3) : prompt.slice(1);
+                const modified = typeof parseInt(prompt[0]) === 'number' ? prompt.slice(3) : prompt.slice(0,2) === '- ' ? prompt.slice(1) : prompt[0] === '-' ? prompt.slice(1) : prompt;
                 return(
                   <li key={i}>{modified}</li>
                 )
