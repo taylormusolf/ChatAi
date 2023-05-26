@@ -102,20 +102,29 @@ function ChatBotShow(){
 
   return(
     <div className="chatbot-show-container">
-        
-          <ul className="chatbot-show-details">
             <div className="chatbot-show-profile">
               <img className='chatbot-show-img' src={bot?.profileImageUrl} alt={bot?.name} />
-              <li>{bot?.name}</li>
-              
+              <h1>{bot?.name}</h1>
             </div>
+          <ul className="chatbot-show-details">
             <div className='chatbot-show-box'>
               <ul>
                 {chat?.messages?.map((mess, i)=>{
                    
                   return(
                     <div key={i}>
-                      <h1 >{mess.role === 'assistant' ? bot?.name : 'You'}</h1>
+                      {mess.role === 'assistant' 
+                      ? 
+                      <div className='chatbot-show-message-detail'> 
+                        <img className='chatbot-show-img-small' src={bot?.profileImageUrl} alt={bot?.name} />
+                        <h1>{bot?.name} </h1>
+                      </div>
+                      : 
+                      <div className='chatbot-show-message-detail'> 
+                        <img className='chatbot-show-img-small' src={sessionUser?.profileImageUrl} alt={sessionUser?.name} />
+                        <h1>{sessionUser?.username} </h1>
+                      </div>
+                      }
                       <h2>{mess.content}</h2>
                     </div>
                   ) 
@@ -128,29 +137,27 @@ function ChatBotShow(){
                 <div ref={chatEndRef} />
               </ul>
             </div>
-          </ul>
-          <div className="show-chat-right-panel">
-            <form onSubmit={handleSubmit}>
-              <h1>Talk to {bot?.name}:</h1>
-              <input onChange={handleChange} value={request}/>
+            <form className="show-chat-form" onSubmit={handleSubmit}>
+              <input type='text' onChange={handleChange} value={request} placeholder={`Send a message to ${bot?.name}`}/>
               <input type='submit' value="Send" disabled={loadingChat}/>
             </form>
-            {/* <h1>Prompt Suggestions:</h1> */}
+          </ul>
+          <div className="show-chat-right-panel">
+            <Link to='/chatbots/'>Back to ChatBot Index</Link>
+            <button onClick={()=> dispatch(openModal({name: 'clear history', fnc: setResponse}))}>Clear Chat History</button>
+            { bot?.author?._id.toString() === sessionUser?._id.toString() ? <button onClick={()=> dispatch(openModal({name:'edit'}))}>Edit Bot</button> : null}
+            { bot?.author?._id.toString() === sessionUser?._id.toString() ? <button onClick={()=> dispatch(openModal({name:'delete'}))}>Delete Bot</button> : null}
+            <button onClick={()=> dispatch(openModal({name: 'clone'}))}>Clone Bot</button>
+            <button disabled={loadingPrompts} onClick={generatePrompts}>Generate Prompts</button>
             <ul className="prompt-suggestions" onClick={handlePromptClick}>
               {loadingPrompts ? <h1>Loading...</h1> : null}
               {prompts?.map((prompt, i)=>{
-                const modified = typeof parseInt(prompt[0]) === 'number' ? prompt.slice(3) : prompt.slice(0,2) === '- ' ? prompt.slice(1) : prompt[0] === '-' ? prompt.slice(1) : prompt;
+                const modified = !Number.isNaN(parseInt(prompt[0])) ? prompt.slice(3) : prompt.slice(0,2) === '- ' ? prompt.slice(1) : prompt[0] === '-' ? prompt.slice(1) : prompt;
                 return(
                   <li key={i}>{modified}</li>
                 )
               })}
             </ul>
-            <button disabled={loadingPrompts} onClick={generatePrompts}>Generate Prompts</button>
-            <button onClick={()=> dispatch(openModal({name: 'clear history', fnc: setResponse}))}>Clear Chat History</button>
-            { bot?.author?._id.toString() === sessionUser?._id.toString() ? <button onClick={()=> dispatch(openModal({name:'edit'}))}>Edit Bot</button> : null}
-            { bot?.author?._id.toString() === sessionUser?._id.toString() ? <button onClick={()=> dispatch(openModal({name:'delete'}))}>Delete Bot</button> : null}
-            <button onClick={()=> dispatch(openModal({name: 'clone'}))}>Clone Bot</button>
-            <Link to='/chatbots/'>Back to ChatBot Index</Link>
           </div>
              
     </div>

@@ -4,7 +4,7 @@ const getAiResponse = async (chatBot, chat, chatRequest) =>{
   const openai = new OpenAIApi(new Configuration({
     apiKey: process.env.CHAT_API_KEY
   }));
-  let systemPrompt = `You are ${chatBot.name} from ${chatBot.location} and should respond as them as realistically as you can in the format of a casual text message conversation. Never mention that you are an AI language model. ${chatBot.bio}`
+  let systemPrompt = `You are ${chatBot.name} from ${chatBot.location} and should respond as them as realistically as you can in the format of a casual text message conversation and keep the response short. Never mention that you are an AI language model. ${chatBot.bio}`
   let messages = [{role:'system', content: systemPrompt}, ...chat.messages, chatRequest]
 
   const res = await openai.createChatCompletion({
