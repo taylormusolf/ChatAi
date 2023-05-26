@@ -1,13 +1,17 @@
 const {OpenAIApi, Configuration} = require("openai");
 
-const getAiResponse = async (messages) =>{
+const getAiResponse = async (chatBot, chat, chatRequest) =>{
   const openai = new OpenAIApi(new Configuration({
     apiKey: process.env.CHAT_API_KEY
   }));
+  let systemPrompt = `You are ${chatBot.name} from ${chatBot.location} and should respond as them as realistically as you can in the format of a casual text message conversation. Never mention that you are an AI language model. ${chatBot.bio}`
+  let messages = [{role:'system', content: systemPrompt}, ...chat.messages, chatRequest]
 
   const res = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
-    messages: messages
+    messages: messages,
+    max_tokens: 150,
+    temperature: 1.5
   });
   return res.data.choices[0].message
 }
@@ -23,7 +27,9 @@ const getAiPrompts = async (chatbot) =>{
   const res = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: newMessages,
-    temperature: 0.9
+    // temperature: 0.9
+    temperature: 1
+
   });
   return res.data.choices[0].message
 }
