@@ -64,7 +64,7 @@ function ChatBotShow(){
   
   useEffect(()=>{
     scrollToBottomChat();
-  }, [chat, response])
+  }, [chat, response,  loadingChat])
   
   const handleChange = (e) => {
     setRequest(e.target.value);
@@ -102,10 +102,10 @@ function ChatBotShow(){
 
   return(
     <div className="chatbot-show-container">
-            <div className="chatbot-show-profile">
+            {/* <div className="chatbot-show-profile">
               <img className='chatbot-show-img' src={bot?.profileImageUrl} alt={bot?.name} />
               <h1>{bot?.name}</h1>
-            </div>
+            </div> */}
           <ul className="chatbot-show-details">
             <div className='chatbot-show-box'>
               <ul>
@@ -134,6 +134,7 @@ function ChatBotShow(){
                   { response && <h2>{response}</h2> }
                 </div>
                 {loadingChat ? <img className='typing' src={typingGif} alt='gif'/> : null}
+                <br/>
                 <div ref={chatEndRef} />
               </ul>
             </div>

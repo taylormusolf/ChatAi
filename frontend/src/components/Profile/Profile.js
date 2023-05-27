@@ -8,7 +8,7 @@ import './Profile.css'
 function Profile () {
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.session.user);
-  const userChatBots = useSelector(state => state.entities.chatBots.user)
+  const userChatBots = useSelector(state => Object.values(state.entities.chatBots.user))
   
   useEffect(() => {
 

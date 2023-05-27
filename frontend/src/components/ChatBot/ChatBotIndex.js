@@ -9,7 +9,7 @@ import { openModal } from "../../store/modal";
 function ChatBotIndex(){
   const dispatch = useDispatch();
   const history = useHistory();
-  const chatBots = useSelector(state => Object.values(state.entities.chatBots.all).length !== 0 ?  state.entities.chatBots.all : []  )
+  const chatBots = useSelector(state => Object.values(state.entities.chatBots.all).length !== 0 ?  Object.values(state.entities.chatBots.all) : []  )
   const chatted = useSelector(state => state.entities.chatBots?.chatted )
   useEffect(()=>{
     dispatch(fetchChatBots())

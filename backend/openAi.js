@@ -11,10 +11,26 @@ const getAiResponse = async (chatBot, chat, chatRequest) =>{
     model: "gpt-3.5-turbo",
     messages: messages,
     max_tokens: 150,
-    temperature: 1.5
+    temperature: 0.9
   });
   return res.data.choices[0].message
 }
+
+// const getAiBattleResponse = async (chatBot1, chatbot2, messageHistory, chatRequest) =>{
+//   const openai = new OpenAIApi(new Configuration({
+//     apiKey: process.env.CHAT_API_KEY
+//   }));
+//   let systemPrompt = `You are ${chatBot1.name} from ${chatBot1.location} and should respond as them as realistically as you can in the format of a casual text message conversation and keep the response short. Never mention that you are an AI language model. You are talking with ${chatbot2.name} from ${chatbot2.location}. ${chatBot1.bio}`
+//   let messages = [{role:'system', content: systemPrompt}, ...messageHistory, chatRequest]
+
+//   const res = await openai.createChatCompletion({
+//     model: "gpt-3.5-turbo",
+//     messages: messages,
+//     max_tokens: 150,
+//     temperature: 1.0
+//   });
+//   return res.data.choices[0].message
+// }
 
 const getAiPrompts = async (chatbot) =>{
   const {name, bio, location} = chatbot;

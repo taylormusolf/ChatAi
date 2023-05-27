@@ -163,40 +163,50 @@ export const chatBotErrorsReducer = (state = nullErrors, action) => {
   }
 };
 
-const chatBotsReducer = (state = { all: [], user: [], chatted: [], new: undefined }, action) => {
+const chatBotsReducer = (state = { all: {}, user: {}, chatted: [], new: undefined }, action) => {
   switch(action.type) {
     case RECEIVE_CHATBOTS:
-      return { ...state, all: action.payload.chatbots, chatted: action.payload.chattedChatbotIds, new: undefined};
+      const nextAll= {...state.all};
+      action.payload.chatbots.forEach((chatbot)=>{
+        nextAll[chatbot._id] = chatbot;
+      })
+      return { ...state, all: nextAll, chatted: action.payload.chattedChatbotIds, new: undefined};
     case RECEIVE_USER_CHATBOTS:
-      return { ...state, user: action.chatbots};
+      const nextUser= {...state.user};
+      action.chatbots.forEach((chatbot)=>{
+        nextUser[chatbot._id] = chatbot;
+      })
+      return { ...state, user: nextUser, new: undefined};
     case RECEIVE_CHATBOT:
       return { ...state, new: action.payload.chatbot};
     case RECEIVE_NEW_CHATBOT:
-      return { ...state, new: action.chatbot, all: [...state.all, action.chatbot] };
+      return { ...state, new: action.chatbot, all: {...state.all, [action.chatbot._id]:action.chatbot} };
     case REMOVE_CHATBOT:
       // if (state.user.length) 
-      let i;
-      for (let index = 0; index < state.user.length; index++) {
-        const element = state.user[index];
-        // if (element === undefined) continue;
-        // console.log(element._id.toString() === action.chatbotId.toString(), element._id, action.chatbotId);
-        if(element._id.toString() === action.chatbotId.toString()){
-          i = index;
-          break;
-        }
-      }
-      if(i !== 0 && !i) i = -1;
+      // let i;
+      // for (let index = 0; index < state.user.length; index++) {
+      //   const element = state.user[index];
+      //   // if (element === undefined) continue;
+      //   // console.log(element._id.toString() === action.chatbotId.toString(), element._id, action.chatbotId);
+      //   if(element._id.toString() === action.chatbotId.toString()){
+      //     i = index;
+      //     break;
+      //   }
+      // }
+      // if(i !== 0 && !i) i = -1;
   
-      // const newUser = state.user.slice(0, i) + state.user.slice(i+ 1);
-      const newUser = [...state.user]
-      delete newUser[i];
-      //avoiding shallow copies
-      const newerUser = [];
-      newUser.forEach((obj)=>{
-        if(obj) newerUser.push({...obj})
-      })
-      const newState = {...state, user: newerUser, new: undefined }
+      // // const newUser = state.user.slice(0, i) + state.user.slice(i+ 1);
+      // const newUser = [...state.user]
+      // delete newUser[i];
+      // //avoiding shallow copies
+      // const newerUser = [];
+      // newUser.forEach((obj)=>{
+      //   if(obj) newerUser.push({...obj})
+      // })
+      const newState = {...state, new: undefined }
       delete newState.all[action.chatbotId]
+      delete newState.user[action.chatbotId]
+   
       return newState;
     default:
       return state;
