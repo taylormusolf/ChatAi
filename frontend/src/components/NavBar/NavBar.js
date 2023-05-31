@@ -25,7 +25,7 @@ function NavBar () {
             <img className='profile-pic' src={user.profileImageUrl} alt='profile-img' /> : 
             null}
           </Link>  
-          {/* <Link to={'/posts/new'}>Write a Post</Link> */}
+          <Link to='/chatbots/battle'>Battle</Link>
           <button onClick={logoutUser} id="logout-button">Logout</button>
         </div>
       );

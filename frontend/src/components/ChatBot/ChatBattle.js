@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { fetchChatBots } from "../../store/chatbots";
-import {OpenAIApi, Configuration} from "openai";
+import { fetchBattleResponse, clearBattleResponse } from "../../store/battle";
 
 import './ChatBattle.scss'
 
@@ -15,10 +15,18 @@ function ChatBattle(){
     const [chattedStarted, setChatStarted] = useState(false);
     const [messages, setMessages] = useState([]);
     const [newRequest, setNewRequest] = useState(null);
+    const responses = useSelector(state => state.ui.battle);
 
     useEffect(()=>{
         dispatch(fetchChatBots())
     }, [dispatch])
+
+    useEffect(()=>{
+        if(responses){
+            setMessages([...responses])
+            setRespondingBot(respondingBot === firstChatbot ? secondChatbot : firstChatbot);
+        }
+    }, [responses])
 
     const handleSelect = (e, chatbot) => {
         if(chatbot === 'first'){
@@ -28,31 +36,30 @@ function ChatBattle(){
         }
     }
 
-    const getAiBattleResponse = async (chatBot1, chatbot2, messageHistory) =>{
-        const openai = new OpenAIApi(new Configuration({
-          apiKey: process.env.CHAT_API_KEY
-        }));
-        let systemPrompt = `You are ${chatBot1.name} from ${chatBot1.location} and should respond as them as realistically as you can in the format of a casual text message conversation and keep the response short. Never mention that you are an AI language model. You are talking with ${chatbot2.name} from ${chatbot2.location}. ${chatBot1.bio}`
-        let messages = [{role:'system', content: systemPrompt}, ...messageHistory, chatRequest]
-      
-        const res = await openai.createChatCompletion({
-          model: "gpt-3.5-turbo",
-          messages: messages,
-          max_tokens: 150,
-          temperature: 1.0
-        });
-        return res.data.choices[0].message
-      }
-
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         if(firstChatbot && secondChatbot && prompt){
             setChatStarted(true);
             setRespondingBot(firstChatbot);
+            
         }
     }
+    const handleReset = (e) => {
+        e.preventDefault();
+        setChatStarted(false);
+        setFirstChatbot(null);
+        setSecondChatbot(null);
+        setPrompt(null);
+        setRespondingBot(null);
+        setMessages([]);
+        dispatch(clearBattleResponse())
+    }
     const handleRequest = async (e) => {
-        getAiBattleResponse(firstChatbot, secondChatbot, prompt, messages)
+        e.preventDefault();
+        
+        dispatch(fetchBattleResponse(firstChatbot, secondChatbot, prompt, respondingBot, messages))
+
     }
     // useEffect(()=>{ 
     //     console.log(firstChatbot)
@@ -83,14 +90,15 @@ function ChatBattle(){
            {chattedStarted && <div>
                  <h1>{firstChatbot.name}</h1>
                  <h1>{secondChatbot.name}</h1>
+                <h2>Topic: {prompt}</h2>
                  <div className="battle-chat-box">
-                    {messages.map((message, idx) => {
-                        return <div key={idx}>{message}</div>
+                    {responses?.map((message, idx) => {
+                        return <div key={idx}>{message.content}</div>
                     })}
                  </div>
 
                 <button onClick={handleRequest}>Go</button>
-                <button onClick={()=> setChatStarted(false)}>Reset</button>
+                <button onClick={handleReset}>Reset</button>
             </div>}
 
             

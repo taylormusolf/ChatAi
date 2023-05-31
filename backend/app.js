@@ -22,6 +22,8 @@ const chatbotsRouter = require('./routes/api/chatbots');
 const chatsRouter = require('./routes/api/chats');
 const promptsRouter = require('./routes/api/prompts');
 const imagesRouter = require('./routes/api/images');
+const battleRouter = require('./routes/api/battle');
+
 
 
 const app = express();
@@ -60,6 +62,8 @@ app.use('/api/chatbots', chatbotsRouter);
 app.use('/api/chats', chatsRouter);
 app.use('/api/prompts', promptsRouter);
 app.use('/api/images', imagesRouter);
+app.use('/api/battle', battleRouter);
+
 
 
 // Serve static React build files statically in production
