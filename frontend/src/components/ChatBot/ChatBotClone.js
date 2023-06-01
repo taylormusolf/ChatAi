@@ -8,8 +8,10 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function ChatBotClone(){
   const [name, setName] = useState('');
-  const [bio, setBio] = useState('');
-  const [location, setLocation] = useState('');
+  const [prompt, setPrompt] = useState('');
+  const [from, setFrom] = useState('');
+  const [description, setDescription] = useState('');
+  const [greeting, setGreeting] = useState('');
   const [image, setImage] = useState(null);
   const [photoUrl, setPhotoUrl] = useState(null);
   const errors = useSelector(state => state.errors.session);
@@ -20,8 +22,10 @@ function ChatBotClone(){
   useEffect(()=>{
     if(chatbot){
       setName(chatbot.name);
-      setBio(chatbot.bio);
-      setLocation(chatbot.location);
+      setPrompt(chatbot.prompt);
+      setFrom(chatbot.from);
+      setDescription(chatbot.description);
+      setGreeting(chatbot.greeting);
     }
 
   }, [chatbot])
@@ -34,11 +38,17 @@ function ChatBotClone(){
       case 'name':
         setState = setName;
         break;
-      case 'bio':
-        setState = setBio;
+      case 'prompt':
+        setState = setPrompt;
         break;
-      case 'location':
-        setState = setLocation;
+      case 'from':
+        setState = setFrom;
+        break;
+      case 'description':
+        setState = setDescription;
+        break;
+      case 'greeting':
+        setState = setGreeting;
         break;
       default:
         throw Error('Unknown field in Form');
@@ -46,8 +56,6 @@ function ChatBotClone(){
   
     return e => setState(e.currentTarget.value);
   }
-
-  // const updateFile = e => setImage(e.target.files[0]);
 
   const handleFile = ({ currentTarget }) => {
     const file = currentTarget.files[0];
@@ -69,8 +77,6 @@ function ChatBotClone(){
   const chatBotSubmit = e => {
     e.preventDefault();
     let newImage;
-    // console.log(image, 'image');
-    // console.log(chatbot.profileImageUrl, 'chatbot.profileImageUrl' )
     if(image !== null){
       newImage = image;
     }else{
@@ -80,9 +86,11 @@ function ChatBotClone(){
     const bot = {
       _id: chatbot._id,
       name,
-      location,
+      from,
       image: newImage,
-      bio
+      prompt,
+      description,
+      greeting
     };
 
     dispatch(createChatBot(bot)).then((chatbot)=> chatBotSubmitCleanup(chatbot));
@@ -103,22 +111,40 @@ function ChatBotClone(){
               placeholder="name"
             />
           </label>
-          <div className="errors">{errors?.location}</div>
+          <div className="errors">{errors?.from}</div>
           <label>
-            <span>Location</span>
-            <input type="location"
-              value={location}
-              onChange={update('location')}
-              placeholder="location"
+            <span>From</span>
+            <input type="from"
+              value={from}
+              onChange={update('from')}
+              placeholder="from"
             />
           </label>
-          <div className="errors">{errors?.bio}</div>
+          <div className="errors">{errors?.prompt}</div>
           <label>
-            <span>Bio</span>
-            <textarea type="bio"
-              value={bio}
-              onChange={update('bio')}
-              placeholder="Bio"
+            <span>Prompt</span>
+            <textarea type="prompt"
+              value={prompt}
+              onChange={update('prompt')}
+              placeholder="prompt"
+            />
+          </label>
+          <div className="errors">{errors?.description}</div>
+          <label>
+            <span>Description</span>
+            <input type="description"
+              value={description}
+              onChange={update('description')}
+              placeholder="How does the chatbot perceive itself?"
+            />
+          </label>
+          <div className="errors">{errors?.greeting}</div>
+          <label>
+            <span>Greeting</span>
+            <input type="greeting"
+              value={greeting}
+              onChange={update('greeting')}
+              placeholder="How does the chatbot introduce itself?"
             />
           </label>
           <label>
@@ -128,11 +154,10 @@ function ChatBotClone(){
           <input
             type="submit"
             value="Create"
-            disabled={!name || !location || !bio}
+            disabled={!name || !from || !prompt}
           />
           </form>
           {photoUrl ? <img className='preview' src={photoUrl} alt='preview' /> : chatbot?.profileImageUrl ? <img className='preview' src={chatbot.profileImageUrl} alt='preview' /> : null}
-          {/* <Link to='/chatbots'>Back to chatbot index</Link> */}
         </div>
     );
 }

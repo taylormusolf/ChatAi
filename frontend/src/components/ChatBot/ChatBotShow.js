@@ -109,6 +109,14 @@ function ChatBotShow(){
           <ul className="chatbot-show-details">
             <div className='chatbot-show-box'>
               <ul>
+                  {bot?.greeting && <div>
+                    <div className='chatbot-show-message-detail'> 
+                      <img className='chatbot-show-img-small' src={bot?.profileImageUrl} alt={bot?.name} />
+                      <h1>{bot?.name} </h1>
+                    </div>
+                    <h2>{bot.greeting}</h2>
+                  </div>
+                  }
                 {chat?.messages?.map((mess, i)=>{
                    
                   return(

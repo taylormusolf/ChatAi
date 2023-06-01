@@ -6,3 +6,12 @@
   position: relative;
   top: 17vh;
 }
+
+.battle-bot-message{
+  img{
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}

@@ -5,8 +5,13 @@ const getAiResponse = async (chatBot, chat, chatRequest) =>{
   const openai = new OpenAIApi(new Configuration({
     apiKey: process.env.CHAT_API_KEY
   }));
-  let systemPrompt = `You are ${chatBot.name} from ${chatBot.location} and should respond as them as realistically as you can in the format of a casual text message conversation and keep the response short. Never mention that you are an AI language model. ${chatBot.bio}`
-  let messages = [{role:'system', content: systemPrompt}, ...chat.messages, chatRequest]
+  const from = chatBot.from ? `from ${chatBot.from}` : '';
+  const prompt = chatBot.prompt ? `${chatBot.prompt}` : '';
+  const description = chatBot.description ? `${chatBot.description}` : '';
+  const greeting = chatBot.greeting ? {role:'assistant', content: chatBot.greeting} : {};
+
+  let systemPrompt = `You are ${chatBot.name} ${from} and should respond as them as realistically as you can in the format of a casual text message conversation and keep the response short. Never mention that you are an AI language model. ${description}. ${prompt}.`
+  let messages = [{role:'system', content: systemPrompt}, greeting, ...chat.messages, chatRequest]
 
   const res = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
@@ -18,12 +23,15 @@ const getAiResponse = async (chatBot, chat, chatRequest) =>{
 }
 
 const getAiPrompts = async (chatbot) =>{
-  const {name, bio, location} = chatbot;
+  const {name, prompt, from, description, greeting} = chatbot;
   const openai = new OpenAIApi(new Configuration({
     apiKey: process.env.CHAT_API_KEY
   }));
-  const prompt = `The subject's name is ${name} from ${location}. ${bio}`;
-  const message = {role:'user', content: prompt};
+  const fromFormatted = chatBot.from ? `from ${chatBot.from}` : '';
+  const descriptionFormatted = chatBot.description ? `${chatBot.description}` : '';
+
+  const content = `The subject's name is ${name} ${fromFormatted}. ${descriptionFormatted}`;
+  const message = {role:'user', content};
   const newMessages = [{role:'system', content:'Provide a non-numbered and list of 3 prompts to ask subject provided. Do not use numbering. The prompts should be formatted as if you are addressing the subject directly.'}, message];
   const res = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
@@ -36,12 +44,12 @@ const getAiPrompts = async (chatbot) =>{
 }
 
 const getAiPictures = async (chatbot, userPrompt) =>{
-  const {name, bio, location} = chatbot;
+  const {name, prompt, from, description, greeting} = chatbot;
   const openai = new OpenAIApi(new Configuration({
     apiKey: process.env.CHAT_API_KEY
   }));
   // const message = {role:'user', content: userPrompt};
-  // const prompt = `Create a picture of ${name} from ${location}. ${bio}`;
+  // const prompt = `Create a picture of ${name} from ${from}. ${prompt}`;
 
   const res = await openai.createImage({
     prompt: userPrompt,
@@ -71,7 +79,7 @@ const getAiBattleResponse = async (chatbot1, chatbot2, prompt, currentChatbot, m
     apiKey: process.env.CHAT_API_KEY
   }));
 
-  let systemPrompt = `You are ${currentChatbot.name} from ${currentChatbot.location} and should respond as them as realistically as you can and keep the response short. Never mention that you are an AI language model. I am ${otherChatbot.name} from ${otherChatbot.location}. Talk to me about about: ${prompt}.`
+  let systemPrompt = `You are ${currentChatbot.name} from ${currentChatbot.from} and should respond as them as realistically as you can and keep the response short. Never mention that you are an AI language model. I am ${otherChatbot.name} from ${otherChatbot.from}. Talk to me about about: ${prompt}.`
   let messagesArr = [{role:'system', content: systemPrompt}, ...currMessages]
 
   const res = await openai.createChatCompletion({
@@ -81,15 +89,9 @@ const getAiBattleResponse = async (chatbot1, chatbot2, prompt, currentChatbot, m
     temperature: 1.0
   });
     return {content: res.data.choices[0].message.content, name: currentChatbot.name.split(" ")[0], role: chatbot1._id !== currentChatbot._id ? 'user' : 'assistant'}
-
   } catch(err){
     console.log(err.response.data)
-
-   
   }
-
-
- 
 }
 
 

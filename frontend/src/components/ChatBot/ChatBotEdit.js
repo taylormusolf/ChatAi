@@ -8,8 +8,10 @@ import './ChatBotNew.css'
 function ChatBotEdit(){
   // const {chatbotId} = useParams();
   const [name, setName] = useState('');
-  const [bio, setBio] = useState('');
-  const [location, setLocation] = useState('');
+  const [prompt, setPrompt] = useState('');
+  const [from, setFrom] = useState('');
+  const [description, setDescription] = useState('');
+  const [greeting, setGreeting] = useState('');
   const [image, setImage] = useState(null);
   const [photoUrl, setPhotoUrl] = useState(null);
   const errors = useSelector(state => state.errors.session);
@@ -24,8 +26,10 @@ function ChatBotEdit(){
   useEffect(()=>{
     if(chatbot){
       setName(chatbot.name);
-      setBio(chatbot.bio);
-      setLocation(chatbot.location);
+      setPrompt(chatbot.prompt);
+      setFrom(chatbot.from);
+      setDescription(chatbot.description);
+      setGreeting(chatbot.greeting);
     }
 
   }, [chatbot])
@@ -38,12 +42,18 @@ function ChatBotEdit(){
       case 'name':
         setState = setName;
         break;
-      case 'bio':
-        setState = setBio;
+      case 'prompt':
+        setState = setPrompt;
         break;
-      case 'location':
-        setState = setLocation;
+      case 'from':
+        setState = setFrom;
         break;
+      case 'description':
+        setState = setDescription;
+        break;
+      case 'greeting':
+        setState = setGreeting;
+        break; 
       default:
         throw Error('Unknown field in Form');
     }
@@ -71,9 +81,11 @@ function ChatBotEdit(){
     const bot = {
       _id: chatbot._id,
       name,
-      location,
+      from,
       image,
-      bio
+      prompt,
+      description,
+      greeting
     };
   
     dispatch(updateChatBot(bot)); 
@@ -94,22 +106,40 @@ function ChatBotEdit(){
               placeholder="name"
             />
           </label>
-          <div className="errors">{errors?.location}</div>
+          <div className="errors">{errors?.from}</div>
           <label>
-            <span>Location</span>
-            <input type="location"
-              value={location}
-              onChange={update('location')}
-              placeholder="location"
+            <span>From</span>
+            <input type="from"
+              value={from}
+              onChange={update('from')}
+              placeholder="from"
             />
           </label>
-          <div className="errors">{errors?.bio}</div>
+          <div className="errors">{errors?.description}</div>
           <label>
-            <span>Bio</span>
-            <textarea type="bio"
-              value={bio}
-              onChange={update('bio')}
-              placeholder="Bio"
+            <span>Description</span>
+            <input type="description"
+              value={description}
+              onChange={update('description')}
+              placeholder="How does the chatbot perceive itself?"
+            />
+          </label>
+          <div className="errors">{errors?.greeting}</div>
+          <label>
+            <span>Greeting</span>
+            <input type="greeting"
+              value={greeting}
+              onChange={update('greeting')}
+              placeholder="How does the chatbot introduce itself?"
+            />
+          </label>
+          <div className="errors">{errors?.prompt}</div>
+          <label>
+            <span>Prompt</span>
+            <textarea type="prompt"
+              value={prompt}
+              onChange={update('prompt')}
+              placeholder="prompt"
             />
           </label>
           <label>
@@ -119,11 +149,10 @@ function ChatBotEdit(){
           <input
             type="submit"
             value="Save"
-            disabled={!name || !location || !bio}
+            disabled={!name || !from || !prompt || !greeting}
           />
           </form>
           {photoUrl ? <img className='preview' src={photoUrl} alt='preview' /> : chatbot?.profileImageUrl ? <img className='preview' src={chatbot.profileImageUrl} alt='preview' /> : null}
-          {/* <Link to='/chatbots'>Back to chatbot index</Link> */}
         </div>
     );
 }

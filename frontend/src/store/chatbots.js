@@ -89,12 +89,14 @@ export const fetchUserChatBots = id => async dispatch => {
   }
 };
 
-export const createChatBot = (chatBot, image) => async dispatch => {
-  const { image, name, bio, location} = chatBot;
+export const createChatBot = (chatBot) => async dispatch => {
+  const { image, name, prompt, from, description, greeting} = chatBot;
   const formData = new FormData();
   formData.append("name", name);
-  formData.append("bio", bio);
-  formData.append("location", location);
+  formData.append("prompt", prompt);
+  formData.append("from", from);
+  formData.append("description", description);
+  formData.append("greeting", greeting);
   formData.append("image", image);
   try {
     const res = await jwtFetch('/api/chatbots/', {
@@ -113,11 +115,13 @@ export const createChatBot = (chatBot, image) => async dispatch => {
 };
 
 export const updateChatBot = (chatBotInfo) => async dispatch => {
-  const { name, bio, location, image} = chatBotInfo;
+  const { name, prompt, from, image, greeting, description} = chatBotInfo;
   const formData = new FormData();
   formData.append("name", name);
-  formData.append("bio", bio);
-  formData.append("location", location);
+  formData.append("prompt", prompt);
+  formData.append("from", from);
+  formData.append("greeting", greeting);
+  formData.append("description", description);
   formData.append("image", image);
   try {
     const res = await jwtFetch(`/api/chatbots/${chatBotInfo._id}`, {

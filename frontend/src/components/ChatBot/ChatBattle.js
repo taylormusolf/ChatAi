@@ -88,12 +88,18 @@ function ChatBattle(){
             </form>}
 
            {chattedStarted && <div>
-                 <h1>{firstChatbot.name}</h1>
-                 <h1>{secondChatbot.name}</h1>
+                 <h1>{firstChatbot.name} vs {secondChatbot.name}</h1>
                 <h2>Topic: {prompt}</h2>
                  <div className="battle-chat-box">
                     {responses?.map((message, idx) => {
-                        return <div key={idx}>{message.content}</div>
+                        const bot = message.role === 'assistant' ? firstChatbot : secondChatbot;
+                        return (
+                        <div key={idx} className="battle-bot-message">
+                            <div>{bot.name}</div> 
+                            <img src={bot.profileImageUrl} alt={bot.name}/>
+                            <div>{message.content}</div>
+                        </div>
+                        )
                     })}
                  </div>
 

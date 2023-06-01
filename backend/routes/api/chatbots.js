@@ -89,8 +89,10 @@ router.post('/', singleMulterUpload("image"),  requireUser, async (req, res, nex
     const newChatBot = new ChatBot({
       name: req.body.name,
       profileImageUrl,
-      bio: req.body.bio,
-      location: req.body.location,
+      prompt: req.body.prompt,
+      from: req.body.from,
+      description: req.body.description,
+      greeting: req.body.greeting,
       author: req.user
     });
     let chatBot = await newChatBot.save();
@@ -120,8 +122,10 @@ router.patch('/:id', singleMulterUpload("image"), requireUser, async (req, res, 
       chatbot.profileImageUrl;
   try{
     chatbot.name = req.body.name || chatbot.name;
-    chatbot.bio = req.body.bio || chatbot.bio;
-    chatbot.location = req.body.location || chatbot.location;
+    chatbot.prompt = req.body.prompt || chatbot.prompt;
+    chatbot.from = req.body.from || chatbot.from;
+    chatbot.description = req.body.description || chatbot.description;
+    chatbot.greeting = req.body.greeting || chatbot.greeting;
     await chatbot.save();
     chatbot = await chatbot.populate("author", "_id username profileImageUrl");
     if(!chatbot.profileImageUrl.includes('aws') ){

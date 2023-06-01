@@ -14,11 +14,19 @@ const chatBotSchema = Schema({
     type: String,
     required: false
   },
-  bio: {
+  description: {
     type: String,
     required: false
   },
-  location: {
+  prompt: {
+    type: String,
+    required: false
+  },
+  from: {
+    type: String,
+    required: false
+  },
+  greeting: {
     type: String,
     required: true
   }

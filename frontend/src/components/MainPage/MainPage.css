@@ -1,11 +1,32 @@
-
-
-
-
-.chat-link{
-  margin-top: 50px;
+.main-container{
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  /* background-color: aliceblue; */
+  align-items: center;
+  position: relative;
+  top: 5vh;
+  width: 100%;
+
+  
+}
+
+.splash-header{
+  position: relative;
+  top: 20vh;
+  font-size: 50px;
+  font-weight: 800;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--purple);
+}
+.splash-img {
+    width: 100%;
+    height: 85vh;
+    object-fit: cover;
+    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
+    from(rgba(0,0,0,0)), to(rgba(0,0,0,1)));
+}
+
+footer{
+  padding-top: 10px;
 }
 

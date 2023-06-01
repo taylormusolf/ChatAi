@@ -8,10 +8,12 @@ import { closeModal } from '../../store/modal';
 
 function ChatBotNew(){
   const [name, setName] = useState('');
-  const [bio, setBio] = useState('');
-  const [location, setLocation] = useState('');
-  const [image, setImage] = useState(null);
   const [prompt, setPrompt] = useState('');
+  const [from, setFrom] = useState('');
+  const [description, setDescription] = useState('');
+  const [greeting, setGreeting] = useState('');
+  const [image, setImage] = useState(null);
+  const [imagePrompt, setImagePrompt] = useState('');
   const aiProfileImages = useSelector(state => state.ui.images);
   const [loadingImage, setLoadingImage] = useState(false);
   const [photoUrl, setPhotoUrl] = useState(null);
@@ -26,14 +28,20 @@ function ChatBotNew(){
       case 'name':
         setState = setName;
         break;
-      case 'bio':
-        setState = setBio;
-        break;
-      case 'location':
-        setState = setLocation;
-        break;
       case 'prompt':
         setState = setPrompt;
+        break;
+      case 'from':
+        setState = setFrom;
+        break;
+      case 'imagePrompt':
+        setState = setImagePrompt;
+        break;
+      case 'description':
+        setState = setDescription;
+        break;
+      case 'greeting':
+        setState = setGreeting;
         break;
       default:
         throw Error('Unknown field in Form');
@@ -45,7 +53,7 @@ function ChatBotNew(){
   const generateImage = e => {
     e.preventDefault();
     setLoadingImage(true);
-    dispatch(fetchImages({name, bio, location}, prompt)).then(() => setLoadingImage(false));
+    dispatch(fetchImages({name, prompt, from}, imagePrompt)).then(() => setLoadingImage(false));
   }
 
   // const updateFile = e => setImage(e.target.files[0]);
@@ -67,17 +75,21 @@ function ChatBotNew(){
     e.preventDefault();
     const bot = {
       name,
-      location,
+      from,
       image,
-      bio
+      prompt,
+      description,
+      greeting
     };
   
     dispatch(createChatBot(bot)); 
-    setName('');
-    setLocation('');
-    setBio('');
-    setImage(null);
-    setPhotoUrl(null);
+    // setName('');
+    // setFrom('');
+    // setPrompt('');
+    // setDescription('');
+    // setGreeting('');
+    // setImage(null);
+    // setPhotoUrl(null);
     dispatch(clearImages());
     dispatch(closeModal());
   }
@@ -96,21 +108,39 @@ function ChatBotNew(){
               placeholder="name"
             />
           </label>
-          <div className="errors">{errors?.location}</div>
+          <div className="errors">{errors?.from}</div>
           <label>
             <span>From</span>
-            <input type="location"
-              value={location}
-              onChange={update('location')}
+            <input type="from"
+              value={from}
+              onChange={update('from')}
               placeholder="Town, Universe, etc. to give context to your chatbot."
             />
           </label>
-          <div className="errors">{errors?.bio}</div>
+          <div className="errors">{errors?.description}</div>
+          <label>
+            <span>Description</span>
+            <input type="description"
+              value={description}
+              onChange={update('description')}
+              placeholder="How does the chatbot perceive itself?"
+            />
+          </label>
+          <div className="errors">{errors?.greeting}</div>
+          <label>
+            <span>Greeting</span>
+            <input type="greeting"
+              value={greeting}
+              onChange={update('greeting')}
+              placeholder="How does the chatbot introduce itself?"
+            />
+          </label>
+          <div className="errors">{errors?.prompt}</div>
           <label>
             <span>Additional Prompt</span>
-            <textarea type="bio"
-              value={bio}
-              onChange={update('bio')}
+            <textarea type="prompt"
+              value={prompt}
+              onChange={update('prompt')}
               placeholder="Details about your chatbot so it acts the way you want."
             />
           </label>
@@ -121,18 +151,17 @@ function ChatBotNew(){
           <input
             type="submit"
             value="Create"
-            disabled={!name || !location || !bio}
+            disabled={!name || !from || !prompt || !greeting}
           />
           </form>
           {photoUrl? <img className='preview' src={photoUrl} alt='preview' /> : null}
           {loadingImage? <div className='loading'>Loading...</div> : null}
           {aiProfileImages?.map((image, i) => <img key={i} src={image.url} alt='profile' />)}
-          <input type='text' value={prompt}
-              onChange={update('prompt')}
-              placeholder="Image Prompt"/>
-          {/* <button onClick={generateImage} disabled={!prompt || loadingImage} >Generate Profile Picture</button> */}
-          <button onClick={generateImage} disabled={true} >Generate Profile Picture</button>
-          {/* <Link to='/chatbots'>Back to chatbot index</Link> */}
+          {/* <input type='text' value={imagePrompt}
+              onChange={update('imagePrompt')}
+              placeholder="Image imagePrompt"/> */}
+          {/* <button onClick={generateImage} disabled={!imagePrompt || loadingImage} >Generate Profile Picture</button> */}
+
         </div>
     );
 }
