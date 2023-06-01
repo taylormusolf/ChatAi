@@ -26,10 +26,10 @@ function ChatBotEdit(){
   useEffect(()=>{
     if(chatbot){
       setName(chatbot.name);
-      setPrompt(chatbot.prompt);
-      setFrom(chatbot.from);
-      setDescription(chatbot.description);
-      setGreeting(chatbot.greeting);
+      if(chatbot.prompt) setPrompt(chatbot.prompt);
+      if(chatbot.from) setFrom(chatbot.from);
+      if(chatbot.description) setDescription(chatbot.description);
+      if(chatbot.greeting) setGreeting(chatbot.greeting);
     }
 
   }, [chatbot])
@@ -149,7 +149,7 @@ function ChatBotEdit(){
           <input
             type="submit"
             value="Save"
-            disabled={!name || !from || !prompt || !greeting}
+            disabled={!name || !greeting}
           />
           </form>
           {photoUrl ? <img className='preview' src={photoUrl} alt='preview' /> : chatbot?.profileImageUrl ? <img className='preview' src={chatbot.profileImageUrl} alt='preview' /> : null}

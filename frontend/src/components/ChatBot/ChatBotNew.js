@@ -151,7 +151,7 @@ function ChatBotNew(){
           <input
             type="submit"
             value="Create"
-            disabled={!name || !from || !prompt || !greeting}
+            disabled={!name || !greeting}
           />
           </form>
           {photoUrl? <img className='preview' src={photoUrl} alt='preview' /> : null}

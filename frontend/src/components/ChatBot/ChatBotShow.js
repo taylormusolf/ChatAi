@@ -138,7 +138,10 @@ function ChatBotShow(){
                   ) 
                 })}
                 <div>
-                  {response && <h1>{bot?.name}</h1>}
+                  {response && <div className='chatbot-show-message-detail'> 
+                        <img className='chatbot-show-img-small' src={bot?.profileImageUrl} alt={bot?.name} />
+                        <h1>{bot?.name} </h1>
+                      </div>}
                   { response && <h2>{response}</h2> }
                 </div>
                 {loadingChat ? <img className='typing' src={typingGif} alt='gif'/> : null}
