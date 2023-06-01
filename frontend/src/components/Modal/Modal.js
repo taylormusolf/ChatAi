@@ -20,10 +20,11 @@ const Modal = () => {
   let component;
   switch (name) {
     case "edit":
-      component = <ChatBotEdit/>;
+      // component = <ChatBotEdit/>;
+      component = <ChatBotNew form='edit'/>;
       break;
     case "new":
-      component = <ChatBotNew/>;
+      component = <ChatBotNew form='new'/>;
       break;
     case "delete":
       component = <ChatBotDelete/>;
@@ -32,7 +33,8 @@ const Modal = () => {
       component = <ClearChatHistoryPrompt/>;
       break;
     case "clone":
-      component = <ChatBotClone/>;
+      // component = <ChatBotClone/>;
+      component = <ChatBotNew form='clone'/>;
       break;
     default:
       return null;

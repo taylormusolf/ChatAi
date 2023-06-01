@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import {createChatBot, fetchChatBot, updateChatBot} from '../../store/chatbots';
 import { closeModal } from '../../store/modal';
 import { Link, useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import './ChatBotNew.css'
 
 function ChatBotEdit(){
   // const {chatbotId} = useParams();
@@ -96,14 +95,14 @@ function ChatBotEdit(){
   return (
       <div className="chatbot-form-container">
         <form className="chatbot-form" onSubmit={chatBotSubmit}>
-          <h2>Chatbot Edit Form</h2>
+          <h2>Chatbot Edit</h2>
           <div className="errors">{errors?.name}</div>
           <label>
-            <span>Name</span>
+            <span>Name *required*</span>
             <input type="text"
               value={name}
               onChange={update('name')}
-              placeholder="name"
+              placeholder="What is their name?"
             />
           </label>
           <div className="errors">{errors?.from}</div>
@@ -112,7 +111,7 @@ function ChatBotEdit(){
             <input type="from"
               value={from}
               onChange={update('from')}
-              placeholder="from"
+              placeholder="Town, Universe, etc. to give context to your chatbot."
             />
           </label>
           <div className="errors">{errors?.description}</div>
@@ -126,7 +125,7 @@ function ChatBotEdit(){
           </label>
           <div className="errors">{errors?.greeting}</div>
           <label>
-            <span>Greeting</span>
+            <span>Greeting *required*</span>
             <input type="greeting"
               value={greeting}
               onChange={update('greeting')}
@@ -139,7 +138,7 @@ function ChatBotEdit(){
             <textarea type="prompt"
               value={prompt}
               onChange={update('prompt')}
-              placeholder="prompt"
+              placeholder="Details about your chatbot so it acts the way you want."
             />
           </label>
           <label>

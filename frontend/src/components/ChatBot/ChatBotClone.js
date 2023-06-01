@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import {createChatBot} from '../../store/chatbots';
 import {createChat} from '../../store/chat';
 import { closeModal } from '../../store/modal';
-import './ChatBotNew.css'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function ChatBotClone(){
@@ -82,7 +81,6 @@ function ChatBotClone(){
     }else{
       newImage = chatbot.profileImageUrl
     }
-    console.log(newImage, 'newImage');
     const bot = {
       _id: chatbot._id,
       name,
@@ -101,14 +99,14 @@ function ChatBotClone(){
   return (
       <div className="chatbot-form-container">
         <form className="chatbot-form" onSubmit={chatBotSubmit}>
-          <h2>Chatbot Clone Form</h2>
+          <h2>Chatbot Clone</h2>
           <div className="errors">{errors?.name}</div>
           <label>
-            <span>Name</span>
+            <span>Name *required*</span>
             <input type="text"
               value={name}
               onChange={update('name')}
-              placeholder="name"
+              placeholder="What is their name?"
             />
           </label>
           <div className="errors">{errors?.from}</div>
@@ -117,16 +115,7 @@ function ChatBotClone(){
             <input type="from"
               value={from}
               onChange={update('from')}
-              placeholder="from"
-            />
-          </label>
-          <div className="errors">{errors?.prompt}</div>
-          <label>
-            <span>Prompt</span>
-            <textarea type="prompt"
-              value={prompt}
-              onChange={update('prompt')}
-              placeholder="prompt"
+              placeholder="Town, Universe, etc. to give context to your chatbot."
             />
           </label>
           <div className="errors">{errors?.description}</div>
@@ -140,11 +129,20 @@ function ChatBotClone(){
           </label>
           <div className="errors">{errors?.greeting}</div>
           <label>
-            <span>Greeting</span>
+            <span>Greeting *required*</span>
             <input type="greeting"
               value={greeting}
               onChange={update('greeting')}
               placeholder="How does the chatbot introduce itself?"
+            />
+          </label>
+          <div className="errors">{errors?.prompt}</div>
+          <label>
+            <span>Prompt</span>
+            <textarea type="prompt"
+              value={prompt}
+              onChange={update('prompt')}
+              placeholder="Details about your chatbot so it acts the way you want."
             />
           </label>
           <label>
