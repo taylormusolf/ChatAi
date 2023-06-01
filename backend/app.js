@@ -8,7 +8,6 @@ const csurf = require('csurf');
 const { isProduction } = require('./config/keys');
 
 require('./models/User');
-require('./models/Post');
 require('./models/ChatBot');
 require('./models/Chat');
 require('./config/passport');
@@ -16,7 +15,6 @@ require('./config/passport');
 const passport = require('passport');
 
 const usersRouter = require('./routes/api/users');
-const postsRouter = require('./routes/api/posts');
 const csrfRouter = require('./routes/api/csrf');
 const chatbotsRouter = require('./routes/api/chatbots');
 const chatsRouter = require('./routes/api/chats');
@@ -56,7 +54,6 @@ app.use(
 
 // Attach Express routers
 app.use('/api/users', usersRouter);
-app.use('/api/posts', postsRouter);
 app.use('/api/csrf', csrfRouter);
 app.use('/api/chatbots', chatbotsRouter);
 app.use('/api/chats', chatsRouter);

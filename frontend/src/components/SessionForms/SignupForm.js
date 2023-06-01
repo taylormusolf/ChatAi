@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import './SessionForm.css';
 import { signup, clearSessionErrors } from '../../store/session';
 
 function SignupForm () {
@@ -42,8 +41,6 @@ function SignupForm () {
 
     return e => setState(e.currentTarget.value);
   }
-
-  // const updateFile = e => setImage(e.target.files[0]);
 
   const handleFile = ({ currentTarget }) => {
     const file = currentTarget.files[0];
@@ -116,13 +113,13 @@ function SignupForm () {
           <span>Profile Image</span>
           <input type="file" accept=".jpg, .jpeg, .png" onChange={handleFile} />
         </label>
+        {photoUrl? <img className='preview' src={photoUrl} alt='preview' /> : null}
         <input
           type="submit"
           value="Sign Up"
           disabled={!email || !username || !password || password !== password2}
         />
       </form>
-        {photoUrl? <img className='preview' src={photoUrl} alt='preview' /> : null}
 
     </div>
   );

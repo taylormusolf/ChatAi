@@ -157,8 +157,8 @@ function ChatBotShow(){
           <div className="show-chat-right-panel">
             <Link to='/chatbots/'>Back to ChatBot Index</Link>
             <button onClick={()=> dispatch(openModal({name: 'clear history', fnc: setResponse}))}>Clear Chat History</button>
-            { bot?.author?._id.toString() === sessionUser?._id.toString() ? <button onClick={()=> dispatch(openModal({name:'edit'}))}>Edit Bot</button> : null}
-            { bot?.author?._id.toString() === sessionUser?._id.toString() ? <button onClick={()=> dispatch(openModal({name:'delete'}))}>Delete Bot</button> : null}
+            { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'edit'}))}>Edit Bot</button> : null}
+            { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'delete'}))}>Delete Bot</button> : null}
             <button onClick={()=> dispatch(openModal({name: 'clone'}))}>Clone Bot</button>
             <button disabled={loadingPrompts} onClick={generatePrompts}>Generate Prompts</button>
             <ul className="prompt-suggestions" onClick={handlePromptClick}>

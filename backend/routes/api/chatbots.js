@@ -109,6 +109,7 @@ router.post('/', singleMulterUpload("image"),  requireUser, async (req, res, nex
 
 router.patch('/:id', singleMulterUpload("image"), requireUser, async (req, res, next) => {
   let chatbot = await ChatBot.findOne({ _id: req.params.id, author: {_id: req.user._id}})
+  if(!chatbot && req.user.username === 'admin') chatbot = await ChatBot.findOne({ _id: req.params.id})
   if(!chatbot) {
     const err = new Error("Validation Error");
     err.statusCode = 400;
@@ -142,7 +143,8 @@ router.patch('/:id', singleMulterUpload("image"), requireUser, async (req, res, 
 });
 
 router.delete('/:id',  requireUser, async (req, res, next) => {
-  const chatbot = await ChatBot.findOne({ _id: req.params.id, author: {_id: req.user._id}})
+  let chatbot = await ChatBot.findOne({ _id: req.params.id, author: {_id: req.user._id}})
+  if(!chatbot && req.user.username === 'admin') chatbot = await ChatBot.findOne({ _id: req.params.id})
   if(!chatbot) {
     const err = new Error("Validation Error");
     err.statusCode = 400;

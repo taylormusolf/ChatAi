@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import './NavBar.css';
 import { logout } from '../../store/session';
-// import dogImg from '../../assets/dog-24.svg';
 import gpt from '../../assets/gpt.jpg';
 
 function NavBar () {
@@ -19,7 +18,6 @@ function NavBar () {
     if (loggedIn) {
       return (
         <div className="links-nav">
-          {/* <Link to={'/posts'}>All Posts</Link> */}
           <Link to={'/profile'}>
           {user.profileImageUrl ? 
             <img className='profile-pic' src={user.profileImageUrl} alt='profile-img' /> : 

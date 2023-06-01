@@ -178,13 +178,13 @@ function ChatBotNew(props){
             Chatbot Image
             <input type="file" accept=".jpg, .jpeg, .png" onChange={handleFile} />
           </label>
+          {photoUrl? <img className='preview' src={photoUrl} alt='preview' /> : null}
           <input
             type="submit"
             value={form === 'edit' ? 'Save' : 'Create'}
             disabled={!name || !greeting}
           />
           </form>
-          {photoUrl? <img className='preview' src={photoUrl} alt='preview' /> : null}
           {/* {loadingImage? <div className='loading'>Loading...</div> : null} */}
           {/* {aiProfileImages?.map((image, i) => <img key={i} src={image.url} alt='profile' />)} */}
           {/* <input type='text' value={imagePrompt}

@@ -13,7 +13,6 @@ import Profile from './components/Profile/Profile';
 import { getCurrentUser } from './store/session';
 import { Route } from 'react-router-dom/cjs/react-router-dom.min';
 import ChatBotNew from './components/ChatBot/ChatBotNew';
-import ChatBotEdit from './components/ChatBot/ChatBotEdit';
 import ChatBotIndex from './components/ChatBot/ChatBotIndex';
 import ChatBotShow from './components/ChatBot/ChatBotShow';
 import ChatBattle from './components/ChatBot/ChatBattle';
@@ -39,12 +38,8 @@ function App() {
 
         <ProtectedRoute exact path="/chatbots/" component={ChatBotIndex} />
         <ProtectedRoute exact path="/chatbots/battle" component={ChatBattle} />
-        <ProtectedRoute exact path="/chatbots/:chatbotId/edit" component={ChatBotEdit} />
         <ProtectedRoute exact path="/chatbots/:chatBotId" component={ChatBotShow} />
-
-        {/* <ProtectedRoute exact path="/posts" component={Posts} /> */}
         <ProtectedRoute exact path="/profile" component={Profile} />
-        {/* <ProtectedRoute exact path="/posts/new" component={PostCompose} /> */}
       </Switch>
     </>
   );

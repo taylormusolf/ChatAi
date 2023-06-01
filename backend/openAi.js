@@ -1,6 +1,13 @@
 const { json } = require("express");
 const {OpenAIApi, Configuration} = require("openai");
 
+const rules = [
+  'You should respond as realistically as you can in the format of a casual text message conversation and keep the response short.', 
+  'Never mention that you are an AI language model.'
+
+]
+
+
 const getAiResponse = async (chatBot, chat, chatRequest) =>{
   const openai = new OpenAIApi(new Configuration({
     apiKey: process.env.CHAT_API_KEY
@@ -10,7 +17,7 @@ const getAiResponse = async (chatBot, chat, chatRequest) =>{
   const description = chatBot.description ? `${chatBot.description}` : '';
   const greeting = chatBot.greeting ? {role:'assistant', content: chatBot.greeting} : {};
 
-  let systemPrompt = `You are ${chatBot.name} ${from} and should respond as them as realistically as you can in the format of a casual text message conversation and keep the response short. Never mention that you are an AI language model. ${description}. ${prompt}.`
+  let systemPrompt = `You are ${chatBot.name} ${from}${rules.join(' ')} ${description}. ${prompt}.`
   let messages = [{role:'system', content: systemPrompt}, greeting, ...chat.messages, chatRequest]
 
   const res = await openai.createChatCompletion({
@@ -78,8 +85,12 @@ const getAiBattleResponse = async (chatbot1, chatbot2, prompt, currentChatbot, m
   const openai = new OpenAIApi(new Configuration({
     apiKey: process.env.CHAT_API_KEY
   }));
+  const fromFormatted = currentChatbot.from ? `from ${currentChatbot.from}` : '';
+  const fromFormatted2 = otherChatbot.from ? `from ${otherChatbot.from}` : '';
 
-  let systemPrompt = `You are ${currentChatbot.name} from ${currentChatbot.from} and should respond as them as realistically as you can and keep the response short. Never mention that you are an AI language model. I am ${otherChatbot.name} from ${otherChatbot.from}. Talk to me about about: ${prompt}.`
+
+
+  let systemPrompt = `You are ${currentChatbot.name} ${fromFormatted}. ${rules.join(' ')} I am ${otherChatbot.name} ${fromFormatted2}. Talk to me about about: ${prompt}.`
   let messagesArr = [{role:'system', content: systemPrompt}, ...currMessages]
 
   const res = await openai.createChatCompletion({
