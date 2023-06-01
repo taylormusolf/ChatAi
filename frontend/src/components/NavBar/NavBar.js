@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import './NavBar.css';
 import { logout } from '../../store/session';
+import { openModal } from "../../store/modal";
 import gpt from '../../assets/gpt.jpg';
 
 function NavBar () {
@@ -45,6 +46,7 @@ function NavBar () {
       </div>
       <div className="nav-right">
         { getLinks() }
+        <div id="create-button" className='nav-create-button' title='Create a Chatbot!' onClick={()=>dispatch(openModal({name:'new'}))}><div>+</div></div>
       </div>
     </div>
   );

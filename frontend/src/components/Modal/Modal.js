@@ -36,8 +36,10 @@ const Modal = () => {
       return null;
   }
   return (
-    <div className="modal-background" onClick={()=> dispatch(closeModal())}>
+    // <div className="modal-background" onClick={()=> dispatch(closeModal())}>
+    <div className="modal-background">
       <div className="modal-child" onClick={(e) => e.stopPropagation()}>
+        <div className="close-x" onClick={()=> dispatch(closeModal())}>X</div>
         {component}
       </div>
     </div>

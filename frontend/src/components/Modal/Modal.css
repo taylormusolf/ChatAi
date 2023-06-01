@@ -14,4 +14,14 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.close-x{
+  font-size: 1.25rem;
+  font-weight: 900;
+  margin-top: 1vw;
+  margin-right: 1vw;
+  cursor: pointer;
 }

@@ -22,6 +22,7 @@ function ChatBotShow(){
   const [response, setResponse] = useState('');
   const [loadingChat, setLoadingChat] = useState(false);
   const [loadingPrompts, setLoadingPrompts] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const chat = useSelector(state => Object.keys(state.entities.chats).length === 0 ? {} : state.entities.chats.current);
   const newResponse = useSelector(state => state.entities.chats?.new);
@@ -99,6 +100,26 @@ function ChatBotShow(){
 
   }
 
+  const popup = ()=>{
+    return <div className="show-chat-popup">
+            <Link to='/chatbots/'>Back to ChatBot Index</Link>
+            <button onClick={()=> dispatch(openModal({name: 'clear history', fnc: setResponse}))}>Clear Chat History</button>
+            { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'edit'}))}>Edit Bot</button> : null}
+            { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'delete'}))}>Delete Bot</button> : null}
+            <button onClick={()=> dispatch(openModal({name: 'clone'}))}>Clone Bot</button>
+            <button disabled={loadingPrompts} onClick={generatePrompts}>Generate Prompts</button>
+            <ul className="prompt-suggestions" onClick={handlePromptClick}>
+              {loadingPrompts ? <h1>Loading...</h1> : null}
+              {prompts?.map((prompt, i)=>{
+                const modified = !Number.isNaN(parseInt(prompt[0])) ? prompt.slice(3) : prompt.slice(0,2) === '- ' ? prompt.slice(1) : prompt[0] === '-' ? prompt.slice(1) : prompt;
+                return(
+                  <li key={i}>{modified}</li>
+                )
+              })}
+            </ul>
+          </div>
+  }
+
 
   return(
     <div className="chatbot-show-container">
@@ -149,28 +170,15 @@ function ChatBotShow(){
                 <div ref={chatEndRef} />
               </ul>
             </div>
-            <form className="show-chat-form" onSubmit={handleSubmit}>
-              <input type='text' onChange={handleChange} value={request} placeholder={`Send a message to ${bot?.name}`}/>
-              <input type='submit' value="Send" disabled={loadingChat}/>
-            </form>
+            <div className='chatbot-show-message-form-container'>
+              <form className="show-chat-form" onSubmit={handleSubmit}>
+                <input type='text' onChange={handleChange} value={request} placeholder={`Send a message to ${bot?.name}`}/>
+                <input type='submit' value="Send" disabled={loadingChat}/>
+              </form>
+              <button onClick={()=> showMenu ? setShowMenu(false) : setShowMenu(true)}>...</button>
+            </div>
           </ul>
-          <div className="show-chat-right-panel">
-            <Link to='/chatbots/'>Back to ChatBot Index</Link>
-            <button onClick={()=> dispatch(openModal({name: 'clear history', fnc: setResponse}))}>Clear Chat History</button>
-            { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'edit'}))}>Edit Bot</button> : null}
-            { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'delete'}))}>Delete Bot</button> : null}
-            <button onClick={()=> dispatch(openModal({name: 'clone'}))}>Clone Bot</button>
-            <button disabled={loadingPrompts} onClick={generatePrompts}>Generate Prompts</button>
-            <ul className="prompt-suggestions" onClick={handlePromptClick}>
-              {loadingPrompts ? <h1>Loading...</h1> : null}
-              {prompts?.map((prompt, i)=>{
-                const modified = !Number.isNaN(parseInt(prompt[0])) ? prompt.slice(3) : prompt.slice(0,2) === '- ' ? prompt.slice(1) : prompt[0] === '-' ? prompt.slice(1) : prompt;
-                return(
-                  <li key={i}>{modified}</li>
-                )
-              })}
-            </ul>
-          </div>
+          {showMenu && popup()}
              
     </div>
   )

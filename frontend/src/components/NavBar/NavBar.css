@@ -4,6 +4,16 @@
   
 }
 
+#create-button.nav-create-button{
+  height: 75px;
+  width: 75px;
+  position: relative;
+  top: 10vh;
+  right: 5vw;
+  cursor: pointer;
+  opacity: .7;
+}
+
 
 .links-auth, .links-nav{
   display: flex; 
