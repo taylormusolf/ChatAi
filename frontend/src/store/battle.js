@@ -34,6 +34,35 @@ export const fetchBattleResponse = (chatbot1, chatbot2, prompt, currentChatbot, 
     }
 }
 
+export const fetchDebateResponse = (chatbot1, chatbot2, prompt, stance1, stance2, currentChatbot, messages) => async dispatch => {
+  try {
+        const res = await jwtFetch('/api/battle/debate', {
+            method: 'POST',
+            body: JSON.stringify({chatbot1, chatbot2, prompt, currentChatbot, messages})
+        });
+        
+        const response = await res.json();
+        dispatch(receiveBattleResponse(response));
+    } catch (err) {
+        console.log(err);
+        dispatch(receiveBattleErrors(err));
+    }
+}
+export const fetchRapResponse = (chatbot1, chatbot2, currentChatbot, messages) => async dispatch => {
+  try {
+        const res = await jwtFetch('/api/battle/rap', {
+            method: 'POST',
+            body: JSON.stringify({chatbot1, chatbot2, currentChatbot, messages})
+        });
+        
+        const response = await res.json();
+        dispatch(receiveBattleResponse(response));
+    } catch (err) {
+        console.log(err);
+        dispatch(receiveBattleErrors(err));
+    }
+}
+
 const nullErrors = null;
 
 export const battleErrorsReducer = (state = nullErrors, action) => {

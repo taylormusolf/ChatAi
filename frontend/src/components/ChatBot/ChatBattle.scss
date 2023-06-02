@@ -5,13 +5,123 @@
   align-items: center;
   position: relative;
   top: 17vh;
+  // height: 50vh;
+}
+
+.battle-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 30%;
+}
+
+.battle-chat-box{
+  overflow-y: scroll;
+  height: 50vh;
 }
 
 .battle-bot-message{
-  img{
-    height: 50px;
-    width: 50px;
-    object-fit: cover;
-    border-radius: 50%;
+}
+.first-bot-message{
+  width: 300px;
+  margin: 50px auto;
+  border: 4px solid #00bfb6;
+  padding: 20px;
+  text-align: center;
+  // font-weight: 900;
+  color: #00bfb6;
+  // font-family: arial;
+  position: relative;
+}
+.sb1:before{
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid #00bfb6;
+  border-top: 10px solid #00bfb6;
+  border-bottom: 10px solid transparent;
+  left: -21px;
+  top: 6px;
+}
+
+.sb1:after {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 7px solid transparent;
+  border-right: 7px solid #fff;
+  border-top: 7px solid #fff;
+  border-bottom: 7px solid transparent;
+  left: -11px;
+  top: 10px;
+}
+
+.second-bot-message{
+  width: 300px;
+  margin: 50px auto;
+  border: 4px solid #cd1bac;
+  padding: 20px;
+  text-align: center;
+  font-weight: 900;
+  color: #cd1bac;
+  font-family: arial;
+  position: relative;
+}
+
+.sb2:before{
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 10px solid #cd1bac;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #cd1bac;
+  border-bottom: 10px solid transparent;
+  right: -21px;
+  top: 6px;
+}
+.sb2:after {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 7px solid #fff;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #fff;
+  border-bottom: 7px solid transparent;
+  right: -11px;
+  top: 10px;
+}
+
+
+.chat-battle-img{
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+  // border-radius: 50%;
+}
+
+.battle-form-bots{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 50%;
+}
+
+.chat-battle-opponents{
+  display: flex;
+  justify-content: space-between;
+  width: 75vw;
+  div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
   }
 }

@@ -7,14 +7,14 @@ import './ChatBattle.scss'
 
 function ChatBattle(){
     const dispatch = useDispatch();
-    const chatbots = useSelector(state => state.entities.chatBots?.all ? Object.values(state.entities.chatBots.all) : []);
+    const chatbots = useSelector(state => state.entities.chatBots?.all ? Object.values(state.entities.chatBots.all).sort((a, b)=> a.name < b.name) : []);
     const [firstChatbot, setFirstChatbot] = useState(null);
     const [secondChatbot, setSecondChatbot] = useState(null);
     const [prompt, setPrompt] = useState(null);
     const [respondingBot, setRespondingBot] = useState(null);
     const [chattedStarted, setChatStarted] = useState(false);
     const [messages, setMessages] = useState([]);
-    const [newRequest, setNewRequest] = useState(null);
+    // const [newRequest, setNewRequest] = useState(null);
     const responses = useSelector(state => state.ui.battle);
 
     useEffect(()=>{
@@ -55,9 +55,16 @@ function ChatBattle(){
         setMessages([]);
         dispatch(clearBattleResponse())
     }
+    const handleClear = (e) => {
+        e.preventDefault();
+        setMessages([]);
+        dispatch(clearBattleResponse())
+    }
     const handleRequest = async (e) => {
         e.preventDefault();
-        
+        //debate, chat or rap
+        // You are in a rap battle with the other person. You can only speak in rhyme and you are to diss the other person.
+
         dispatch(fetchBattleResponse(firstChatbot, secondChatbot, prompt, respondingBot, messages))
 
     }
@@ -67,43 +74,64 @@ function ChatBattle(){
     return(
         <div className="battle-container">
             <h1>ChatBattle</h1>
-            { !chattedStarted && <form onSubmit={handleSubmit}>
-                <h2>Choose your first chatbot</h2>
-                <select defaultValue= "null" onChange={(e)=> handleSelect(e, 'first')}>
-                    <option value="null" disabled>Select Chatbot</option>
-                    {chatbots?.map((chatbot) => {
-                        return <option key={chatbot._id} value={JSON.stringify(chatbot)}>{chatbot.name}</option>
-                    })}
-                </select>
-                <h2>Choose your second chatbot</h2>
-                <select defaultValue= "null" onChange={(e)=> handleSelect(e, 'second')}>
-                    <option value="null" disabled>Select Chatbot</option>
-                    {chatbots?.map((chatbot) => (
-                        <option key={chatbot._id} value={JSON.stringify(chatbot)}>{chatbot.name}</option>
-                    ))}
-                </select>
-                <br />
+            { !chattedStarted && <form className="battle-form" onSubmit={handleSubmit}>
+                <div className="battle-form-bots">
+                    <div>
+                        <h2>Choose your first chatbot</h2>
+                        <select defaultValue= "null" onChange={(e)=> handleSelect(e, 'first')}>
+                            <option value="null" disabled>Select Chatbot</option>
+                            {chatbots?.map((chatbot) => {
+                                return <option key={chatbot._id} value={JSON.stringify(chatbot)}>{chatbot.name}</option>
+                            })}
+                        </select>
+                    </div>
+                    <div>
+                        <h2>Choose your second chatbot</h2>
+                        <select defaultValue= "null" onChange={(e)=> handleSelect(e, 'second')}>
+                            <option value="null" disabled>Select Chatbot</option>
+                            {chatbots?.map((chatbot) => {
+                                return <option key={chatbot._id} value={JSON.stringify(chatbot)}>{chatbot.name}</option>
+                            })}
+                        </select>
+                    </div>
+
+                </div>
+                
                 <textarea placeholder="What should they talk about?" onChange={e => setPrompt(e.target.value)}/>
-                <button type="submit">Start Chat Battle</button>
+                <button type="submit" disabled={!firstChatbot || !secondChatbot || !prompt}>Start Chat Battle</button>
             </form>}
 
            {chattedStarted && <div>
-                 <h1>{firstChatbot.name} vs {secondChatbot.name}</h1>
-                <h2>Topic: {prompt}</h2>
-                 <div className="battle-chat-box">
+                <div className="chat-battle-opponents"> 
+                    <div>
+                        <h1>{firstChatbot.name}</h1>
+                        <img className="chat-battle-img" src={firstChatbot.profileImageUrl} alt={firstChatbot.name}/>
+                    </div>
+                    <div>
+                        <h1>vs</h1>
+                        <h2>Topic: {prompt}</h2>
+                    </div>
+                    <div>
+                    <h1>{secondChatbot.name}</h1>
+                        <img className="chat-battle-img" src={secondChatbot.profileImageUrl} alt={secondChatbot.name}/>
+                    </div>
+                </div>
+                
+                <div className="battle-chat-box">
                     {responses?.map((message, idx) => {
                         const bot = message.role === 'assistant' ? firstChatbot : secondChatbot;
                         return (
-                        <div key={idx} className="battle-bot-message">
+                        <div key={idx} className={`battle-bot-message ${message.role === 'assistant' ? 'first-bot-message sb1' : 'second-bot-message sb2'}`}>
                             <div>{bot.name}</div> 
-                            <img src={bot.profileImageUrl} alt={bot.name}/>
+                            {/* <img src={bot.profileImageUrl} alt={bot.name}/> */}
                             <div>{message.content}</div>
                         </div>
                         )
                     })}
-                 </div>
+                </div>
 
                 <button onClick={handleRequest}>Go</button>
+                <button onClick={handleClear}>Clear</button>
                 <button onClick={handleReset}>Reset</button>
             </div>}
 
