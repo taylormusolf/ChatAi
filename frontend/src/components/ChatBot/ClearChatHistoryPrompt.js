@@ -23,10 +23,12 @@ function ClearChatHistoryPrompt(){
 
 
   return (
-    <div className="chatbot-clear-history-confirmation">
+    <div className="chatbot-conformation-popup">
       <h1>Are you sure you want to clear this chatbot's history?  It will be gone forever.</h1>
-      <button onClick={handleClear}>Yes</button>
-      <button onClick={()=>dispatch(closeModal())}>No</button>
+      <div className="chatbot-conformation-popup-buttons">
+        <button className='red-button' onClick={handleClear}>Yes</button>
+        <button className='green-button' onClick={()=>dispatch(closeModal())}>No</button>
+      </div>
     </div>
   )
 

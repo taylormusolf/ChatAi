@@ -3,7 +3,7 @@ const {OpenAIApi, Configuration} = require("openai");
 
 const rules = [
   'You should respond as realistically as you can in the format of a casual text message conversation and keep the response short.', 
-  'Never mention that you are an AI language model.'
+  'Never ever mention that you are an AI language model.'
 
 ]
 
@@ -16,8 +16,7 @@ const getAiResponse = async (chatBot, chat, chatRequest) =>{
   const prompt = chatBot.prompt ? `${chatBot.prompt}` : '';
   const description = chatBot.description ? `${chatBot.description}` : '';
   const greeting = chatBot.greeting ? {role:'assistant', content: chatBot.greeting} : {};
-
-  let systemPrompt = `You are ${chatBot.name} ${from}${rules.join(' ')} ${description}. ${prompt}.`
+  let systemPrompt = `You are ${chatBot.name} ${from}.  The user you are speaking with is ${chatRequest.name}. ${rules.join(' ')} ${description}. ${prompt}.`
   let messages = [{role:'system', content: systemPrompt}, greeting, ...chat.messages, chatRequest]
 
   const res = await openai.createChatCompletion({
@@ -34,8 +33,8 @@ const getAiPrompts = async (chatbot) =>{
   const openai = new OpenAIApi(new Configuration({
     apiKey: process.env.CHAT_API_KEY
   }));
-  const fromFormatted = chatBot.from ? `from ${chatBot.from}` : '';
-  const descriptionFormatted = chatBot.description ? `${chatBot.description}` : '';
+  const fromFormatted = chatbot.from ? `from ${chatbot.from}` : '';
+  const descriptionFormatted = chatbot.description ? `${chatbot.description}` : '';
 
   const content = `The subject's name is ${name} ${fromFormatted}. ${descriptionFormatted}`;
   const message = {role:'user', content};

@@ -23,6 +23,7 @@ function ChatBotShow(){
   const [loadingChat, setLoadingChat] = useState(false);
   const [loadingPrompts, setLoadingPrompts] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [showPrompts, setShowPrompts] = useState(false);
 
   const chat = useSelector(state => Object.keys(state.entities.chats).length === 0 ? {} : state.entities.chats.current);
   const newResponse = useSelector(state => state.entities.chats?.new);
@@ -41,6 +42,7 @@ function ChatBotShow(){
   const generatePrompts = e => {  
     e.preventDefault();
     setLoadingPrompts(true);
+    setShowPrompts(true);
     dispatch(clearPrompts());
     dispatch(fetchPrompts(chatBotId)).then(()=>setLoadingPrompts(false));
   }
@@ -79,7 +81,7 @@ function ChatBotShow(){
         dispatch(receiveChatRequest(prompt));
         setResponse("");
         setLoadingChat(true);
-        dispatch(fetchChatResponse(chat._id, {role: 'user', content: prompt })).then(()=>setLoadingChat(false));
+        dispatch(fetchChatResponse(chat._id, {role: 'user', content: prompt, name: sessionUser.username })).then(()=>setLoadingChat(false));
       } catch (err) {
         console.log(err)
       }
@@ -93,7 +95,7 @@ function ChatBotShow(){
       setRequest("");
       setResponse("");
       setLoadingChat(true);
-      dispatch(fetchChatResponse(chat._id, {role: 'user', content: request })).then(()=>setLoadingChat(false));
+      dispatch(fetchChatResponse(chat._id, {role: 'user', content: request, name: sessionUser.username })).then(()=>setLoadingChat(false));
     } catch (err) {
       console.log(err)
     }
@@ -102,21 +104,28 @@ function ChatBotShow(){
 
   const popup = ()=>{
     return <div className="show-chat-popup">
-            <Link to='/chatbots/'>Back to ChatBot Index</Link>
-            <button onClick={()=> dispatch(openModal({name: 'clear history', fnc: setResponse}))}>Clear Chat History</button>
-            { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'edit'}))}>Edit Bot</button> : null}
-            { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'delete'}))}>Delete Bot</button> : null}
-            <button onClick={()=> dispatch(openModal({name: 'clone'}))}>Clone Bot</button>
-            <button disabled={loadingPrompts} onClick={generatePrompts}>Generate Prompts</button>
-            <ul className="prompt-suggestions" onClick={handlePromptClick}>
+            <div className="show-chat-popup-x" onClick={()=> setShowMenu(false)}>X</div>
+            {!showPrompts && <div className="show-chat-popup-buttons">
+              <Link to='/chatbots/'>Back to ChatBot Index</Link>
+              <button onClick={()=> dispatch(openModal({name: 'clear history', fnc: setResponse}))}>Clear Chat History</button>
+              { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'edit'}))}>Edit Bot</button> : null}
+              { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'delete'}))}>Delete Bot</button> : null}
+              <button onClick={()=> dispatch(openModal({name: 'clone'}))}>Clone Bot</button>
+              <button disabled={loadingPrompts} onClick={generatePrompts}>Generate Prompts</button>
+            </div>}
+            {showPrompts && <div>
+              <ul className="prompt-suggestions" onClick={handlePromptClick}>
               {loadingPrompts ? <h1>Loading...</h1> : null}
               {prompts?.map((prompt, i)=>{
                 const modified = !Number.isNaN(parseInt(prompt[0])) ? prompt.slice(3) : prompt.slice(0,2) === '- ' ? prompt.slice(1) : prompt[0] === '-' ? prompt.slice(1) : prompt;
                 return(
                   <li key={i}>{modified}</li>
-                )
-              })}
-            </ul>
+                  )
+                })}
+              </ul>
+              <button onClick={()=>setShowPrompts(false)}>Back</button>
+            </div>}
+
           </div>
   }
 

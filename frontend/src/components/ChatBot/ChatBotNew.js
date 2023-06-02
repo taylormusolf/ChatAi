@@ -179,7 +179,7 @@ function ChatBotNew(props){
             <input type="file" accept=".jpg, .jpeg, .png" onChange={handleFile} />
           </label>
           {photoUrl? <img className='preview' src={photoUrl} alt='preview' /> 
-            : chatbot.profileImageUrl ? <img className='preview' src={chatbot.profileImageUrl} alt='preview' /> 
+            : form !== 'new' && chatbot?.profileImageUrl ? <img className='preview' src={chatbot.profileImageUrl} alt='preview' /> 
             : null}
           <input
             type="submit"

@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteChatBot } from "../../store/chatbots";
 import { closeModal } from "../../store/modal";
 import { useHistory } from "react-router-dom";
-import './ChatBotDelete.css'
 
 function ChatBotDelete(){
   // const {chatbotId} = useParams();
@@ -20,10 +19,12 @@ function ChatBotDelete(){
 
 
   return (
-    <div className="chatbot-delete-conformation">
+    <div className="chatbot-conformation-popup">
       <h1>Are you sure you want to delete this chatbot?</h1>
-      <button onClick={handleDelete}>Delete</button>
-      <button onClick={()=>dispatch(closeModal())}>Cancel</button>
+      <div className="chatbot-conformation-popup-buttons">
+        <button className='red-button' onClick={handleDelete}>Delete</button>
+        <button className='green-button' onClick={()=>dispatch(closeModal())}>Cancel</button>
+      </div>
     </div>
   )
 

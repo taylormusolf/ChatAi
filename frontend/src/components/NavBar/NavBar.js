@@ -26,6 +26,8 @@ function NavBar () {
           </Link>  
           <Link to='/chatbots/battle'>Battle</Link>
           <button onClick={logoutUser} id="logout-button">Logout</button>
+          <div id="create-button" className='nav-create-button' title='Create a Chatbot!' onClick={()=>dispatch(openModal({name:'new'}))}><div>+</div></div>
+
         </div>
       );
     } else {
@@ -46,7 +48,6 @@ function NavBar () {
       </div>
       <div className="nav-right">
         { getLinks() }
-        <div id="create-button" className='nav-create-button' title='Create a Chatbot!' onClick={()=>dispatch(openModal({name:'new'}))}><div>+</div></div>
       </div>
     </div>
   );
