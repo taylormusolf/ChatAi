@@ -24,7 +24,7 @@ function NavBar () {
             <img className='profile-pic' src={user.profileImageUrl} alt='profile-img' /> : 
             null}
           </Link>  
-          <Link to='/chatbots/battle'>Battle</Link>
+          <Link id="battle-button" to='/chatbots/battle'>Battle</Link>
           <button onClick={logoutUser} id="logout-button">Logout</button>
           <div id="create-button" className='nav-create-button' title='Create a Chatbot!' onClick={()=>dispatch(openModal({name:'new'}))}><div>+</div></div>
 

@@ -1,6 +1,8 @@
 .preview{
-  width: 200px;
-  height: 200px;
+  width: 50vw;
+  max-width: 200px;
+  height: 50vh;
+  max-height: 200px;
   object-fit: cover;
   padding-bottom: 10px;
 }
@@ -11,8 +13,10 @@
   /* justify-content: center; */
   // margin-top: 50px;
   align-items: center;
-  height: 60vh;
-  width: 50vw;
+  height: 100vh;
+  max-height: 600px;
+  width: 95vw;
+  max-width: 550px;
   border-radius: 5%;
   h2{
     font-size: 1.5rem;

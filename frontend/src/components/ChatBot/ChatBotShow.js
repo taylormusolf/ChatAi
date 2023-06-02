@@ -103,30 +103,40 @@ function ChatBotShow(){
   }
 
   const popup = ()=>{
-    return <div className="show-chat-popup">
+    return (
+    <div className="show-chat-popup-container">
+      <div className="show-chat-popup">
+        {!showPrompts && <div className="show-chat-popup-buttons">
+          <div className="show-chat-popup-navigation">
             <div className="show-chat-popup-x" onClick={()=> setShowMenu(false)}>X</div>
-            {!showPrompts && <div className="show-chat-popup-buttons">
-              <Link to='/chatbots/'>Back to ChatBot Index</Link>
-              <button onClick={()=> dispatch(openModal({name: 'clear history', fnc: setResponse}))}>Clear Chat History</button>
-              { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'edit'}))}>Edit Bot</button> : null}
-              { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'delete'}))}>Delete Bot</button> : null}
-              <button onClick={()=> dispatch(openModal({name: 'clone'}))}>Clone Bot</button>
-              <button disabled={loadingPrompts} onClick={generatePrompts}>Generate Prompts</button>
-            </div>}
-            {showPrompts && <div>
-              <ul className="prompt-suggestions" onClick={handlePromptClick}>
-              {loadingPrompts ? <h1>Loading...</h1> : null}
-              {prompts?.map((prompt, i)=>{
-                const modified = !Number.isNaN(parseInt(prompt[0])) ? prompt.slice(3) : prompt.slice(0,2) === '- ' ? prompt.slice(1) : prompt[0] === '-' ? prompt.slice(1) : prompt;
-                return(
-                  <li key={i}>{modified}</li>
-                  )
-                })}
-              </ul>
-              <button onClick={()=>setShowPrompts(false)}>Back</button>
-            </div>}
+          </div>
+          <Link to='/chatbots/'>Back to ChatBot Index</Link>
+          <button onClick={()=> dispatch(openModal({name: 'clear history', fnc: setResponse}))}>Clear Chat History</button>
+          { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'edit'}))}>Edit Bot</button> : null}
+          { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'delete'}))}>Delete Bot</button> : null}
+          <button onClick={()=> dispatch(openModal({name: 'clone'}))}>Clone Bot</button>
+          <button disabled={loadingPrompts} onClick={generatePrompts}>Generate Prompts</button>
+        </div>}
+        {showPrompts && <div>
+          <div className="show-chat-popup-navigation">
+            <button onClick={()=>setShowPrompts(false)}>{'<='}</button>
+            <div className="show-chat-popup-x" onClick={()=> setShowMenu(false)}>X</div>
+          </div>
+          <h1>Prompt Suggestions</h1>
+          <ul className="prompt-suggestions" onClick={handlePromptClick}>
+          {loadingPrompts ? <h1>Loading...</h1> : null}
+          {prompts?.map((prompt, i)=>{
+            const modified = !Number.isNaN(parseInt(prompt[0])) ? prompt.slice(3) : prompt.slice(0,2) === '- ' ? prompt.slice(1) : prompt[0] === '-' ? prompt.slice(1) : prompt;
+            return(
+              <li key={i}>{modified}</li>
+              )
+            })}
+          </ul>
+        </div>}
 
           </div>
+      </div>
+      )
   }
 
 
