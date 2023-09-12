@@ -21,18 +21,21 @@ function ChatBotIndex(){
   } 
 
   return(
-    <div className="chatbots-index-container">
-      {chatBots?.map((bot, i)=>{
-        return(
-          <ul className="chatbots-index-details" key={i}>
-            <li title={bot.name}>{bot.name}</li>
-            <img src={bot.profileImageUrl} alt={bot.name}/>
-            {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button">Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button"> Start Chat</button>}
-          </ul>
-        )
-      })}
-      {/* <div id="create-button" onClick={()=>dispatch(openModal({name:'new'}))}><div>+</div></div> */}
-    </div>
+    <>
+      {/* <h1>Featured Chatbots</h1> */}
+      <div className="chatbots-index-container">
+        {chatBots?.map((bot, i)=>{
+          return(
+            <ul className="chatbots-index-details" key={i}>
+              <li title={bot.name}>{bot.name}</li>
+              <img src={bot.profileImageUrl} alt={bot.name}/>
+              {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button">Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button"> Start Chat</button>}
+            </ul>
+          )
+        })}
+      </div>
+      {/* <h1>Recently Chatted With</h1> */}
+    </>
   )
 
   

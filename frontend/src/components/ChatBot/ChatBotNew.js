@@ -130,50 +130,50 @@ function ChatBotNew(props){
         <form className="chatbot-form" onSubmit={chatBotSubmit}>
           <h2>{form === 'new' ? 'New Chatbot' : form === 'clone' ? 'Chatbot Clone' : 'Edit Chatbot'}</h2>
           <div className="errors">{errors?.name}</div>
-          <label>
-            <span>Name *required*</span>
+          <div className='input-container'>
+            <label id={name && 'filled'}>*Name your chatbot</label>
             <input type="text"
               value={name}
               onChange={update('name')}
-              placeholder="What is their name?"
+              // placeholder="What is their name?"
             />
-          </label>
+          </div>
           <div className="errors">{errors?.from}</div>
-          <label>
-            <span>From</span>
-            <input type="from"
+          <div className='input-container'>
+            <label id={from && 'filled'}>From: Town, Universe, etc. to give context to your chatbot.</label>
+            <input type="text"
               value={from}
               onChange={update('from')}
-              placeholder="Town, Universe, etc. to give context to your chatbot."
+              // placeholder="Town, Universe, etc. to give context to your chatbot."
             />
-          </label>
+          </div>
           <div className="errors">{errors?.description}</div>
-          <label>
-            <span>Description</span>
-            <input type="description"
+          <div className='input-container'>
+            <label id={description && 'filled'}>Description: How does the chatbot perceive itself?</label>
+            <input type="text"
               value={description}
               onChange={update('description')}
-              placeholder="How does the chatbot perceive itself?"
+              // placeholder="How does the chatbot perceive itself?"
             />
-          </label>
+          </div>
           <div className="errors">{errors?.greeting}</div>
-          <label>
-            <span>Greeting *required*</span>
-            <input type="greeting"
+          <div className='input-container'>
+            <label id={greeting && 'filled'}>*Greeting: How does the chatbot introduce itself?</label>
+            <input type="text"
               value={greeting}
               onChange={update('greeting')}
-              placeholder="How does the chatbot introduce itself?"
+              // placeholder="How does the chatbot introduce itself?"
             />
-          </label>
+          </div>
           <div className="errors">{errors?.prompt}</div>
-          <label>
-            <span>Additional Prompt</span>
-            <textarea type="prompt"
+          <div className='input-container'>
+            <label id={prompt && 'filled'}>Additional Prompt: Details about your chatbot so it acts the way you want.</label>
+            <input type="text"
               value={prompt}
               onChange={update('prompt')}
-              placeholder="Details about your chatbot so it acts the way you want."
+              // placeholder="Details about your chatbot so it acts the way you want."
             />
-          </label>
+          </div>
           <label>
             <span>Chatbot Image</span>
             <input type="file" accept=".jpg, .jpeg, .png" onChange={handleFile} />

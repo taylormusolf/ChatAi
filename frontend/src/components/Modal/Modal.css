@@ -16,15 +16,19 @@
   background: white;
   display: flex;
   flex-direction: row-reverse;
+  border-radius: .5%;
 }
 
 .close-x{
-  font-size: 1.25rem;
+  position: absolute;
+  font-size: 1.5rem;
   font-weight: 900;
   margin-top: 1vw;
   margin-right: 1vw;
   cursor: pointer;
+  top: 5px;
+  right: 15px;
 }
 .close-x:hover{
-  color: #a4a2a2;
+  color: var(--purple);
 }

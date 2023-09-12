@@ -12,7 +12,8 @@ const { singleFileUpload, singleMulterUpload, retrievePrivateFile } = require(".
 router.get('/', requireUser, async (req, res) => {
   try {
     const chatbots = await ChatBot.find()
-                  .populate("author", "_id username");
+                  .populate("author", "_id username")
+                  .sort({ name: 1});
     chatbots.forEach(bot=>{
       if(!bot.profileImageUrl.includes('aws') ){
         bot.profileImageUrl = retrievePrivateFile(bot.profileImageUrl)

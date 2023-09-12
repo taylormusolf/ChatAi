@@ -20,7 +20,8 @@ const getAiResponse = async (chatBot, chat, chatRequest) =>{
   let messages = [{role:'system', content: systemPrompt}, greeting, ...chat.messages, chatRequest]
 
   const res = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo",
+    model: "gpt-4",
+    // model: "gpt-3.5-turbo",
     messages: messages,
     max_tokens: 150,
     temperature: 0.9
