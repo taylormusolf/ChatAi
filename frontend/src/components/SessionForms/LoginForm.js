@@ -49,13 +49,8 @@ function LoginForm () {
 
   return (
     <div className='session-form-container'>
-      <form className="session-form" onSubmit={handleSubmit}>
-        <h2>Log In Form</h2>
-        <div className="errors">{errors?.email}</div>
-
-        <div className='input-container'>
-
-        </div>
+      <form className="session-form login" onSubmit={handleSubmit}>
+        <h2>Log In</h2>
         <label>
           <span>Email</span>
           <input type="text"
@@ -64,7 +59,7 @@ function LoginForm () {
             placeholder="Email"
           />
         </label>
-        <div className="errors">{errors?.password}</div>
+        <div className="errors">{errors?.email}</div>
         <label>
           <span>Password</span>
           <input type="password"
@@ -73,6 +68,7 @@ function LoginForm () {
             placeholder="Password"
           />
         </label>
+        <div className="errors">{errors?.password}</div>
         <input
           type="submit"
           value="Log In"
