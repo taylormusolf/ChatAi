@@ -17,6 +17,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.swiper-slide {
+  width: 125px !important;
 }
 
 .swiper {
@@ -49,11 +55,13 @@ div.swiper-button-prev{
   /* justify-content: center; */
   /* flex-wrap: wrap; */
   position: relative;
-  top: 15vh;
+  top: 150px;
   max-width: 1200px;
   width: 100%;
-  height: 80vh;
+  /* height: 80vh; */
   max-height: 850px;
+  padding-left: 20px;
+  padding-right: 20px;
   /* width: 600px; */
 }
 .featured-container, .chatted-container, .created-container{
@@ -62,9 +70,13 @@ div.swiper-button-prev{
   /* width: 100%; */
   /* margin-left: 50px; */
   width: 100%;
+  padding-bottom: 30px;
   /* width: 100vw; */
   /* max-width: 1200px; */
 
+}
+.no-chatbot-message{
+  height: 200px;
 }
 
 .chatbots-index-container h1{

@@ -140,7 +140,7 @@ function ChatBotNew(props){
           </div>
           <div className="errors">{errors?.from}</div>
           <div className='input-container'>
-            <label id={from && 'filled'}>From: Town, Universe, etc. to give context to your chatbot.</label>
+            <label id={from && 'filled'}>From: Town, Universe, etc. to give context</label>
             <input type="text"
               value={from}
               onChange={update('from')}
@@ -149,7 +149,7 @@ function ChatBotNew(props){
           </div>
           <div className="errors">{errors?.description}</div>
           <div className='input-container'>
-            <label id={description && 'filled'}>Description: How does the chatbot perceive itself?</label>
+            <label id={description && 'filled'}>Description: How does it perceive itself?</label>
             <input type="text"
               value={description}
               onChange={update('description')}
@@ -158,7 +158,7 @@ function ChatBotNew(props){
           </div>
           <div className="errors">{errors?.greeting}</div>
           <div className='input-container'>
-            <label id={greeting && 'filled'}>*Greeting: How does the chatbot introduce itself?</label>
+            <label id={greeting && 'filled'}>*Greeting: How does it introduce itself?</label>
             <input type="text"
               value={greeting}
               onChange={update('greeting')}
@@ -167,7 +167,7 @@ function ChatBotNew(props){
           </div>
           <div className="errors">{errors?.prompt}</div>
           <div className='input-container'>
-            <label id={prompt && 'filled'}>Additional Prompt: Details about your chatbot so it acts the way you want.</label>
+            <label id={prompt && 'filled'}>Additional Prompt: How should it act?</label>
             <input type="text"
               value={prompt}
               onChange={update('prompt')}

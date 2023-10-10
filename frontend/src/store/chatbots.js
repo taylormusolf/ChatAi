@@ -184,29 +184,8 @@ const chatBotsReducer = (state = { all: {}, user: {}, chatted: [], new: undefine
     case RECEIVE_CHATBOT:
       return { ...state, new: action.payload.chatbot};
     case RECEIVE_NEW_CHATBOT:
-      return { ...state, new: action.chatbot, all: {...state.all, [action.chatbot._id]:action.chatbot} };
+      return { ...state, new: action.chatbot, all: {...state.all, [action.chatbot._id]:action.chatbot}, user: {...state.user, [action.chatbot._id]:action.chatbot} };
     case REMOVE_CHATBOT:
-      // if (state.user.length) 
-      // let i;
-      // for (let index = 0; index < state.user.length; index++) {
-      //   const element = state.user[index];
-      //   // if (element === undefined) continue;
-      //   // console.log(element._id.toString() === action.chatbotId.toString(), element._id, action.chatbotId);
-      //   if(element._id.toString() === action.chatbotId.toString()){
-      //     i = index;
-      //     break;
-      //   }
-      // }
-      // if(i !== 0 && !i) i = -1;
-  
-      // // const newUser = state.user.slice(0, i) + state.user.slice(i+ 1);
-      // const newUser = [...state.user]
-      // delete newUser[i];
-      // //avoiding shallow copies
-      // const newerUser = [];
-      // newUser.forEach((obj)=>{
-      //   if(obj) newerUser.push({...obj})
-      // })
       const newState = {...state, new: undefined }
       delete newState.all[action.chatbotId]
       delete newState.user[action.chatbotId]

@@ -15,6 +15,7 @@ import ChatBotNew from './components/ChatBot/ChatBotNew';
 import ChatBotIndex from './components/ChatBot/ChatBotIndex';
 import ChatBotShow from './components/ChatBot/ChatBotShow';
 import ChatBattle from './components/ChatBot/ChatBattle';
+import ChatBotSearch from './components/ChatBot/ChatBotSearch';
 import Modal from './components/Modal/Modal';
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <ProtectedRoute exact path="/chatbots/new" component={ChatBotNew} />
 
           <ProtectedRoute exact path="/chatbots/" component={ChatBotIndex} />
+          <ProtectedRoute exact path="/chatbots/search" component={ChatBotSearch} />
           <ProtectedRoute exact path="/chatbots/battle" component={ChatBattle} />
           <ProtectedRoute exact path="/chatbots/:chatBotId" component={ChatBotShow} />
           <ProtectedRoute exact path="/profile" component={Profile} />
