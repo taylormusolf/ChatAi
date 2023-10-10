@@ -19,7 +19,7 @@ router.get('/', requireUser, async (req, res) => {
         bot.profileImageUrl = retrievePrivateFile(bot.profileImageUrl)
       }
     })
-    const chats = await Chat.find({author: req.user})
+    const chats = await Chat.find({author: req.user}).sort({updatedAt: -1})
     const chattedChatbotIds = chats.map(chat => chat.chatBot);
 
     return res.json({chatbots, chattedChatbotIds});
@@ -94,6 +94,7 @@ router.post('/', singleMulterUpload("image"),  requireUser, async (req, res, nex
       from: req.body.from,
       description: req.body.description,
       greeting: req.body.greeting,
+      featured: false,
       author: req.user
     });
     let chatBot = await newChatBot.save();

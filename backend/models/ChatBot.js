@@ -14,6 +14,10 @@ const chatBotSchema = Schema({
     type: String,
     required: false
   },
+  featured: {
+    type: Boolean,
+    required: false
+  },
   description: {
     type: String,
     required: false
