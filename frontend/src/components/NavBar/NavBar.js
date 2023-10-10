@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import './NavBar.css';
 import { logout } from '../../store/session';
 import { openModal } from "../../store/modal";
 import gpt from '../../assets/gpt.jpg';

@@ -2,6 +2,8 @@
 *{
     box-sizing: border-box
 }
+@import "./assets/stylesheets/reset.css";
 @import "./assets/stylesheets/splash_page.css";
 @import "./assets/stylesheets/session-forms.css";
-@import "./assets/stylesheets/chat-bot-index.css"
+@import "./assets/stylesheets/chat-bot-index.css";
+@import "./assets/stylesheets/nav_bar.css";

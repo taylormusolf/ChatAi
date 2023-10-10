@@ -1,7 +1,26 @@
-:root{
-  --purple: #541ffb;
-  --black: rgb(49, 49, 49);
-  --white: #FFFFFF
+.navbar{
+  width: 100%;
+  max-width: 1300px;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  background-color: white;
+  z-index: 5;
+}
+
+#logout-button, #battle-button{
+  border: none;
+  background-color: transparent;
+  color: var(--purple);
+  cursor: pointer;
+  transition: all;
+  transition: all 750ms;
+  transition-timing-function: ease-out;
+}
+
+#logout-button:hover, #battle-button:hover{
+  transform: translateY(-2px);
 }
 
 #create-button.nav-create-button{
@@ -13,6 +32,7 @@
   cursor: pointer;
   opacity: .7;
 }
+
 
 
 .links-auth, .links-nav{
@@ -76,6 +96,3 @@
   
 }
 
-footer{
-  margin: none;
-}

@@ -1,10 +1,10 @@
 .session-form-container{
-    /* height: 85vh; */
-    /* width: 100vw; */
     display: flex;
     justify-content: center;
     position: relative;
     top: 15vh;
+    width: 50vw;
+    min-width: 400px;
 }
 
 .session-form{

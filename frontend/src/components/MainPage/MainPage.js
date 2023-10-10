@@ -1,6 +1,5 @@
 
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import './MainPage.css'
 import splash from '../../assets/splash_placeholder.jpg'
 import lofi from '../../assets/lofi.avif'
 

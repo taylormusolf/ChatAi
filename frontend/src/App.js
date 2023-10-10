@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Switch } from 'react-router-dom';
-import './assets/reset.css'
 
 import { AuthRoute, ProtectedRoute } from './components/Routes/Routes';
 import NavBar from './components/NavBar/NavBar';
@@ -27,20 +26,22 @@ function App() {
 
   return loaded && (
     <>
-      <Modal />
-      <NavBar />
-      <Switch>
-        <AuthRoute exact path="/" component={MainPage} />
-        <AuthRoute exact path="/login" component={LoginForm} />
-        <AuthRoute exact path="/signup" component={SignupForm} />
+      <div className='app-wrapper'>
+        <Modal />
+        <NavBar />
+        <Switch>
+          <AuthRoute exact path="/" component={MainPage} />
+          <AuthRoute exact path="/login" component={LoginForm} />
+          <AuthRoute exact path="/signup" component={SignupForm} />
 
-        <ProtectedRoute exact path="/chatbots/new" component={ChatBotNew} />
+          <ProtectedRoute exact path="/chatbots/new" component={ChatBotNew} />
 
-        <ProtectedRoute exact path="/chatbots/" component={ChatBotIndex} />
-        <ProtectedRoute exact path="/chatbots/battle" component={ChatBattle} />
-        <ProtectedRoute exact path="/chatbots/:chatBotId" component={ChatBotShow} />
-        <ProtectedRoute exact path="/profile" component={Profile} />
-      </Switch>
+          <ProtectedRoute exact path="/chatbots/" component={ChatBotIndex} />
+          <ProtectedRoute exact path="/chatbots/battle" component={ChatBattle} />
+          <ProtectedRoute exact path="/chatbots/:chatBotId" component={ChatBotShow} />
+          <ProtectedRoute exact path="/profile" component={Profile} />
+        </Switch>
+      </div>
     </>
   );
 }
