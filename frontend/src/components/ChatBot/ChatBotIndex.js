@@ -24,70 +24,130 @@ function ChatBotIndex(){
     history.push(`/chatbots/${chatBotId}`)
   } 
 
+  const breakpoints = {
+    // when window width is >= 320px
+    1121: {
+      slidesPerView: 8,
+      // spaceBetween: .25,
+      slidesPerGroup: 7
+    },
+    1100: {
+      slidesPerView: 7,
+      slidesPerGroup: 6
+      // spaceBetween: 5
+    },
+    900: {
+      slidesPerView: 6,
+      slidesPerGroup: 5
+      // spaceBetween: 10
+    },
+    700: {
+      slidesPerView: 5,
+      slidesPerGroup: 4
+      // spaceBetween: 10
+    },
+    500: {
+      slidesPerView: 4,
+      slidesPerGroup: 3
+      // spaceBetween: 10
+    },
+    300: {
+      slidesPerView: 3,
+      slidesPerGroup: 2
+      // spaceBetween: 10
+    },
+    100: {
+      slidesPerView: 2,
+      slidesPerGroup: 1
+      // spaceBetween: 10
+    }
+  }
+
   return(
     <div className="chatbots-index-container">
-      <h1>Featured Chatbots</h1>
-      <Swiper
-       modules={[Navigation, Pagination, Scrollbar]}
-       className="swiper"
-       spaceBetween={5}
-       slidesPerView={0}
-       breakpoints={{
-        // when window width is >= 320px
-        1121: {
-          slidesPerView: 8
-          // spaceBetween: 5
-        },
-        1100: {
-          slidesPerView: 7
-          // spaceBetween: 5
-        },
-        900: {
-          slidesPerView: 6
-          // spaceBetween: 10
-        },
-        400: {
-          slidesPerView: 2
-          // spaceBetween: 10
-        },
-      }}
-       navigation
-      //  pagination={{ clickable: true }}
-      //  scrollbar={{ draggable: true }}
-       onSlideChange={() => console.log('slide change')}
-       onSwiper={(swiper) => console.log(swiper)}
-      >
-        {chatBots?.map((bot, i)=>{
-          return(
-            <SwiperSlide key={bot._id}>
-              <ul className="chatbots-index-details" >
-                <li title={bot.name}>{bot.name}</li>
-                <img src={bot.profileImageUrl} alt={bot.name}/>
-                {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button">Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button"> Start Chat</button>}
-              </ul>
-            </SwiperSlide>
-          )
-        })}
-        {/* <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide> */}
-      </Swiper>
-
-
-      {/* <h1>Featured Chatbots</h1> */}
-      <div className="chatbots-index-container">
-        {chatBots?.map((bot, i)=>{
-          return(
-            <ul className="chatbots-index-details" key={i}>
-              <li title={bot.name}>{bot.name}</li>
-              <img src={bot.profileImageUrl} alt={bot.name}/>
-              {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button">Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button"> Start Chat</button>}
-            </ul>
-          )
-        })}
+      <div className="featured-container">
+        <h1>Featured Chatbots</h1>
+        <Swiper
+        modules={[Navigation, Pagination, Scrollbar]}
+        className="swiper"
+        spaceBetween={15}
+        speed={700}
+        autoHeight={true}
+        centerInsufficientSlides={true}
+        breakpoints={breakpoints}
+        navigation
+        //  pagination={{ clickable: true }}
+        scrollbar={{ draggable: true, dragSize: 50, snapOnRelease: true}}
+        //  onSlideChange={() => console.log('slide change')}
+        //  onSwiper={(swiper) => console.log(swiper)}
+        >
+          {chatBots?.map((bot, i)=>{
+            return(
+              <SwiperSlide key={bot._id}>
+                <ul className="chatbots-index-details" >
+                  <li title={bot.name}>{bot.name}</li>
+                  <img src={bot.profileImageUrl} alt={bot.name}/>
+                  {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button">Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button"> Start Chat</button>}
+                </ul>
+              </SwiperSlide>
+            )
+          })}
+        </Swiper>
       </div>
-      {/* <h1>Recently Chatted With</h1> */}
+      <div className="chatted-container">
+        <h1>Recently Chatted Chatbots</h1>
+        <Swiper
+        modules={[Navigation, Pagination, Scrollbar]}
+        className="swiper"
+        spaceBetween={15}
+        speed={700}
+        autoHeight={true}
+        centerInsufficientSlides={true}
+        breakpoints={breakpoints}
+        navigation
+        scrollbar={{ draggable: true, dragSize: 50, snapOnRelease: true}}
+        >
+          {chatBots?.map((bot, i)=>{
+            return(
+              <SwiperSlide key={bot._id}>
+                <ul className="chatbots-index-details" >
+                  <li title={bot.name}>{bot.name}</li>
+                  <img src={bot.profileImageUrl} alt={bot.name}/>
+                  {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button">Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button"> Start Chat</button>}
+                </ul>
+              </SwiperSlide>
+            )
+          })}
+        </Swiper>
+      </div>
+      <div className="created-container">
+        <h1>Created Chatbots</h1>
+        <Swiper
+        modules={[Navigation, Pagination, Scrollbar]}
+        className="swiper"
+        spaceBetween={15}
+        speed={700}
+        autoHeight={true}
+        centerInsufficientSlides={true}
+        breakpoints={breakpoints}
+        navigation
+        scrollbar={{ draggable: true, dragSize: 50, snapOnRelease: true}}
+        >
+          {chatBots?.map((bot, i)=>{
+            return(
+              <SwiperSlide key={bot._id}>
+                <ul className="chatbots-index-details" >
+                  <li title={bot.name}>{bot.name}</li>
+                  <img src={bot.profileImageUrl} alt={bot.name}/>
+                  {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button">Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button"> Start Chat</button>}
+                </ul>
+              </SwiperSlide>
+            )
+          })}
+        </Swiper>
+      </div>
+
+
     </div>
   )
 
