@@ -178,7 +178,10 @@ function ChatBotShow(){
                         <h1>{sessionUser?.username} </h1>
                       </div>
                       }
-                      <h2>{mess.content}</h2>
+                      {mess.content.split('\n').map((message)=>{
+                        return <h2>{message}</h2>
+                      })}
+                      
                     </div>
                   ) 
                 })}
@@ -187,7 +190,9 @@ function ChatBotShow(){
                         <img className='chatbot-show-img-small' src={bot?.profileImageUrl} alt={bot?.name} />
                         <h1>{bot?.name} </h1>
                       </div>}
-                  { response && <h2>{response}</h2> }
+                  { response && response.split('\n').map((message)=>{
+                        return <h2>{message}</h2>
+                      }) }
                 </div>
                 {loadingResponse ? <img className='typing' src={typingGif} alt='gif'/> : null}
                 <br/>
