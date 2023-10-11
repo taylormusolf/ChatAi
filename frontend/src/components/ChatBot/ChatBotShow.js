@@ -4,7 +4,6 @@ import { fetchChatBot } from "../../store/chatbots";
 import { fetchChatResponse, receiveChatRequest} from '../../store/chat';
 import { fetchPrompts, clearPrompts } from "../../store/prompts";
 import {Link} from "react-router-dom";
-import './ChatBotShow.scss'
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import typingGif from "../../assets/typing-text.gif";
 import { delay } from "../Util";
@@ -20,7 +19,8 @@ function ChatBotShow(){
 
   const [request, setRequest] = useState('');
   const [response, setResponse] = useState('');
-  const [loadingChat, setLoadingChat] = useState(false);
+  const [loadingResponse, setLoadingResponse] = useState(false); //shows message loading gif
+  const [loadingChat, setLoadingChat] = useState(false); //disables chat until message finishes
   const [loadingPrompts, setLoadingPrompts] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [showPrompts, setShowPrompts] = useState(false);
@@ -62,12 +62,15 @@ function ChatBotShow(){
       await delay(30)
       setResponse(newChat.slice(0,i+1).join(''))
     }
-    
+    setLoadingChat(false)
   }
-  
   useEffect(()=>{
     scrollToBottomChat();
-  }, [chat, response,  loadingChat])
+  }, [chat, response])
+  
+  useEffect(()=>{
+    setTimeout(scrollToBottomChat, 500) //had to add a delay so typing gif has time to load before the scroll occurs
+  }, [loadingChat])
   
   const handleChange = (e) => {
     setRequest(e.target.value);
@@ -81,7 +84,8 @@ function ChatBotShow(){
         dispatch(receiveChatRequest(prompt));
         setResponse("");
         setLoadingChat(true);
-        dispatch(fetchChatResponse(chat._id, {role: 'user', content: prompt, name: sessionUser.username })).then(()=>setLoadingChat(false));
+        setLoadingResponse(true);
+        dispatch(fetchChatResponse(chat._id, {role: 'user', content: prompt, name: sessionUser.username })).then(()=>setLoadingResponse(false));
       } catch (err) {
         console.log(err)
       }
@@ -94,8 +98,9 @@ function ChatBotShow(){
       dispatch(receiveChatRequest(request))
       setRequest("");
       setResponse("");
-      setLoadingChat(true);
-      dispatch(fetchChatResponse(chat._id, {role: 'user', content: request, name: sessionUser.username })).then(()=>setLoadingChat(false));
+      setLoadingChat(true); //disables user ability to send messages
+      setLoadingResponse(true); //brings up the typing message gif
+      dispatch(fetchChatResponse(chat._id, {role: 'user', content: request, name: sessionUser.username })).then(()=>setLoadingResponse(false));
     } catch (err) {
       console.log(err)
     }
@@ -184,17 +189,17 @@ function ChatBotShow(){
                       </div>}
                   { response && <h2>{response}</h2> }
                 </div>
-                {loadingChat ? <img className='typing' src={typingGif} alt='gif'/> : null}
+                {loadingResponse ? <img className='typing' src={typingGif} alt='gif'/> : null}
                 <br/>
                 <div ref={chatEndRef} />
               </ul>
             </div>
             <div className='chatbot-show-message-form-container'>
               <form className="show-chat-form" onSubmit={handleSubmit}>
-                <input type='text' onChange={handleChange} value={request} placeholder={`Send a message to ${bot?.name}`}/>
-                <input type='submit' value="Send" disabled={loadingChat}/>
+                <input type='text' className="show-chat-form-input" onChange={handleChange} value={request} placeholder={`Send a message to ${bot?.name}`}/>
+                <input type='submit' className='chat-form-button' value="Send" disabled={loadingChat || !request.length}/>
               </form>
-              <button onClick={()=> showMenu ? setShowMenu(false) : setShowMenu(true)}>...</button>
+              <input type='submit' className='chat-form-button' value="..." onClick={()=> showMenu ? setShowMenu(false) : setShowMenu(true)} />
             </div>
           </ul>
           {showMenu && popup()}

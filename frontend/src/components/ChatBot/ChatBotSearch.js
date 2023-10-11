@@ -33,7 +33,7 @@ const ChatBotSearch = () =>{
     return(
         <div className="search-wrapper">
             <div className="search-container">
-                <input className="search-input" type="text" placeholder="Search" onChange={(e)=> setSearch(e.target.value)}/>
+                <input className="search-input" type="text" placeholder="Search for Chatbot by Name" onChange={(e)=> setSearch(e.target.value)}/>
                 {loading ? <img src={loadingGif}/> :
                     <ul>
                         {Object.values(result).map((bot)=>{
