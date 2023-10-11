@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import {createChatBot, fetchChatBot, updateChatBot} from '../../store/chatbots';
 import {createChat} from '../../store/chat';
 // import { fetchImages, clearImages } from '../../store/images.js';
-import './ChatBotNew.scss'
 import { closeModal } from '../../store/modal';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
@@ -85,6 +84,13 @@ function ChatBotNew(props){
     }
   }
 
+  const handleClearFile = e => {
+    setPhotoUrl(null);
+    setImage(null);
+    document.getElementsByClassName('picture-input')[0].value = null;
+
+  }
+
   const chatBotSubmitCleanup = (chatbot) => {
     dispatch(createChat({chatBotId: chatbot?._id})).then(history.push(`/chatbots/${chatbot._id}`));
   }
@@ -150,7 +156,7 @@ function ChatBotNew(props){
           <div className="errors">{errors?.description}</div>
           <div className='input-container'>
             <label id={description && 'filled'}>Description: How does it perceive itself?</label>
-            <input type="text"
+            <textarea
               value={description}
               onChange={update('description')}
               // placeholder="How does the chatbot perceive itself?"
@@ -159,28 +165,33 @@ function ChatBotNew(props){
           <div className="errors">{errors?.greeting}</div>
           <div className='input-container'>
             <label id={greeting && 'filled'}>*Greeting: How does it introduce itself?</label>
-            <input type="text"
+            <textarea
               value={greeting}
               onChange={update('greeting')}
+              // onInput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+              // style={{overflow: 'hidden'}}
               // placeholder="How does the chatbot introduce itself?"
             />
           </div>
           <div className="errors">{errors?.prompt}</div>
           <div className='input-container'>
             <label id={prompt && 'filled'}>Additional Prompt: How should it act?</label>
-            <input type="text"
+            <textarea
               value={prompt}
+              // onInput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
               onChange={update('prompt')}
+              // style={{overflow: 'hidden'}}
               // placeholder="Details about your chatbot so it acts the way you want."
             />
           </div>
           <label>
             <span>Chatbot Image</span>
-            <input type="file" accept=".jpg, .jpeg, .png" onChange={handleFile} />
+            <input type="file" accept=".jpg, .jpeg, .png" className='picture-input' onChange={handleFile} />
           </label>
           {photoUrl? <img className='preview' src={photoUrl} alt='preview' /> 
-            : form !== 'new' && chatbot?.profileImageUrl ? <img className='preview' src={chatbot.profileImageUrl} alt='preview' /> 
+            : form !== 'new' && chatbot?.profileImageUrl ? <img className='preview' src={chatbot?.profileImageUrl} alt='preview' /> 
             : null}
+          {image ? <button className='chatbot-img-remove-button' onClick={handleClearFile}>Remove</button>: null}
           <input
             type="submit"
             value={form === 'edit' ? 'Save' : 'Create'}

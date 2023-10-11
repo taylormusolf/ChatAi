@@ -13,8 +13,8 @@
   /* justify-content: center; */
   // margin-top: 50px;
   align-items: center;
-  height: 100vh;
-  max-height: 600px;
+  // height: 100vh;
+  // max-height: 600px;
   width: 95vw;
   max-width: 550px;
   border-radius: 5%;
@@ -32,30 +32,43 @@
   height: 100%;
 }
 
-.chatbot-form input[type='text']{
+.chatbot-form input[type='text'], .chatbot-form textarea{
   width: 100%;
   border: 1px solid rgb(186, 186, 186, 0.814);
   padding: 16px 12px 10px 12px;
-  
+  font-family: Arial, Helvetica, sans-serif;
 }
 .chatbot-form input[type='submit']{
- background-color: var(--purple);
- width: 90%;
- color: white;
- padding: 5px;
- cursor: pointer;
- margin-top: .25rem;
- border-radius: 2px;
+  background-color: var(--purple);
+  width: 90%;
+  color: white;
+  padding: 5px;
+  cursor: pointer;
+  margin-top: 30px;
+  border-radius: 2px;
 }
+
+.chatbot-img-remove-button{
+  background-color: red;
+  width: 15%;
+  color: white;
+  padding: 5px;
+  cursor: pointer;
+  margin-top: 30px;
+  border-radius: 2px;
+  border: 1px solid black;
+}
+
+
 .chatbot-form input[type='submit']:hover{
   box-shadow: 0px 0px 2px rgba(12,1,1,0.6)
 }
 
 
-.chatbot-form input[type='text']:hover{
+.chatbot-form input[type='text']:hover, .chatbot-form textarea:hover{
   border: 1px solid var(--purple);
 }
-.chatbot-form input[type='text']:focus{
+.chatbot-form input[type='text']:focus, .chatbot-form textarea:focus{
   border: 1px solid var(--purple);
   outline: 1px solid var(--purple);
 }
@@ -67,6 +80,7 @@
   flex-direction: column;
   // align-items: center;
   width: 90%;
+  padding: 20px 0px 10px 0px;
 }
 
 .input-container label {
@@ -79,7 +93,7 @@
   font-size: 14px;
   line-height: 1;
   left: 10px;
-  top: -8px;
+  top: 12px;
 }
 
 .input-container:focus-within label {
