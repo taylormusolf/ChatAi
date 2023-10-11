@@ -10,15 +10,28 @@ const { singleFileUpload, singleMulterUpload, retrievePrivateFile } = require(".
 
 //gets all chatBots for index page
 router.get('/', requireUser, async (req, res) => {
+  console.log(req.query.query)
   try {
-    const chatbots = await ChatBot.find()
+    let chatbots;
+    if(!req.query.query){ //req.query.query will be undefined if just doing a request for all bots with no query
+      chatbots = await ChatBot.find()
                   .populate("author", "_id username")
                   .sort({ name: 1});
-    chatbots.forEach(bot=>{
-      if(!bot.profileImageUrl.includes('aws') ){
-        bot.profileImageUrl = retrievePrivateFile(bot.profileImageUrl)
-      }
-    })
+      chatbots.forEach(bot=>{
+        if(!bot.profileImageUrl.includes('aws') ){
+          bot.profileImageUrl = retrievePrivateFile(bot.profileImageUrl)
+        }
+      }) 
+    } else {
+        chatbots = await ChatBot.find({"name": { "$regex": req.query.query, "$options": "i" }})  //$options of 'i' makes search case insensitive
+                    .populate("author", "_id username")
+        chatbots.forEach(bot=>{
+          if(!bot.profileImageUrl.includes('aws') ){
+            bot.profileImageUrl = retrievePrivateFile(bot.profileImageUrl)
+          }
+        }) 
+    }
+    
     const chats = await Chat.find({author: req.user}).sort({updatedAt: -1})
     const chattedChatbotIds = chats.map(chat => chat.chatBot);
 

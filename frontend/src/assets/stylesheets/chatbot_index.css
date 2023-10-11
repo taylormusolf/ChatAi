@@ -213,16 +213,10 @@ div.swiper-button-prev{
   color: white;
 }
 
-
-
-
-
-
-.chatbots-index-details img{
-  /* height: 100px; */
-  /* width: 50px; */
+.loading-img{
+  position: relative;
+  top: 25vh;
 }
-
 
 
 

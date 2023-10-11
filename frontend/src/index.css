@@ -4,6 +4,8 @@
 }
 @import "./assets/stylesheets/reset.css";
 @import "./assets/stylesheets/splash_page.css";
-@import "./assets/stylesheets/session-forms.css";
-@import "./assets/stylesheets/chat-bot-index.css";
+@import "./assets/stylesheets/session_forms.css";
+@import "./assets/stylesheets/chatbot_index.css";
 @import "./assets/stylesheets/nav_bar.css";
+@import "./assets/stylesheets/chatbot_search.css";
+

@@ -3,6 +3,8 @@ import jwtFetch from './jwt';
 export const RECEIVE_CHATBOTS = "chatbots/RECEIVE_CHATBOTS";
 export const REMOVE_CHATBOT = "chatbots/REMOVE_CHATBOT";
 export const RECEIVE_CHATBOT = "chatbots/RECEIVE_CHATBOT";
+export const RECEIVE_SEARCH_CHATBOTS = "chatbots/RECEIVE_SEARCH_CHATBOTS";
+
 
 
 const RECEIVE_USER_CHATBOTS = "chatbots/RECEIVE_USER_CHATBOTS";
@@ -12,6 +14,11 @@ const CLEAR_CHATBOT_ERRORS = "chatbots/CLEAR_CHATBOT_ERRORS";
 
 const receiveChatBots = payload => ({
   type: RECEIVE_CHATBOTS,
+  payload
+});
+
+export const receiveSearchChatBots = payload => ({
+  type: RECEIVE_SEARCH_CHATBOTS,
   payload
 });
 const receiveChatBot = payload => {
@@ -54,6 +61,19 @@ export const fetchChatBots = () => async dispatch => {
     const res = await jwtFetch ('/api/chatbots');
     const chatBots = await res.json();
     dispatch(receiveChatBots(chatBots));
+  } catch (err) {
+    const resBody = await err.json();
+    if (resBody.statusCode === 400) {
+      dispatch(receiveErrors(resBody.errors));
+    }
+  }
+};
+
+export const searchChatBots = (query) => async dispatch => {
+  try {
+    const res = await jwtFetch (`/api/chatbots?query=${query}`);
+    const chatBots = await res.json();
+    dispatch(receiveSearchChatBots(chatBots));
   } catch (err) {
     const resBody = await err.json();
     if (resBody.statusCode === 400) {
@@ -167,14 +187,20 @@ export const chatBotErrorsReducer = (state = nullErrors, action) => {
   }
 };
 
-const chatBotsReducer = (state = { all: {}, user: {}, chatted: [], new: undefined }, action) => {
+const chatBotsReducer = (state = { all: {}, user: {}, chatted: [], new: undefined, search: {} }, action) => {
   switch(action.type) {
     case RECEIVE_CHATBOTS:
       const nextAll= {...state.all};
       action.payload.chatbots.forEach((chatbot)=>{
         nextAll[chatbot._id] = chatbot;
       })
-      return { ...state, all: nextAll, chatted: action.payload.chattedChatbotIds, new: undefined};
+      return { ...state, all: nextAll, chatted: action.payload.chattedChatbotIds, new: undefined, search: {}};
+    case RECEIVE_SEARCH_CHATBOTS:
+      const nextSearch = {};
+      action.payload.chatbots.forEach((chatbot)=>{
+        nextSearch[chatbot._id] = chatbot;
+      })
+      return { ...state, chatted: action.payload.chattedChatbotIds, search: nextSearch};
     case RECEIVE_USER_CHATBOTS:
       const nextUser= {...state.user};
       action.chatbots.forEach((chatbot)=>{

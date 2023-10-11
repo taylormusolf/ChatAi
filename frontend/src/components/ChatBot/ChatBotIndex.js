@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { fetchChatBots, fetchUserChatBots } from "../../store/chatbots";
 import {Link , useHistory} from "react-router-dom";
@@ -8,18 +8,21 @@ import { Swiper, SwiperSlide} from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/bundle';
+import loadingGif from "../../assets/loading.gif"
 
 
 function ChatBotIndex(){
   const dispatch = useDispatch();
   const history = useHistory();
+  const [loading, setLoading] = useState(true);
   const chatBots = useSelector(state => state.entities.chatBots.all ?  state.entities.chatBots.all : {}  )
   const currentUser = useSelector(state => state.session.user);
   const userChatBots = useSelector(state => state.entities.chatBots.user ?  state.entities.chatBots.user : {}  )
   const chatted = useSelector(state => state.entities.chatBots?.chatted )
   useEffect(()=>{
-    dispatch(fetchChatBots())
-    dispatch(fetchUserChatBots(currentUser._id))
+    setLoading(true);
+      dispatch(fetchChatBots()).then(()=> setLoading(false))
+      dispatch(fetchUserChatBots(currentUser._id))
   }, [dispatch, currentUser])
 
   const clickHandler = (chatBotId) => (e)=>{
@@ -27,51 +30,51 @@ function ChatBotIndex(){
     history.push(`/chatbots/${chatBotId}`)
   } 
 
-  const breakpoints = {
-    // when window width is >= 320px
-    1250: {
-      slidesPerView: 9,
-      // spaceBetween: .25,
-      slidesPerGroup: 7
-    },
-    1100: {
-      slidesPerView: 8,
-      slidesPerGroup: 6
-      // spaceBetween: 5
-    },
-    950: {
-      slidesPerView: 7,
-      slidesPerGroup: 5
-      // spaceBetween: 10
-    },
-    850: {
-      slidesPerView: 6,
-      slidesPerGroup: 4
-      // spaceBetween: 10
-    },
-    700: {
-      slidesPerView: 5,
-      slidesPerGroup: 4
-      // spaceBetween: 10
-    },
-    550: {
-      slidesPerView: 4,
-      slidesPerGroup: 3
-      // spaceBetween: 10
-    },
-    400: {
-      slidesPerView: 3,
-      slidesPerGroup: 2
-      // spaceBetween: 10
-    },
-    100: {
-      slidesPerView: 2,
-      slidesPerGroup: 1
-      // spaceBetween: 10
-    }
-  }
-
-  return(
+  // const breakpoints = {
+  //   // when window width is >= 320px
+  //   1250: {
+  //     slidesPerView: 9,
+  //     // spaceBetween: .25,
+  //     slidesPerGroup: 7
+  //   },
+  //   1100: {
+  //     slidesPerView: 8,
+  //     slidesPerGroup: 6
+  //     // spaceBetween: 5
+  //   },
+  //   950: {
+  //     slidesPerView: 7,
+  //     slidesPerGroup: 5
+  //     // spaceBetween: 10
+  //   },
+  //   850: {
+  //     slidesPerView: 6,
+  //     slidesPerGroup: 4
+  //     // spaceBetween: 10
+  //   },
+  //   700: {
+  //     slidesPerView: 5,
+  //     slidesPerGroup: 4
+  //     // spaceBetween: 10
+  //   },
+  //   550: {
+  //     slidesPerView: 4,
+  //     slidesPerGroup: 3
+  //     // spaceBetween: 10
+  //   },
+  //   400: {
+  //     slidesPerView: 3,
+  //     slidesPerGroup: 2
+  //     // spaceBetween: 10
+  //   },
+  //   100: {
+  //     slidesPerView: 2,
+  //     slidesPerGroup: 1
+  //     // spaceBetween: 10
+  //   }
+  // }
+  console.log(loading)
+  {return loading ? <img className='loading-img' src={loadingGif}/> :
     <div className="chatbots-index-container">
       <div className="featured-container">
         <h1>Featured Chatbots</h1>
@@ -107,7 +110,7 @@ function ChatBotIndex(){
       </div>
       <div className="chatted-container">
         <h1>Recently Chatted Chatbots</h1>
-        {chatted.length ?
+        {chatted?.length ?
           <Swiper
           modules={[Navigation, Pagination, Scrollbar]}
           className="swiper"
@@ -170,7 +173,7 @@ function ChatBotIndex(){
 
 
     </div>
-  )
+  }
 
   
   
