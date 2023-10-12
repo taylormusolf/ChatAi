@@ -24,13 +24,34 @@
 }
 
 #create-button.nav-create-button{
-  height: 75px;
-  width: 75px;
+  height: 60px;
+  width: 60px;
   position: absolute;
-  top: 100px;
+  top: 80px;
   right: 50px;
   cursor: pointer;
-  opacity: .7;
+  opacity: .5;
+}
+
+#create-button > div{
+  color: var(--purple);
+  font-size: 2rem;
+  transition: all 1s;
+
+  /* background-color: aqua; */
+}
+
+#create-button:hover{
+  transition: all 1s;
+  background-color: var(--purple);
+  opacity: 1;
+}
+
+
+#create-button:hover > div{
+  transition: all 1s;
+
+  color: white;
 }
 
 

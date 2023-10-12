@@ -193,25 +193,7 @@ div.swiper-button-prev{
   /* background-color: aqua; */
 }
 
-#create-button > div{
-  color: var(--purple);
-  font-size: 2rem;
-  transition: all 1s;
 
-  /* background-color: aqua; */
-}
-
-#create-button:hover{
-  transition: all 1s;
-  background-color: var(--purple);
-  }
-
-
-#create-button:hover > div{
-  transition: all 1s;
-
-  color: white;
-}
 
 .loading-img{
   position: relative;

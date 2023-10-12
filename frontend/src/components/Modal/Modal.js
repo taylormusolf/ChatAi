@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ChatBotNew from "../ChatBot/ChatBotNew";
 import ChatBotDelete from "../ChatBot/ChatBotDelete";
 import ClearChatHistoryPrompt from "../ChatBot/ClearChatHistoryPrompt";
-import './Modal.css'
+import {AiFillCloseCircle} from 'react-icons/ai'
 
 
 
@@ -39,7 +39,7 @@ const Modal = () => {
     // <div className="modal-background" onClick={()=> dispatch(closeModal())}>
     <div className="modal-background">
       <div className="modal-child" onClick={(e) => e.stopPropagation()}>
-        <div><div className="close-x" onClick={()=> dispatch(closeModal())}>x</div></div>
+        <div><div className="close-x" onClick={()=> dispatch(closeModal())}><AiFillCloseCircle/></div></div>
         {component}
       </div>
     </div>
