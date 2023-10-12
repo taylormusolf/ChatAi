@@ -152,16 +152,18 @@ div.swiper-button-prev{
 }
 
 #resume-button{
+  display: block;
   background-color: transparent;
   color: var(--purple);
   font-family: Arial, Helvetica, sans-serif;
-  border: none;
+  /* border: none; */
   width: 100%;
   align-self: center;
   padding: 5px;
   cursor: pointer;
   margin-top: 5px;
   border-radius: 5px;
+  font-size: 1rem;
   border: 1px solid var(--purple);
   transition: all 750ms;
   transition-timing-function: ease-in;
@@ -180,7 +182,7 @@ div.swiper-button-prev{
 }
 
 #create-button{
-    border: 5px solid var(--purple);
+  border: 5px solid var(--purple);
   height: 120px;
   /* width: 120px; */
   border-radius: 50%;

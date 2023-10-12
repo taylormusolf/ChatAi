@@ -4,6 +4,7 @@ import { searchChatBots, receiveSearchChatBots } from "../../store/chatbots";
 import { createChat } from "../../store/chat";
 import {Link , useHistory} from "react-router-dom";
 import loadingGif from "../../assets/loading.gif"
+import {AiFillStar} from 'react-icons/ai'
 
 
 
@@ -43,9 +44,9 @@ const ChatBotSearch = () =>{
                                     <div className='search-result-subdetails'>
                                         <li>{bot.name}</li>
                                         {/* {bot.description ? <li>{bot.description}</li>: null} */}
-                                        {bot.featured ? <li>*Featured Chatbot*</li>: null}
+                                        {bot.featured ? <li><strong className='star'><AiFillStar/></strong>Featured Chatbot<strong className='star'><AiFillStar/></strong></li>: null}
                                         {bot.author.username !== 'admin' ? <li>Created by: {bot.author.username}</li>: null}
-                                        {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button">Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button"> Start Chat</button>}
+                                        <div className='search-chat-button'>{chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button">Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button"> Start Chat</button>}</div>
                                     </div>
                                 </li>
                             )

@@ -36,7 +36,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 10px 25px 0px 10px;
+    padding: 5px 25px 0px 10px;
 
 }
 .search-result-subdetails li:first-child{
@@ -44,9 +44,19 @@
 }
 
 .search-result-image{
-    height: 100px;
-    width: 100px;
+    height: 75px;
+    width: 75px;
     object-fit: cover;
     object-position: 50% 0%;
     border-radius: 75%;
+}
+
+.search-chat-button{
+    width: 120px;
+}
+
+.star{
+    color: var(--purple);
+    position: relative;
+    top: 2px;
 }
