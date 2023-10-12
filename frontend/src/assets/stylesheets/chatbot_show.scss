@@ -53,6 +53,29 @@
   font-weight: 700;
 }
 
+.popup-button{
+  background-color: var(--purple);
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  border: none;
+  width: 100%;
+  align-self: center;
+  padding: 8px;
+  cursor: pointer;
+  margin-top: px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.popup-button:hover{
+  box-shadow: 0px 0px 2px rgba(12,1,1,0.6);
+}
+
+.popup-button:active{
+  box-shadow: inset 0px 0px 8px rgba(12,1,1,0.5);
+}
+
 .typing{
   // width: 125px;
   // height: 75px;
@@ -92,51 +115,65 @@
   flex-direction: column;
   align-items: center;
   position: absolute;
-  top: 20%;
+  top: -10%;
   left: 20%;
   width: 75vw;
   max-width: 300px;
-  height: 40vh;
-  max-height: 500px;
-  border: 5px solid var(--purple);
-
-  
-  .prompt-suggestions{
+  // height: 40vh;
+  // max-height: 500px;
+  border: 4px solid var(--purple);
+  // width: 95vw;
+  // max-width: 550px;
+  border-radius: 1%;
+}
+.prompt-suggestions{
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 40vh;
-    // li{
-    //   margin: 10px;
-    // }
-    li:hover{
-      cursor: pointer;
-      // margin-right: 10px;
-    }
-    li{
-      margin: 5px;
-      width: 75%;
-    }
   }
-  *{
-    margin-top: 5px;
-    margin-bottom: 5px;
 
-  }
+.prompt-entry{
+  margin: 5px;
+  width: 75%;
+
 }
-.show-chat-popup-navigation{
+.prompt-entry:hover{
   cursor: pointer;
+      // margin-right: 10px;
+}
+
+.prompt-loading-img{
+  width: 250px;
+  position: relative;
+  top: 10px;
+}
+
+
+.show-chat-popup-navigation{
   display: flex;
   justify-content: space-between;
   width: 100%;
-  button{
-    margin-left: 10px;
+  // position: relative;
+
+  h1{
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding-top: 10px;
+    padding-bottom: 20px;
   }
+}
+#show-chat-popup-x{
+   cursor: pointer;
+   top: -5px;
+   right: 0px;
 }
 .show-chat-popup-buttons{
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
   button{
     cursor: pointer;
     width: 75%;
@@ -194,21 +231,29 @@
   display: flex;
   flex-direction: column;
   background-color: white;
-  height: 12vh;
+  // height: 12vh;
   font-size: 1.5rem;
-  padding: 10px;
+  padding: 40px 30px 30px 30px;
+  width: 90vw;
+  max-width: 700px;
+  h1{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    strong{
+      font-weight: 700;
+    }
+  }
 }
 .chatbot-conformation-popup-buttons{
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: 15px;
+  margin-top: 20px;
   button{
-    width: 100px;
-    height: 30px;
+    width: 115px;
     font-size: 1.5rem;
-    border-radius: 10%;
-    padding: 2px;
+    border-radius: 5px;
+    padding: 3px;
     text-align: center;
   }
   button:hover{
@@ -232,15 +277,16 @@
 
 
 .show-chat-popup-container{
- width:500px;
- height:500px;
- margin:0 auto;
- background:transparent;
- position:absolute;
- left:50%;
- top:60%;
- margin-left:-250px;
- margin-top:-250px;
+  width:500px;
+  height:500px;
+  margin:0 auto;
+  background:transparent;
+  position:absolute;
+  left:50%;
+  top:60%;
+  margin-left:-250px;
+  margin-top:-250px;
+  
 }
 
 .show-chat-form-input{

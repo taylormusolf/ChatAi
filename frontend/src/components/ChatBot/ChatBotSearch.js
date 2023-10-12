@@ -17,7 +17,7 @@ const ChatBotSearch = () =>{
     const chatted = useSelector(state => state.entities.chatBots?.chatted )
 
     useEffect(()=> {
-        if(search.length >= 3){
+        if(search.length >= 2){
             setLoading(true);
             dispatch(searchChatBots(search)).then(()=> setLoading(false))
         } else {

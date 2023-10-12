@@ -67,6 +67,8 @@ router.get('/:id', requireUser, async (req, res, next) => {
   
 });
 
+
+//gets all chatbots created by a user
 router.get('/user/:userId', requireUser, async (req, res, next) => {
   let user;
   try {

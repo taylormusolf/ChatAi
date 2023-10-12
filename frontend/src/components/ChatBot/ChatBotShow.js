@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import typingGif from "../../assets/typing-text.gif";
 import { delay } from "../Util";
 import { openModal } from "../../store/modal";
+import loadingGif from "../../assets/loading.gif"
 
 
 function ChatBotShow(){
@@ -43,8 +44,8 @@ function ChatBotShow(){
     e.preventDefault();
     setLoadingPrompts(true);
     setShowPrompts(true);
-    dispatch(clearPrompts());
-    dispatch(fetchPrompts(chatBotId)).then(()=>setLoadingPrompts(false));
+    // dispatch(clearPrompts());
+    // dispatch(fetchPrompts(chatBotId)).then(()=>setLoadingPrompts(false));
   }
 
   
@@ -113,14 +114,15 @@ function ChatBotShow(){
       <div className="show-chat-popup">
         {!showPrompts && <div className="show-chat-popup-buttons">
           <div className="show-chat-popup-navigation">
-            <div className="show-chat-popup-x" onClick={()=> setShowMenu(false)}>X</div>
+            <h1>Chatbot Options Menu</h1>
+            <div id="show-chat-popup-x" className="close-x" onClick={()=> setShowMenu(false)}>x</div>
           </div>
-          <Link to='/chatbots/'>Back to ChatBot Index</Link>
-          <button onClick={()=> dispatch(openModal({name: 'clear history', fnc: setResponse}))}>Clear Chat History</button>
-          { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'edit'}))}>Edit Bot</button> : null}
-          { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button onClick={()=> dispatch(openModal({name:'delete'}))}>Delete Bot</button> : null}
-          <button onClick={()=> dispatch(openModal({name: 'clone'}))}>Clone Bot</button>
-          <button disabled={loadingPrompts} onClick={generatePrompts}>Generate Prompts</button>
+          {/* <Link to='/chatbots/'>Back to ChatBot Index</Link> */}
+          <button className='popup-button' disabled={loadingPrompts} onClick={generatePrompts}>Generate Prompts</button>
+          <button className='popup-button' onClick={()=> dispatch(openModal({name: 'clear history', fnc: setResponse}))}>Clear Chat History</button>
+          { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button className='popup-button' onClick={()=> dispatch(openModal({name:'edit'}))}>Edit Bot</button> : null}
+          { bot?.author?._id.toString() === sessionUser?._id.toString() || sessionUser?.username === 'admin' ? <button className='popup-button' onClick={()=> dispatch(openModal({name:'delete'}))}>Delete Bot</button> : null}
+          <button className='popup-button' onClick={()=> dispatch(openModal({name: 'clone'}))}>Clone Bot</button>
         </div>}
         {showPrompts && <div>
           <div className="show-chat-popup-navigation">
@@ -129,11 +131,11 @@ function ChatBotShow(){
           </div>
           <h1>Prompt Suggestions</h1>
           <ul className="prompt-suggestions" onClick={handlePromptClick}>
-          {loadingPrompts ? <h1>Loading...</h1> : null}
+          {loadingPrompts && <img className='prompt-loading-img' src={loadingGif}/>}
           {prompts?.map((prompt, i)=>{
             const modified = !Number.isNaN(parseInt(prompt[0])) ? prompt.slice(3) : prompt.slice(0,2) === '- ' ? prompt.slice(1) : prompt[0] === '-' ? prompt.slice(1) : prompt;
             return(
-              <li key={i}>{modified}</li>
+              <li key={i} className="prompt-entry">{modified}</li>
               )
             })}
           </ul>
