@@ -8,7 +8,8 @@ import { Swiper, SwiperSlide} from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/bundle';
-import loadingGif from "../../assets/loading.gif"
+import loadingGif from "../../assets/loading.gif";
+import Footer from "../Footer/Footer";
 
 
 function ChatBotIndex(){
@@ -172,6 +173,7 @@ function ChatBotIndex(){
       </div>
 
 
+      <Footer />
     </div>
   }
 

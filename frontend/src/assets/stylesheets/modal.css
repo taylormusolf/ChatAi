@@ -28,7 +28,10 @@
   cursor: pointer;
   top: 15px;
   right: 15px;
+  transition: all 750ms;
+  transition-timing-function: ease-out;
 }
 .close-x:hover{
   color: var(--purple);
+  transform: translateY(-2px);
 }

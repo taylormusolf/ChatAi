@@ -55,7 +55,7 @@ div.swiper-button-prev{
   /* justify-content: center; */
   /* flex-wrap: wrap; */
   position: relative;
-  top: 150px;
+  top: 120px;
   max-width: 1200px;
   width: 100%;
   /* height: 80vh; */
@@ -64,7 +64,7 @@ div.swiper-button-prev{
   padding-right: 20px;
   /* width: 600px; */
 }
-.featured-container, .chatted-container, .created-container{
+.featured-container, .chatted-container{
   /* display: flex;
   flex-direction: column;
   /* width: 100%; */
@@ -75,6 +75,12 @@ div.swiper-button-prev{
   /* max-width: 1200px; */
 
 }
+
+.created-container{
+  width: 100%;
+  padding-bottom: 60px;
+}
+
 .no-chatbot-message{
   height: 200px;
 }
@@ -101,6 +107,11 @@ div.swiper-button-prev{
   border-radius: 5px;
   /* margin: .5rem; */
   position: relative;
+  transition: all 750ms;
+  transition-timing-function: ease-out;
+}
+.chatbots-index-details:hover{
+  transform: translateY(-5px);
 }
   
   

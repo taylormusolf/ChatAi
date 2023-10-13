@@ -43,6 +43,7 @@ function App() {
           <ProtectedRoute exact path="/chatbots/:chatBotId" component={ChatBotShow} />
           <ProtectedRoute exact path="/profile" component={Profile} />
         </Switch>
+        
       </div>
     </>
   );

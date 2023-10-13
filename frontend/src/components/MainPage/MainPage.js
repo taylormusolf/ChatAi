@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import splash from '../../assets/splash_placeholder.jpg'
 import lofi from '../../assets/lofi.avif'
+import Footer from '../Footer/Footer';
 
 function MainPage() {
   return (
@@ -10,9 +11,7 @@ function MainPage() {
       {/* <img className='splash-img' src={splash} alt='splash'></img> */}
       {/* <img className='lofi-img' src={lofi} alt='splash'></img> */}
 
-      <footer>
-        Copyright &copy; 2023 ChatAi
-      </footer>
+      <Footer />
     </div>
   );
 }

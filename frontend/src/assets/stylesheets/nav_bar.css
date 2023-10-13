@@ -9,7 +9,29 @@
   z-index: 5;
 }
 
-#logout-button, #battle-button{
+#chat-logo-title{
+  display: flex;
+  transition: all;
+  transition: all 750ms;
+  transition-timing-function: ease-out;
+}
+
+#chat-logo{
+  color: var(--purple);
+  font-size: 2rem;
+  position: relative;
+  top: 3px;
+  padding-right: 5px;
+}
+
+#chat-title{
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--purple);
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+#logout-button, #battle-button, #search-button{
   border: none;
   background-color: transparent;
   color: var(--purple);
@@ -19,9 +41,28 @@
   transition-timing-function: ease-out;
 }
 
-#logout-button:hover, #battle-button:hover{
+#profile-button{
+  transition: all;
+  transition: all 750ms;
+  transition-timing-function: ease-out;
+}
+
+#logout-button:hover, #battle-button:hover, #search-button:hover, #profile-button:hover, #chat-logo-title:hover{
   transform: translateY(-2px);
 }
+#battle-button{
+  font-size: 1.75rem;
+}
+
+#search-button{
+  font-size: 1.75rem;
+}
+
+#logout-button{
+  font-size: 1.75rem;
+}
+
+
 
 #create-button.nav-create-button{
   height: 60px;
@@ -65,8 +106,8 @@
 }
 
 .profile-pic{
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -76,12 +117,6 @@
   width: 50px;
 }
 
-.navbar h1 {
- font-family: Arial, Helvetica, sans-serif;
- color: var(--purple);
- font-size: 1.25rem;
- font-weight: 900;
-}
 
 .nav-left{
   width: 50%;
