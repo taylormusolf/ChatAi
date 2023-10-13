@@ -23,7 +23,7 @@ function NavBar () {
       return (
         <div className="links-nav">
           <Link id="search-button" to='/chatbots/search' title='Search'><FiSearch/></Link>
-          <Link id="battle-button" to='/chatbots/battle' title='Battle'><FaHandFist /></Link>
+          {/* <Link id="battle-button" to='/chatbots/battle' title='Battle'><FaHandFist /></Link> */}
           <button onClick={logoutUser} id="logout-button" title='Logout'><RiLogoutBoxRLine /></button>
           <Link id="profile-button" to='/profile' title='Profile'>
           {user.profileImageUrl ? 
