@@ -1,0 +1,50 @@
+
+.profile-bots-container{
+  position: relative;
+  top: 15vh;
+  justify-content: space-evenly;
+  width: 100%;
+  max-width: 1300px;
+
+  display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  flex-wrap: wrap;
+}
+
+.profile-created-container, .profile-chat-history-container{
+  padding-bottom: 40px;
+  h1{
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+}
+
+
+
+
+.profile-bot-details{
+  display: flex;
+  padding: 20px;
+}
+
+
+.profile-bot-img{
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-bot-buttons{
+  display: flex;
+  
+}
+
+.profile-bot-buttons button{
+  cursor: pointer;
+}
+.profile-bot-edit{
+  width: 54.55px;
+}
+

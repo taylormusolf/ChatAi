@@ -2,7 +2,7 @@ import jwtFetch from './jwt';
 import { REMOVE_CHATBOT, RECEIVE_NEW_CHATBOT, RECEIVE_CHATBOT, RECEIVE_CHATBOTS } from './chatbots';
 
 const RECEIVE_CHAT = "chats/RECEIVE_CHAT";
-const REMOVE_CHAT = "chats/REMOVE_CHAT";
+export const REMOVE_CHAT = "chats/REMOVE_CHAT";
 
 const RECEIVE_CHAT_REQUEST = "chats/RECEIVE_CHAT_REQUEST";
 const RECEIVE_CHAT_RESPONSE = "chats/RECEIVE_CHAT_RESPONSE";
@@ -15,9 +15,9 @@ const receiveChat = chat => ({
   chat
 });
 
-const removeChat = chatId => ({
+const removeChat = chatBotId => ({
   type: REMOVE_CHAT,
-  chatId
+  chatBotId
 });
 
 export const receiveChatRequest = (chatRequest) => ({
@@ -67,6 +67,24 @@ export const deleteChat = (chatId) => async dispatch =>{
     }
   }
 }
+
+//clear chat history with a chatBot by chatbotId
+export const deleteChatByBotId = (chatbotId) => async dispatch =>{
+  // console.log('hello')
+  // try {
+      jwtFetch(`/api/chats/chatbot/${chatbotId}`, {
+        method: 'DELETE'
+      });
+    dispatch(removeChat(chatbotId));
+  // } catch(err) {
+  //   const resBody = await err.json();
+  //   if (resBody.statusCode === 400) {
+  //     return dispatch(receiveErrors(resBody.errors));
+  //   }
+  // }
+}
+
+
 
 //ask new question to chatBot in an existing chat
 export const fetchChatResponse = (chatId, chatRequest)=> async dispatch=> {

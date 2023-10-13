@@ -10,7 +10,6 @@ const { singleFileUpload, singleMulterUpload, retrievePrivateFile } = require(".
 
 //gets all chatBots for index page
 router.get('/', requireUser, async (req, res) => {
-  console.log(req.query.query)
   try {
     let chatbots;
     if(!req.query.query){ //req.query.query will be undefined if just doing a request for all bots with no query

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../store/modal";
-import { deleteChat, createChat } from "../../store/chat";
+import { deleteChat, createChat, deleteChatByBotId } from "../../store/chat";
 
 function ClearChatHistoryPrompt(){
   const dispatch = useDispatch();
@@ -12,10 +12,14 @@ function ClearChatHistoryPrompt(){
   }
 
   const handleClear = e => {
-    const setResponse = modal.fnc;
     e.preventDefault();
-    setResponse('');
-    dispatch(deleteChat(chat?._id))
+    if(modal.fnc){
+      const setResponse = modal.fnc;
+      setResponse('');
+      dispatch(deleteChat(chat?._id))
+    } else {
+      dispatch(deleteChatByBotId(modal.chatbotId))
+    }
     // dispatch(createChat({chatBotId: chatbot?._id}))
     dispatch(closeModal())
   }

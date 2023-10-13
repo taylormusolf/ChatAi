@@ -22,7 +22,16 @@ function ChatBotNew(props){
   const {form} = props;
   const history = useHistory();
   const dispatch = useDispatch();
-  const chatbot = useSelector(state => state.entities.chatBots?.new ? state.entities.chatBots.new : null  )
+  const chatbot = useSelector(state => state.entities.chatBots?.new ? state.entities.chatBots.new : null )
+  const modal = useSelector(state => state.ui.modal);
+
+  useEffect(()=>{
+    if(modal.chatbotId){ //came from profile page
+      dispatch(fetchChatBot(modal.chatbotId))
+    }
+  }, [])
+
+
 
   useEffect(()=>{
     if((form === 'edit' || form === 'clone') && chatbot){

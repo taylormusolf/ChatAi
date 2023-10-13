@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { deleteChatBot } from "../../store/chatbots";
-import { closeModal } from "../../store/modal";
+import modalReducer, { closeModal } from "../../store/modal";
 import { useHistory } from "react-router-dom";
 
 function ChatBotDelete(){
@@ -8,12 +8,18 @@ function ChatBotDelete(){
   const dispatch = useDispatch();
   const history = useHistory();
   const chatbot = useSelector(state => state.entities.chatBots?.new ? state.entities.chatBots.new : null  )
+  const modal = useSelector(state => state.ui.modal);
 
   const handleDelete = e => {
     e.preventDefault();
-    dispatch(deleteChatBot(chatbot._id));
-    dispatch(closeModal());
-    history.push('/chatbots')
+    if(modal.chatbotId){ //came from profile page
+      dispatch(deleteChatBot(modal.chatbotId));
+      dispatch(closeModal());
+    }else{ //came from chat show page
+      dispatch(deleteChatBot(chatbot._id));
+      dispatch(closeModal());
+      history.push('/chatbots')
+    }
   }
 
 

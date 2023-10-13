@@ -109,6 +109,23 @@ router.delete('/:id', requireUser, async (req, res) => {
   }
 });
 
+router.delete('/chatbot/:chatbotId', requireUser, async (req, res) => {
+  
+  try{
+    const chat = await Chat.deleteOne({ chatBot: req.params.chatbotId, author: {_id: req.user._id}})
+    // if(!chat) {
+    //   const err = new Error("Validation Error");
+    //   err.statusCode = 400;
+    //   const errors = {};
+    //   err.errors = errors;
+    //   errors.userId = "You are not the owner of this Chat";
+    // }
+    return chat;
+  }catch(err) {
+    console.log(err);
+  }
+});
+
 
 
 

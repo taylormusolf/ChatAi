@@ -1,5 +1,6 @@
 import jwtFetch from './jwt';
 import {RECEIVE_USER_LOGOUT} from './session'
+import { REMOVE_CHAT } from './chat';
 
 export const RECEIVE_CHATBOTS = "chatbots/RECEIVE_CHATBOTS";
 export const REMOVE_CHATBOT = "chatbots/REMOVE_CHATBOT";
@@ -209,15 +210,24 @@ const chatBotsReducer = (state = { all: {}, user: {}, chatted: [], new: undefine
     case RECEIVE_USER_LOGOUT:
       return { ...state, user: {}, new: undefined};
     case RECEIVE_CHATBOT:
-      return { ...state, new: action.payload.chatbot};
+      const newStuff = {...state, new: action.payload.chatbot, all: {...state.all}, user: {...state.user}}
+      if(action.payload.chatbot._id in newStuff.all) newStuff.all[action.payload.chatbot._id] = action.payload.chatbot;
+      if(action.payload.chatbot._id in newStuff.user) newStuff.user[action.payload.chatbot._id] = action.payload.chatbot;
+      return newStuff;
     case RECEIVE_NEW_CHATBOT:
       return { ...state, new: action.chatbot, all: {...state.all, [action.chatbot._id]:action.chatbot}, user: {...state.user, [action.chatbot._id]:action.chatbot} };
     case REMOVE_CHATBOT:
-      const newState = {...state, new: undefined }
+      const newState = {...state, new: undefined, all: {...state.all}, user: {...state.user} }
+      const idx = newState.chatted.indexOf(action.chatbotId)
+      newState.chatted.splice(idx, 1)
       delete newState.all[action.chatbotId]
       delete newState.user[action.chatbotId]
-   
       return newState;
+    case REMOVE_CHAT:
+      const newerState = {...state, new: undefined, chatted: [...state.chatted] }
+      const index = newerState.chatted.indexOf(action.chatBotId)
+      newerState.chatted.splice(index, 1)
+      return newerState;
     default:
       return state;
   }
