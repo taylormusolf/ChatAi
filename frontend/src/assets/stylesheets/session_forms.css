@@ -67,7 +67,7 @@ label span{
     cursor: pointer;
     margin-top: .25rem;
     border-radius: 2px;
-   
+    font-size: 1rem;
 }
 
 .session-form > input[type=submit]:hover{

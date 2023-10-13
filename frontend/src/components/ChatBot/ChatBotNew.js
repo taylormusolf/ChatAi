@@ -120,7 +120,7 @@ function ChatBotNew(props){
       bot.image = newImage;
     }
     if(form === 'new'){
-      dispatch(createChatBot(bot)); 
+      dispatch(createChatBot(bot)).then((chatbot)=> chatBotSubmitCleanup(chatbot)); 
     }else if(form === 'clone'){
       dispatch(createChatBot(bot)).then((chatbot)=> chatBotSubmitCleanup(chatbot));
     } else if(form === 'edit'){

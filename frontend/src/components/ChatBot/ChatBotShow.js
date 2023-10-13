@@ -197,8 +197,8 @@ function ChatBotShow(){
                         <h1>{sessionUser?.username} </h1>
                       </div>
                       }
-                      {mess.content.split('\n').map((message)=>{
-                        return <h2>{message}</h2>
+                      {mess.content.split('\n').map((message, i)=>{
+                        return <h2 key={i}>{message}</h2>
                       })}
                       
                     </div>

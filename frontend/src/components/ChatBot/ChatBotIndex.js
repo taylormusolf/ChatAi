@@ -74,7 +74,6 @@ function ChatBotIndex(){
   //     // spaceBetween: 10
   //   }
   // }
-  console.log(loading)
   {return loading ? <img className='loading-img' src={loadingGif}/> :
     <div className="chatbots-index-container">
       <div className="featured-container">

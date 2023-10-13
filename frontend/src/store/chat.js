@@ -109,8 +109,8 @@ const chatsReducer = (state = { all: {}, current: {}, new:undefined}, action) =>
       return {...state, current: {}, new: undefined};
     case RECEIVE_CHATBOT:
       return {...state, current: action.payload.chat, new: undefined};
-    // case RECEIVE_NEW_CHATBOT:
-    //   return {...state, current: action.payload.chat};
+    case RECEIVE_NEW_CHATBOT:
+      return {...state, current: {}};
     case REMOVE_CHATBOT:
       return {...state, current:{}, new: undefined};
     case REMOVE_CHAT:

@@ -1,11 +1,10 @@
 import jwtFetch from './jwt';
+import {RECEIVE_USER_LOGOUT} from './session'
 
 export const RECEIVE_CHATBOTS = "chatbots/RECEIVE_CHATBOTS";
 export const REMOVE_CHATBOT = "chatbots/REMOVE_CHATBOT";
 export const RECEIVE_CHATBOT = "chatbots/RECEIVE_CHATBOT";
 export const RECEIVE_SEARCH_CHATBOTS = "chatbots/RECEIVE_SEARCH_CHATBOTS";
-
-
 
 const RECEIVE_USER_CHATBOTS = "chatbots/RECEIVE_USER_CHATBOTS";
 export const RECEIVE_NEW_CHATBOT = "chatbots/RECEIVE_NEW_CHATBOT";
@@ -207,6 +206,8 @@ const chatBotsReducer = (state = { all: {}, user: {}, chatted: [], new: undefine
         nextUser[chatbot._id] = chatbot;
       })
       return { ...state, user: nextUser, new: undefined};
+    case RECEIVE_USER_LOGOUT:
+      return { ...state, user: {}, new: undefined};
     case RECEIVE_CHATBOT:
       return { ...state, new: action.payload.chatbot};
     case RECEIVE_NEW_CHATBOT:
