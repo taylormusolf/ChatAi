@@ -262,6 +262,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
+    width: 100%;
 
     input[type=text]{
       width: 60vw;
@@ -277,7 +279,7 @@
   align-items: center;
   position: fixed;
   height: 10vh;
-  z-index: 100;
+  z-index: 9;
   bottom: -5px;
 }
 
