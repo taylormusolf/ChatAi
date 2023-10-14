@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../store/session';
 import { openModal } from "../../store/modal";
-import gpt from '../../assets/gpt.jpg';
+// import gpt from '../../assets/gpt.jpg';
 import {FiSearch} from 'react-icons/fi';
 import {RiLogoutBoxRLine} from 'react-icons/ri';
 import {BsChatRightDots} from 'react-icons/bs';

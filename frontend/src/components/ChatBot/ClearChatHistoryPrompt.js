@@ -1,10 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../../store/modal";
-import { deleteChat, createChat, deleteChatByBotId } from "../../store/chat";
+import { deleteChat, deleteChatByBotId } from "../../store/chat";
 
 function ClearChatHistoryPrompt(){
   const dispatch = useDispatch();
-  const chatbot = useSelector(state => state.entities.chatBots?.new ? state.entities.chatBots.new : null  )
   const chat = useSelector(state => Object.keys(state.entities.chats).length === 0 ? null : state.entities.chats.current);
   const modal = useSelector(state => state.ui.modal);
   if (!modal) {

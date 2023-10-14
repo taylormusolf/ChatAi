@@ -29,7 +29,7 @@ function ChatBotNew(props){
     if(modal.chatbotId){ //came from profile page
       dispatch(fetchChatBot(modal.chatbotId))
     }
-  }, [])
+  }, [dispatch])
 
 
 

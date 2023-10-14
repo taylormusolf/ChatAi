@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserChatBots, deleteChatBot, fetchChatBots } from '../../store/chatbots';
+import { fetchUserChatBots, fetchChatBots } from '../../store/chatbots';
 import { logout } from '../../store/session';
 import { createChat } from "../../store/chat";
 import {Link , useHistory} from "react-router-dom";

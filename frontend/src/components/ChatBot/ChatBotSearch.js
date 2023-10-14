@@ -24,7 +24,7 @@ const ChatBotSearch = () =>{
         } else {
             dispatch(receiveSearchChatBots({chatbots: []}))
         }
-    }, [search])
+    }, [search, dispatch])
 
     const clickHandler = (chatBotId) => (e)=>{
         dispatch(createChat({chatBotId}));
@@ -35,7 +35,7 @@ const ChatBotSearch = () =>{
         <div className="search-wrapper">
             <div className="search-container">
                 <input className="search-input" type="text" placeholder="Search for Chatbot by Name" onChange={(e)=> setSearch(e.target.value)}/>
-                {loading ? <img src={loadingGif}/> :
+                {loading ? <img src={loadingGif} alt='loading gif'/> :
                     <ul>
                         {Object.values(result).map((bot)=>{
                             return (

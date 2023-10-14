@@ -10,7 +10,7 @@ import SignupForm from './components/SessionForms/SignupForm';
 import Profile from './components/Profile/Profile';
 
 import { getCurrentUser } from './store/session';
-import { Route } from 'react-router-dom/cjs/react-router-dom.min';
+// import { Route } from 'react-router-dom/cjs/react-router-dom.min';
 import ChatBotNew from './components/ChatBot/ChatBotNew';
 import ChatBotIndex from './components/ChatBot/ChatBotIndex';
 import ChatBotShow from './components/ChatBot/ChatBotShow';

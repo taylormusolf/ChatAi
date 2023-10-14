@@ -1,6 +1,4 @@
-
 import Footer from '../Footer/Footer';
-import img from '../../assets/chatbots.jpg'
 import {useState, useEffect} from 'react';
 
 function MainPage() {

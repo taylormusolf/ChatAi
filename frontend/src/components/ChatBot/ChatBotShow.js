@@ -3,14 +3,13 @@ import {useDispatch, useSelector} from "react-redux";
 import { fetchChatBot } from "../../store/chatbots";
 import { fetchChatResponse, receiveChatRequest} from '../../store/chat';
 import { fetchPrompts, clearPrompts } from "../../store/prompts";
-import {Link} from "react-router-dom";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import typingGif from "../../assets/typing-text.gif";
 import { delay } from "../Util";
 import { openModal } from "../../store/modal";
 import loadingGif from "../../assets/loading.gif"
 import { BsFillArrowLeftCircleFill } from 'react-icons/bs';
-import {AiFillCloseCircle, AiOutlineStar} from 'react-icons/ai';
+import {AiFillCloseCircle} from 'react-icons/ai';
 import {BiSolidSend} from 'react-icons/bi';
 import {SlOptions} from 'react-icons/sl';
 
@@ -59,7 +58,7 @@ function ChatBotShow(){
     if(newResponse){
       delayTypeResponse();
     }
-  }, [newResponse]);
+  }, [newResponse, delayTypeResponse]);
   
 
   const delayTypeResponse = async() => {
@@ -138,7 +137,7 @@ function ChatBotShow(){
             <h1>Prompt Suggestions</h1>
             <div id="show-chat-popup-x" className="close-x" onClick={()=> setShowMenu(false)}><AiFillCloseCircle/></div>
           </div>
-          {loadingPrompts ? <img className='prompt-loading-img' src={loadingGif}/> :
+          {loadingPrompts ? <img className='prompt-loading-img' src={loadingGif} alt='loading gif'/> :
             <div className="prompt-suggestions-container">
               <ul className="prompt-suggestions" onClick={handlePromptClick}>
               {console.log(prompts?.response?.content)}

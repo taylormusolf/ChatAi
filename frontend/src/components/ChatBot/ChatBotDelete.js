@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { deleteChatBot } from "../../store/chatbots";
-import modalReducer, { closeModal } from "../../store/modal";
+import { closeModal } from "../../store/modal";
 import { useHistory } from "react-router-dom";
 
 function ChatBotDelete(){
