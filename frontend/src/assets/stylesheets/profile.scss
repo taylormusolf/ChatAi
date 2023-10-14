@@ -1,15 +1,40 @@
-
-.profile-bots-container{
+.profile-container{
   position: relative;
   top: 15vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.profile-logout{
+  height: 100px;
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 10px 10px 10px 20px;
+  strong{
+    font-weight: 700;
+  }
+  button{
+    position: relative;
+    top: 8px;
+  }
+}
+
+
+.profile-bots-container{
   justify-content: space-evenly;
   width: 100%;
   max-width: 1300px;
+  margin-left: 15px;
 
   display: flex;
   // flex-direction: column;
   // align-items: center;
   flex-wrap: wrap;
+  h1{
+    margin-left: 10px;
+  }
 }
 
 .profile-created-container, .profile-chat-history-container{
@@ -25,15 +50,35 @@
 
 .profile-bot-details{
   display: flex;
+  // flex-direction: column;
   padding: 20px;
+  width: 400px;
+}
+.profile-bot-subdetails{
+  display: flex;
+}
+
+.profile-bot-name-wrapper{
+  position: relative;
+  width: 0;
+  height: 0;
+  li{
+    position: absolute;
+    left: 5px;
+    white-space: pre;
+  }
+  
 }
 
 
 .profile-bot-img{
-  height: 40px;
-  width: 40px;
+  height: 75px;
+  width: 75px;
   border-radius: 50%;
   object-fit: cover;
+  position: relative;
+  // top: 20px;
+  // left: -75px
 }
 
 .profile-bot-buttons{
@@ -48,3 +93,25 @@
   width: 54.55px;
 }
 
+button.profile-button{
+  width: 50px;
+  font-size: .75rem;
+  margin: 0px 5px;
+}
+
+#chat-button.profile-button, #resume-button.profile-button{
+  margin: 0px 5px;
+  padding: 8px;
+  width: 75px;
+  font-size: .75rem;
+}
+
+#resume-button.profile-button{
+  width: 75px;
+  font-size: .75rem;
+  padding: 1px;
+}
+
+.profile-button.clear-chat{
+  width: 130px;
+}
