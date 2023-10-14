@@ -58,9 +58,8 @@ function ChatBotShow(){
     if(newResponse){
       delayTypeResponse();
     }
-  }, [newResponse, delayTypeResponse]);
+  }, [newResponse]);
   
-
   const delayTypeResponse = async() => {
     // let lastChat = chat.messages[chat?.messages.length - 1]?.content.split('');
     let newChat = newResponse?.content.split('');
@@ -70,6 +69,7 @@ function ChatBotShow(){
     }
     setLoadingChat(false)
   }
+
   useEffect(()=>{
     scrollToBottomChat();
   }, [chat, response])
@@ -169,7 +169,7 @@ function ChatBotShow(){
               <h1>{bot?.name}</h1>
             </div> */}
           <ul className="chatbot-show-details">
-            {bot?.author.username && <h1 className="chat-header">Chat with {bot?.name}{bot?.author.username !== 'admin' ? ` (@${bot?.author.username})`: null}</h1>}
+            {/* {bot?.author.username && <h1 className="chat-header">Chat with {bot?.name}{bot?.author.username !== 'admin' ? ` (@${bot?.author.username})`: null}</h1>} */}
             <div className='chatbot-show-box'>
               <ul>
                   {bot?.greeting && <div>

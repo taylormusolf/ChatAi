@@ -258,6 +258,7 @@
     height: 76vh;
   }
   .chatbot-show-message-form-container{
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -274,6 +275,10 @@
   // justify-content: space-between;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  height: 10vh;
+  z-index: 100;
+  bottom: -5px;
 }
 
 .chatbot-conformation-popup{
@@ -328,13 +333,14 @@
 .show-chat-popup-container{
   width:500px;
   height:500px;
-  margin:0 auto;
+  // margin:0 auto;
   background:transparent;
   position:absolute;
-  left:50%;
-  top:60%;
-  margin-left:-250px;
-  margin-top:-250px;
+  left: 50%;
+  top: 80%;
+  transform: translate(-50%, -50%);
+  // margin-left:-250px;
+  // margin-top:-250px;
   
 }
 
