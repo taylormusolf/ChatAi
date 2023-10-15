@@ -66,17 +66,17 @@ function Profile () {
             {Object.values(chatted).map((id)=>{
               const bot = chatBots[id]
               return(
-                <ul key={bot._id} className="profile-bot-details" >
+                <ul key={bot?._id} className="profile-bot-details" >
                   <div className='profile-bot-subdetails'>
-                    <img className='profile-bot-img' src={bot.profileImageUrl} alt={bot.name}/>
+                    <img className='profile-bot-img' src={bot?.profileImageUrl} alt={bot?.name}/>
                     <div className='profile-bot-name-wrapper'>
-                      <li title={bot.name}>{bot.name}</li>
+                      <li title={bot?.name}>{bot?.name}</li>
                     </div>
                   </div>
                   <div className='profile-bot-buttons'>
-                    {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button" className='profile-button'>Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button" className='profile-button'> Start Chat</button>}
-                    <button className='popup-button profile-button' onClick={()=> dispatch(openModal({name: 'clone', chatbotId: bot._id}))}>Clone</button>
-                    <button className='popup-button profile-button clear-chat' onClick={()=> dispatch(openModal({name: 'clear history', chatbotId: bot._id}))}>Clear Chat History</button>
+                    {chatted.includes(bot?._id) ? <Link to={`/chatbots/${bot?._id}`} id="resume-button" className='profile-button'>Resume Chat</Link> : <button onClick={clickHandler(bot?._id)} id="chat-button" className='profile-button'> Start Chat</button>}
+                    <button className='popup-button profile-button' onClick={()=> dispatch(openModal({name: 'clone', chatbotId: bot?._id}))}>Clone</button>
+                    <button className='popup-button profile-button clear-chat' onClick={()=> dispatch(openModal({name: 'clear history', chatbotId: bot?._id}))}>Clear Chat History</button>
                   </div>
                   </ul>
                 )
