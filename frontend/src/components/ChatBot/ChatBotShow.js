@@ -204,17 +204,17 @@ function ChatBotShow(){
                       </div>
                     ) 
                   })}
-                  <div>
-                    {response && <div className='chatbot-show-message-detail'> 
+                  {response &&<div className="chatbot-show-response">
+                     <div className='chatbot-show-message-detail'> 
                           <img className='chatbot-show-img-small' src={bot?.profileImageUrl} alt={bot?.name} />
                           <h1>{bot?.name} </h1>
-                        </div>}
+                        </div>
                     { response && response.split('\n').map((message)=>{
                           return <h2>{message}</h2>
                         }) }
-                  </div>
+                  </div>}
                   {loadingResponse ? <img className='typing' src={typingGif} alt='gif'/> : null}
-                  <div ref={chatEndRef} />
+                  <div className='ref-div' ref={chatEndRef} />
                 </ul>
               </div>
             </ul>
