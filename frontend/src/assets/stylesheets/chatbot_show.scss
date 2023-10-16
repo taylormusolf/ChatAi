@@ -195,6 +195,7 @@
   width: 200px;
   position: relative;
   top: -20px;
+  margin-bottom: 25px;
 }
 
 
@@ -268,7 +269,9 @@
   overflow-x: hidden;
   // height: 75vh;
   height: 100%;
-  margin-bottom: 100px;
+  // margin-bottom: 100px;
+  margin-bottom: 75px;
+
 }
 
 .chatbot-show-message-form-container{
@@ -308,7 +311,7 @@
 // }
 
 .chatbot-show-response{
-  margin-bottom: 50px;
+  margin-bottom: 25px;
 }
 
 .chatbot-conformation-popup{
