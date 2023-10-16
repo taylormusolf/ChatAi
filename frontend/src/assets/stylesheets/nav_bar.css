@@ -1,11 +1,14 @@
 .navbar{
   width: 100%;
   max-width: 1300px;
-  height: 100px;
+  /* height: 100px; */
   /* height: 15vh; */
   display: flex;
   justify-content: space-between;
-  position: fixed;
+  /* position: fixed; */
+  position: sticky;
+  padding: 20px 0px;
+  top: 0;
   background-color: white;
   z-index: 5;
 }
