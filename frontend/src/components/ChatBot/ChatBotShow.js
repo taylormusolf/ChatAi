@@ -163,70 +163,71 @@ function ChatBotShow(){
 
 
   return(
-    <div className="chatbot-show-container">
-            {/* <div className="chatbot-show-profile">
-              <img className='chatbot-show-img' src={bot?.profileImageUrl} alt={bot?.name} />
-              <h1>{bot?.name}</h1>
-            </div> */}
-          <ul className="chatbot-show-details">
-            {/* {bot?.author.username && <h1 className="chat-header">Chat with {bot?.name}{bot?.author.username !== 'admin' ? ` (@${bot?.author.username})`: null}</h1>} */}
-            <div className='chatbot-show-box'>
-              <ul>
-                  {bot?.greeting && <div>
-                    <div className='chatbot-show-message-detail'> 
-                      <img className='chatbot-show-img-small' src={bot?.profileImageUrl} alt={bot?.name} />
-                      <h1>{bot?.name} </h1>
+    <>
+      <div className="chatbot-show-container">
+              {/* <div className="chatbot-show-profile">
+                <img className='chatbot-show-img' src={bot?.profileImageUrl} alt={bot?.name} />
+                <h1>{bot?.name}</h1>
+              </div> */}
+            <ul className="chatbot-show-details">
+              {/* {bot?.author.username && <h1 className="chat-header">Chat with {bot?.name}{bot?.author.username !== 'admin' ? ` (@${bot?.author.username})`: null}</h1>} */}
+              <div className='chatbot-show-box'>
+                <ul>
+                    {bot?.greeting && <div>
+                      <div className='chatbot-show-message-detail'> 
+                        <img className='chatbot-show-img-small' src={bot?.profileImageUrl} alt={bot?.name} />
+                        <h1>{bot?.name} </h1>
+                      </div>
+                      <h2>{bot.greeting}</h2>
                     </div>
-                    <h2>{bot.greeting}</h2>
+                    }
+                  {chat?.messages?.map((mess, i)=>{
+                    
+                    return(
+                      <div key={i}>
+                        {mess.role === 'assistant' 
+                        ? 
+                        <div className='chatbot-show-message-detail'> 
+                          <img className='chatbot-show-img-small' src={bot?.profileImageUrl} alt={bot?.name} />
+                          <h1>{bot?.name} </h1>
+                        </div>
+                        : 
+                        <div className='chatbot-show-message-detail'> 
+                          <img className='chatbot-show-img-small' src={sessionUser?.profileImageUrl} alt={sessionUser?.name} />
+                          <h1>{sessionUser?.username} </h1>
+                        </div>
+                        }
+                        {mess.content.split('\n').map((message, i)=>{
+                          return <h2 key={i}>{message}</h2>
+                        })}
+                        
+                      </div>
+                    ) 
+                  })}
+                  <div>
+                    {response && <div className='chatbot-show-message-detail'> 
+                          <img className='chatbot-show-img-small' src={bot?.profileImageUrl} alt={bot?.name} />
+                          <h1>{bot?.name} </h1>
+                        </div>}
+                    { response && response.split('\n').map((message)=>{
+                          return <h2>{message}</h2>
+                        }) }
                   </div>
-                  }
-                {chat?.messages?.map((mess, i)=>{
-                   
-                  return(
-                    <div key={i}>
-                      {mess.role === 'assistant' 
-                      ? 
-                      <div className='chatbot-show-message-detail'> 
-                        <img className='chatbot-show-img-small' src={bot?.profileImageUrl} alt={bot?.name} />
-                        <h1>{bot?.name} </h1>
-                      </div>
-                      : 
-                      <div className='chatbot-show-message-detail'> 
-                        <img className='chatbot-show-img-small' src={sessionUser?.profileImageUrl} alt={sessionUser?.name} />
-                        <h1>{sessionUser?.username} </h1>
-                      </div>
-                      }
-                      {mess.content.split('\n').map((message, i)=>{
-                        return <h2 key={i}>{message}</h2>
-                      })}
-                      
-                    </div>
-                  ) 
-                })}
-                <div>
-                  {response && <div className='chatbot-show-message-detail'> 
-                        <img className='chatbot-show-img-small' src={bot?.profileImageUrl} alt={bot?.name} />
-                        <h1>{bot?.name} </h1>
-                      </div>}
-                  { response && response.split('\n').map((message)=>{
-                        return <h2>{message}</h2>
-                      }) }
-                </div>
-                {loadingResponse ? <img className='typing' src={typingGif} alt='gif'/> : null}
-                <div ref={chatEndRef} />
-              </ul>
-            </div>
-            {bot?.name &&<div className='chatbot-show-message-form-container'>
-              <form className="show-chat-form" onSubmit={handleSubmit}>
-                 <input type='text' className="show-chat-form-input" onChange={handleChange} value={request} placeholder={`Send a message to ${bot?.name}`}/>
-                <button className='chat-form-button' disabled={loadingChat || !request.length}><BiSolidSend /></button>
-              </form>
-              <button className='chat-form-button' onClick={()=> showMenu ? setShowMenu(false) : setShowMenu(true)}><SlOptions/></button>
-            </div>}
-          </ul>
-          {showMenu && popup()}
-             
-    </div>
+                  {loadingResponse ? <img className='typing' src={typingGif} alt='gif'/> : null}
+                  <div ref={chatEndRef} />
+                </ul>
+              </div>
+            </ul>
+      </div>
+      {bot?.name &&<div className='chatbot-show-message-form-container'>
+        <form className="show-chat-form" onSubmit={handleSubmit}>
+          <input type='text' className="show-chat-form-input" onChange={handleChange} value={request} placeholder={`Send a message to ${bot?.name}`}/>
+          <button className='chat-form-button' disabled={loadingChat || !request.length}><BiSolidSend /></button>
+        </form>
+        <button className='chat-form-button' onClick={()=> showMenu ? setShowMenu(false) : setShowMenu(true)}><SlOptions/></button>
+      </div>}
+      {showMenu && popup()}
+    </>
   )
 
 }

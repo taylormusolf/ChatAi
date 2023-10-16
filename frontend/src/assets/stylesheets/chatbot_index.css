@@ -215,12 +215,12 @@ div.swiper-button-prev{
 }
 
 
-@media screen and (max-width: 480px) {
+/* @media screen and (max-width: 480px) {
 
   .chatbots-index-container{
     top: 125px;
     padding-bottom: 10px;
 
   }
-}
+} */
 
