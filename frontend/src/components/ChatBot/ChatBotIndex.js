@@ -74,42 +74,10 @@ function ChatBotIndex(){
   //   }
   // }
   {return loading ? <img className='loading-img' src={loadingGif}/> :
-    <div className="chatbots-index-container">
-      <div className="featured-container">
-        <h1>Featured Chatbots</h1>
-        <Swiper
-        modules={[Navigation, Pagination, Scrollbar]}
-        className="swiper"
-        spaceBetween={10}
-        speed={700}
-        autoHeight={true}
-        centerInsufficientSlides={true}
-        slidesPerGroupAuto={true}
-        slidesPerView='auto'
-        // centeredSlides={true}
-        // breakpoints={breakpoints}
-        navigation
-        //  pagination={{ clickable: true }}
-        scrollbar={{ draggable: true, dragSize: 50, snapOnRelease: true}}
-        //  onSlideChange={() => console.log('slide change')}
-        //  onSwiper={(swiper) => console.log(swiper)}
-        >
-          {Object.values(chatBots).map((bot, i)=>{
-            return bot.featured ? (
-              <SwiperSlide key={bot._id}>
-                <ul className="chatbots-index-details" >
-                  <li title={bot.name}>{bot.name}</li>
-                  <img src={bot.profileImageUrl} alt={bot.name}/>
-                  {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button">Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button"> Start Chat</button>}
-                </ul>
-              </SwiperSlide>
-            ): null
-          })}
-        </Swiper>
-      </div>
-      <div className="chatted-container">
-        <h1>Recently Chatted Chatbots</h1>
-        {chatted?.length ?
+    <>
+      <div className="chatbots-index-container">
+        <div className="featured-container">
+          <h1>Featured Chatbots</h1>
           <Swiper
           modules={[Navigation, Pagination, Scrollbar]}
           className="swiper"
@@ -117,16 +85,18 @@ function ChatBotIndex(){
           speed={700}
           autoHeight={true}
           centerInsufficientSlides={true}
-          // breakpoints={breakpoints}
           slidesPerGroupAuto={true}
           slidesPerView='auto'
+          // centeredSlides={true}
+          // breakpoints={breakpoints}
           navigation
+          //  pagination={{ clickable: true }}
           scrollbar={{ draggable: true, dragSize: 50, snapOnRelease: true}}
+          //  onSlideChange={() => console.log('slide change')}
+          //  onSwiper={(swiper) => console.log(swiper)}
           >
-            {chatted.map((idx, i)=>{
-              const bot = chatBots[idx]
-              if (!bot) return null;
-              return(
+            {Object.values(chatBots).map((bot, i)=>{
+              return bot.featured ? (
                 <SwiperSlide key={bot._id}>
                   <ul className="chatbots-index-details" >
                     <li title={bot.name}>{bot.name}</li>
@@ -134,45 +104,77 @@ function ChatBotIndex(){
                     {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button">Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button"> Start Chat</button>}
                   </ul>
                 </SwiperSlide>
-              )
+              ): null
             })}
-          </Swiper>: <div className="no-chatbot-message"> No Chatbots Chatted Yet!</div>
-        }
-      </div>
-      <div className="created-container">
-        <h1>Created Chatbots</h1>
-        {Object.values(userChatBots).length ?
-          <Swiper
+          </Swiper>
+        </div>
+        <div className="chatted-container">
+          <h1>Recently Chatted Chatbots</h1>
+          {chatted?.length ?
+            <Swiper
             modules={[Navigation, Pagination, Scrollbar]}
             className="swiper"
             spaceBetween={10}
             speed={700}
             autoHeight={true}
             centerInsufficientSlides={true}
+            // breakpoints={breakpoints}
             slidesPerGroupAuto={true}
             slidesPerView='auto'
-            // breakpoints={breakpoints}
             navigation
             scrollbar={{ draggable: true, dragSize: 50, snapOnRelease: true}}
-          >
-            {Object.values(userChatBots).map((bot, i)=>{
-              return(
-                <SwiperSlide key={bot._id}>
-                  <ul className="chatbots-index-details" >
-                    <li title={bot.name}>{bot.name}</li>
-                    <img src={bot.profileImageUrl} alt={bot.name}/>
-                    {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button">Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button"> Start Chat</button>}
-                  </ul>
-                </SwiperSlide>
-              )
-            })}
-          </Swiper> : <div className="no-chatbot-message"> No Chatbots Created Yet!</div>
-        }
+            >
+              {chatted.map((idx, i)=>{
+                const bot = chatBots[idx]
+                if (!bot) return null;
+                return(
+                  <SwiperSlide key={bot._id}>
+                    <ul className="chatbots-index-details" >
+                      <li title={bot.name}>{bot.name}</li>
+                      <img src={bot.profileImageUrl} alt={bot.name}/>
+                      {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button">Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button"> Start Chat</button>}
+                    </ul>
+                  </SwiperSlide>
+                )
+              })}
+            </Swiper>: <div className="no-chatbot-message"> No Chatbots Chatted Yet!</div>
+          }
+        </div>
+        <div className="created-container">
+          <h1>Created Chatbots</h1>
+          {Object.values(userChatBots).length ?
+            <Swiper
+              modules={[Navigation, Pagination, Scrollbar]}
+              className="swiper"
+              spaceBetween={10}
+              speed={700}
+              autoHeight={true}
+              centerInsufficientSlides={true}
+              slidesPerGroupAuto={true}
+              slidesPerView='auto'
+              // breakpoints={breakpoints}
+              navigation
+              scrollbar={{ draggable: true, dragSize: 50, snapOnRelease: true}}
+            >
+              {Object.values(userChatBots).map((bot, i)=>{
+                return(
+                  <SwiperSlide key={bot._id}>
+                    <ul className="chatbots-index-details" >
+                      <li title={bot.name}>{bot.name}</li>
+                      <img src={bot.profileImageUrl} alt={bot.name}/>
+                      {chatted.includes(bot._id) ? <Link to={`/chatbots/${bot._id}`} id="resume-button">Resume Chat</Link> : <button onClick={clickHandler(bot._id)} id="chat-button"> Start Chat</button>}
+                    </ul>
+                  </SwiperSlide>
+                )
+              })}
+            </Swiper> : <div className="no-chatbot-message"> No Chatbots Created Yet!</div>
+          }
+        </div>
+
+
       </div>
-
-
       <Footer />
-    </div>
+    </>  
   }
 
   
