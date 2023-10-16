@@ -62,7 +62,7 @@ footer{
     transition: all 750ms;
     transition-timing-function: ease-out;
 }
-.right-footer a:hover{
+.right-footer a:hover, .left-footer a:hover{
     transform: translateY(-5px); 
 }
 
