@@ -1,7 +1,7 @@
 # ChatAi
 ChatAi is an application platform where you can create your own chatbot with whatever personality you like. You can chat your own chatbot creations or with ones built by other users.
 
-Try out the app here on [Heroku!](https://chat-with-ai-app-d519911d76bc.herokuapp.com/)
+Try out the app here on [Heroku!](https://chat-ai-46f1a8b5ba43.herokuapp.com/)
 
 ChatAi is built using the MERN stack which utilizes React with Redux on the frontend and Node, Express and MongoDB on the backend.
 
