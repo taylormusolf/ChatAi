@@ -1,5 +1,9 @@
-# ChatAi
-ChatAi is an application platform where you can create your own chatbot with whatever personality you like. You can chat your own chatbot creations or with ones built by other users.
+<div><img width="200" alt="logo" src="https://github.com/taylormusolf/ChatAi/assets/71670060/0fda19e8-2bda-453c-8f45-12252ba59389"></div>
+ChatAi is an application platform where you can create your own chatbot with whatever personality you like. 
+<br />
+You can chat your own chatbot creations or with ones built by other users.
+<br />
+<br />
 
 Try out the app here on [Heroku!](https://chat-ai-46f1a8b5ba43.herokuapp.com/)
 
@@ -28,9 +32,9 @@ ChatAi is built using the MERN stack which utilizes React with Redux on the fron
 
 
 ## Logging In to Chat with a Chatbot:
-* bullet
-
-![logging](link)
+* A new user can either sign up or log in using the Demo User account
+* Once logged in a user can start chatting with any existing chatbot
+![login](https://github.com/taylormusolf/ChatAi/assets/71670060/24ea35d2-ce67-4433-beb3-30f131526ca7)
 
 
 ```javascript
@@ -40,8 +44,9 @@ ChatAi is built using the MERN stack which utilizes React with Redux on the fron
 ```
 
 ## Generating Chatbot Responses with OpenAI:
-![search](link)
-* bullet
+* Using OpenAI API the chatbot can dynamically generate responses to match the user's prompts
+![chatting](https://github.com/taylormusolf/ChatAi/assets/71670060/6e9c82cb-bc7a-4642-ab73-5a95ba174732)
+
 
 ```javascript
 //file
@@ -53,7 +58,7 @@ ChatAi is built using the MERN stack which utilizes React with Redux on the fron
 ## Generating Chat Prompts with OpenAI:
 * bullet
 
-![search](link)
+![prompt](https://github.com/taylormusolf/ChatAi/assets/71670060/fb2068bd-61f2-4136-b5a7-bf60b49ef31e)
 
 ```javascript
 
