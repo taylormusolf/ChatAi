@@ -5,7 +5,7 @@ You can chat your own chatbot creations or with ones built by other users.
 <br />
 <br />
 
-Try out the app here on [Heroku!](https://chat-ai-46f1a8b5ba43.herokuapp.com/)
+Try out the app here on [Heroku!](https://chatai.taylormusolf.com/))
 
 ChatAi is built using the MERN stack which utilizes React with Redux on the frontend and Node, Express and MongoDB on the backend.
 
