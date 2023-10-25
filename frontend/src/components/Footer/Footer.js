@@ -24,7 +24,7 @@ function Footer(){
                 <div className="right-footer">
                     <h1>Developed by Taylor Musolf</h1>
                     <div className="footer-links">
-                        <Link to={{pathname:'https://github.com/taylormusolf/aibot_creator'}} target='_blank'>< BsGithub/></Link>
+                        <Link to={{pathname:'https://github.com/taylormusolf/ChatAi'}} target='_blank'>< BsGithub/></Link>
                         <Link to={{pathname:'https://www.linkedin.com/in/taylor-musolf'}} target='_blank'>< BsLinkedin/></Link>
                         <Link to={{pathname: 'https://wellfound.com/u/taylor-musolf'}} target='_blank'><SiWellfound /></Link>
                     </div>
