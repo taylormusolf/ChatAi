@@ -10,13 +10,14 @@ import SignupForm from './components/SessionForms/SignupForm';
 import Profile from './components/Profile/Profile';
 
 import { getCurrentUser } from './store/session';
-// import { Route } from 'react-router-dom/cjs/react-router-dom.min';
+import { Route } from 'react-router-dom/cjs/react-router-dom.min';
 import ChatBotNew from './components/ChatBot/ChatBotNew';
 import ChatBotIndex from './components/ChatBot/ChatBotIndex';
 import ChatBotShow from './components/ChatBot/ChatBotShow';
 import ChatBattle from './components/ChatBot/ChatBattle';
 import ChatBotSearch from './components/ChatBot/ChatBotSearch';
 import Modal from './components/Modal/Modal';
+import NotFound from './components/404/NotFound';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -42,6 +43,7 @@ function App() {
           <ProtectedRoute exact path="/chatbots/battle" component={ChatBattle} />
           <ProtectedRoute exact path="/chatbots/:chatBotId" component={ChatBotShow} />
           <ProtectedRoute exact path="/profile" component={Profile} />
+          <Route path='/' component={NotFound}/>
         </Switch>
         
       </div>

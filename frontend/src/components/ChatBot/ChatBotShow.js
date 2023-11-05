@@ -12,6 +12,7 @@ import { BsFillArrowLeftCircleFill } from 'react-icons/bs';
 import {AiFillCloseCircle} from 'react-icons/ai';
 import {BiSolidSend} from 'react-icons/bi';
 import {SlOptions} from 'react-icons/sl';
+import {TbError404} from 'react-icons/tb'
 
 function ChatBotShow(){
   
@@ -22,6 +23,7 @@ function ChatBotShow(){
 
   const [request, setRequest] = useState('');
   const [response, setResponse] = useState('');
+  const [botLoaded, setBotLoaded] = useState(false);
   const [loadingResponse, setLoadingResponse] = useState(false); //shows message loading gif
   const [loadingChat, setLoadingChat] = useState(false); //disables chat until message finishes
   const [loadingPrompts, setLoadingPrompts] = useState(false);
@@ -39,7 +41,7 @@ function ChatBotShow(){
 
   useEffect(()=>{
     dispatch(clearPrompts())
-    dispatch(fetchChatBot(chatBotId))
+    dispatch(fetchChatBot(chatBotId)).then(()=> setBotLoaded(true));
   }, [dispatch, chatBotId])
 
   const generatePrompts = e => {  
@@ -161,6 +163,14 @@ function ChatBotShow(){
       )
   }
 
+  if(botLoaded && !bot){
+    return(
+      <div>
+          <h1 id='message-404'>The chatbot you are looking for cannot be found.</h1>
+            <div id='icon-404' ><TbError404 /></div>
+      </div>
+    )
+  }
 
   return(
     <>
