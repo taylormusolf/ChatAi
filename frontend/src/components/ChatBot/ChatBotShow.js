@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { fetchChatBot } from "../../store/chatbots";
-import { fetchChatResponse, receiveChatRequest} from '../../store/chat';
+import { fetchChatResponse, receiveChatRequest, clearChatResponse} from '../../store/chat';
 import { fetchPrompts, clearPrompts } from "../../store/prompts";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import typingGif from "../../assets/typing-text.gif";
@@ -43,6 +43,11 @@ function ChatBotShow(){
     dispatch(clearPrompts())
     dispatch(fetchChatBot(chatBotId)).then(()=> setBotLoaded(true));
   }, [dispatch, chatBotId])
+
+  useEffect(()=> { //this fixes bug if chatbot was edited mid conversation it wouldn't show their last response twice
+    setResponse('');
+    // dispatch(clearChatResponse())
+  }, [bot])
 
   const generatePrompts = e => {  
     e.preventDefault();
@@ -142,9 +147,7 @@ function ChatBotShow(){
           {loadingPrompts ? <img className='prompt-loading-img' src={loadingGif} alt='loading gif'/> :
             <div className="prompt-suggestions-container">
               <ul className="prompt-suggestions" onClick={handlePromptClick}>
-              {console.log(prompts?.response?.content)}
                 {prompts?.response?.content.split('\n').map((prompt, i)=>{
-                  {console.log(prompt.length)}
                 const modified = !Number.isNaN(parseInt(prompt[0])) ? prompt.slice(3) : prompt.slice(0,2) === '- ' ? prompt.slice(1) : prompt[0] === '-' ? prompt.slice(1) : prompt;
                 return(
                   // <li key={i} className="prompt-entry"><strong><AiOutlineStar/></strong> {modified}</li>

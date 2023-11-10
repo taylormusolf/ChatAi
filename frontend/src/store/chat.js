@@ -6,6 +6,7 @@ export const REMOVE_CHAT = "chats/REMOVE_CHAT";
 
 const RECEIVE_CHAT_REQUEST = "chats/RECEIVE_CHAT_REQUEST";
 const RECEIVE_CHAT_RESPONSE = "chats/RECEIVE_CHAT_RESPONSE";
+const CLEAR_CHAT_RESPONSE = "chats/CLEAR_CHAT_RESPONSE";
 
 const RECEIVE_CHAT_ERRORS = "chats/RECEIVE_CHAT_ERRORS";
 const CLEAR_CHAT_ERRORS = "chats/CLEAR_CHAT_ERRORS";
@@ -27,6 +28,10 @@ export const receiveChatRequest = (chatRequest) => ({
 const receiveChatResponse = (chat) => ({
   type: RECEIVE_CHAT_RESPONSE,
   chat
+});
+
+export const clearChatResponse = () => ({
+  type: CLEAR_CHAT_RESPONSE,
 });
 
 const receiveErrors = errors => ({
@@ -143,6 +148,8 @@ const chatsReducer = (state = { all: {}, current: {}, new:undefined}, action) =>
       const newRes = action.chat.messages.pop();
       // newCurrent.messages.push({role:'assistant', content: action.chatResponse})
       return {...state, current: action.chat, new: newRes }
+    case CLEAR_CHAT_RESPONSE:
+      return {...state, new: undefined}
     case RECEIVE_CHAT:
       return {...state, current: action.chat, new: undefined};
     default:
