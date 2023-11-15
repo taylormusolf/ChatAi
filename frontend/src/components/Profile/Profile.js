@@ -62,7 +62,7 @@ function Profile () {
           </div>
           <div className='profile-chat-history-container'>
             <h1>Your Recently Chatted Chatbots</h1>
-            {chatted && Object.values(chatted) === 0 && <div className="profile-bot-details"><h1>No Chatbots Chatted Yet!</h1> </div>}
+            {chatted && Object.values(chatted).length === 0 && <div className="profile-bot-details"><h1>No Chatbots Chatted Yet!</h1> </div>}
             {chatted && Object.values(chatted).map((id)=>{
               const bot = chatBots[id]
               return(

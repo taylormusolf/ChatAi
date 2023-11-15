@@ -140,7 +140,7 @@ function ChatBotIndex(){
             </Swiper>: <div className="no-chatbot-message"> No Chatbots Chatted Yet!</div>
           }
         </div>
-        <div className="created-container">
+        {/* <div className="created-container">
           <h1>Created Chatbots</h1>
           {Object.values(userChatBots).length ?
             <Swiper
@@ -169,7 +169,7 @@ function ChatBotIndex(){
               })}
             </Swiper> : <div className="no-chatbot-message"> No Chatbots Created Yet!</div>
           }
-        </div>
+        </div> */}
 
 
       </div>
